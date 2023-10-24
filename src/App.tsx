@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 
 
 const PageBackground = styled(Box)({
+  boxSizing: 'border-box',
   width: '100vw',
   height: '100vh',
   padding: '80px 0',
