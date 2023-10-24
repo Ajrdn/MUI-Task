@@ -11,7 +11,9 @@ import Box from '@mui/material/Box'
 const TableData = () => {
   return (
     <TableContainer component={Box}>
-      
+      <Table>
+        
+      </Table>
     </TableContainer>
   )
 }
