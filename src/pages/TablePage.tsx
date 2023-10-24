@@ -2,6 +2,7 @@ import React from 'react'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
+import TableData from './TableData/TableData'
 
 
 const TablePageBackground = styled(Box)({
@@ -16,6 +17,7 @@ const TablePage = () => {
   return (
     <TablePageBackground>
       <TablePageSearchBar />
+      <TableData />
     </TablePageBackground>
   )
 }
