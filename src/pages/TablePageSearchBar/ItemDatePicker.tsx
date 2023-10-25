@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -10,7 +10,7 @@ const ItemDatePicker = () => {
   const setDate = TableSearchStore(state => state.setSearchDate)
 
   const dateChange = (newDate: Dayjs | null) => {
-    setDate(newDate)
+    setDate(newDate ?? dayjs())
   }
 
   return (
