@@ -1,7 +1,7 @@
 import React from 'react'
+import InformDataStore from 'store/InformModalDataStore'
 import Fab from '@mui/material/Fab'
 import Alarm from '@mui/icons-material/Alarm'
-import InformDataStore from 'store/InformDataStore'
 import InformModal from './InformModal/InformModal'
 
 

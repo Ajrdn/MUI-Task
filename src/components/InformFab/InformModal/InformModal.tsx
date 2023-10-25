@@ -1,7 +1,7 @@
 import React from 'react'
+import InformDataStore from 'store/InformModalDataStore'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import InformDataStore from 'store/InformDataStore'
 import ModalBackground from 'components/ModalBackground/ModalBackground'
 
 
@@ -10,10 +10,7 @@ const InformModal = () => {
   const setOpen = InformDataStore(state => state.setOpen)
 
   return (
-    <ModalBackground
-      open={open}
-      onClose={setOpen}
-    >
+    <ModalBackground open={open} onClose={setOpen}>
       <Box sx={{ bgcolor: 'red' }}>
         <Typography id='modal-modal-title' variant='h6' component='h2'>
           Text in a modal
