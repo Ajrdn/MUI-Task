@@ -2,12 +2,12 @@ import { create } from 'zustand'
 
 
 interface InformDataState {
-  show: boolean
+  open: boolean
   title: string
   content: string
   target: string
 
-  setShow: () => void
+  setOpen: () => void
   
   setTitle: (newTitle: string) => void
 
@@ -18,12 +18,12 @@ interface InformDataState {
 
 
 const InformDataStore = create<InformDataState>(set => ({
-  show: false,
+  open: false,
   title: '',
   content: '',
   target: '',
 
-  setShow: () => set(state => ({show: !state.show})),
+  setOpen: () => set(state => ({open: !state.open})),
 
   setTitle: newTitle => set(state => ({title: newTitle})),
 
