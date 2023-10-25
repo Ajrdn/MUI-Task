@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
@@ -7,14 +6,14 @@ import InputLabel from '@mui/material/InputLabel'
 
 interface ItemSelectSearchProps {
   selectLabel: string
+  item: string
+  setItem: (item: string) => void
 }
 
 
 const ItemSelectSearch = (props: ItemSelectSearchProps) => {
-  const [item, setItem] = useState<string>('전체')
-
   const itemChange = (event: SelectChangeEvent) => {
-    setItem(event.target.value)
+    props.setItem(event.target.value)
   }
 
   return (
@@ -23,7 +22,7 @@ const ItemSelectSearch = (props: ItemSelectSearchProps) => {
       <Select
         labelId='item-select-label'
         id='item-select'
-        value={item}
+        value={props.item}
         onChange={itemChange}
         label={props.selectLabel}
         sx={{
