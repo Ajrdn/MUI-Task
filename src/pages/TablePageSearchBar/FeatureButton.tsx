@@ -10,6 +10,7 @@ interface FeatureButtonProps {
   icon: React.ReactNode
   width: string
   padding: string
+  performance: () => void
 }
 
 
@@ -18,6 +19,7 @@ const FeatureButton = (props: FeatureButtonProps) => {
     <Button
       variant={props.variant}
       startIcon={props.icon}
+      onClick={props.performance}
       sx={{
         width: props.width,
         height: '40px',
