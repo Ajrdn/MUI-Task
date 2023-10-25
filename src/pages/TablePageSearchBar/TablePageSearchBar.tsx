@@ -25,26 +25,20 @@ const TablePageSearchBarBackground = styled(Box)({
 const TablePageSearchBar = () => {
   const [excelFile, setExcelFile] = useState()
 
-  const item = TableSearchStore((state) => state.searchItem)
-  const setItem = TableSearchStore((state) => state.setSearchItem)
-  const word = TableSearchStore((state) => state.searchWord)
-  const setWord = TableSearchStore((state) => state.setSearchWord)
+  const item = TableSearchStore(state => state.searchItem)
+  const setItem = TableSearchStore(state => state.setSearchItem)
+  const word = TableSearchStore(state => state.searchWord)
+  const setWord = TableSearchStore(state => state.setSearchWord)
 
-  const detailItem = TableSearchStore((state) => state.searchDetailItem)
-  const setDetailItem = TableSearchStore((state) => state.setSearchDetailItem)
-  const detailWord = TableSearchStore((state) => state.searchDetailWord)
-  const setDetailWord = TableSearchStore((state) => state.setSearchDetailWord)
+  const detailItem = TableSearchStore(state => state.searchDetailItem)
+  const setDetailItem = TableSearchStore(state => state.setSearchDetailItem)
+  const detailWord = TableSearchStore(state => state.searchDetailWord)
+  const setDetailWord = TableSearchStore(state => state.setSearchDetailWord)
 
-  const taskDataTitleList: string[] = TaskDataListStore(
-    (state) => state.taskDataTitleList
-  )
-  const taskDataList: TaskData[] = TaskDataListStore(
-    (state) => state.taskDataList
-  )
+  const taskDataTitleList: string[] = TaskDataListStore(state => state.taskDataTitleList)
+  const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
 
-  const setTaskDataListByExcel = TaskDataListStore(
-    (state) => state.setTaskDataListByExcel
-  )
+  const setTaskDataListByExcel = TaskDataListStore(state => state.setTaskDataListByExcel)
 
   const excelDownload = () => {
     TaskDataListDownloadXlsx(taskDataTitleList, taskDataList)
