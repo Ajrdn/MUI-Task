@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import { utils, read } from 'xlsx'
 import { styled } from '@mui/material/styles'
 import Search from '@mui/icons-material/Search'
 import DownloadForOffline from '@mui/icons-material/DownloadForOffline'
@@ -22,6 +23,8 @@ const TablePageSearchBarBackground = styled(Box)({
 
 
 const TablePageSearchBar = () => {
+  const [excelFile, setExcelFile] = useState<any[]>()
+
   const item = TableSearchStore(state => state.searchItem)
   const setItem = TableSearchStore(state => state.setSearchItem)
   const word = TableSearchStore(state => state.searchWord)
@@ -35,8 +38,34 @@ const TablePageSearchBar = () => {
   const taskDataTitleList: string[] = TaskDataListStore(state => state.taskDataTitleList)
   const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
 
+  const setTaskDataListByExcel = TaskDataListStore(state => state.setTaskDataListByExcel)
+  
   const excelDownload = () => {
     TaskDataListDownloadXlsx(taskDataTitleList, taskDataList)
+  }
+
+  const excelUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(!event.target.files) return
+
+    const fileReader = new FileReader()
+    fileReader.readAsArrayBuffer(event.target.files[0])
+    fileReader.onload = async (event: ProgressEvent<FileReader>) => {
+      if(!event.target) return
+      const bufferArray = event.target.result
+      const fileInformation = read(bufferArray, {
+        type: 'buffer',
+        cellText: false,
+        cellDates: true,
+      })
+      const sheetName = fileInformation.SheetNames[0]
+      const rawData = fileInformation.Sheets[sheetName]
+      const data = utils.sheet_to_json(rawData)
+      setExcelFile(data)
+    }
+  }, [])
+
+  const excelDataUpdate = () => {
+    console.log(excelFile)
   }
 
   return (
@@ -70,7 +99,8 @@ const TablePageSearchBar = () => {
         icon={<Search />}
         width='82px'
         padding='0 15px'
-        performance={() => {}}
+        label={false}
+        buttonPerformance={() => {}}
       />
       <FeatureButton
         feature='액셀 다운로드'
@@ -80,7 +110,8 @@ const TablePageSearchBar = () => {
         icon={<DownloadForOffline />}
         width='127px'
         padding='0 10px'
-        performance={excelDownload}
+        label={false}
+        buttonPerformance={excelDownload}
       />
       <FeatureButton
         feature='액셀 업로드'
@@ -90,7 +121,8 @@ const TablePageSearchBar = () => {
         icon={<CloudUpload />}
         width='113px'
         padding='0 10px'
-        performance={() => {}}
+        label
+        inputPerformance={excelUpload}
       />
     </TablePageSearchBarBackground>
   )
