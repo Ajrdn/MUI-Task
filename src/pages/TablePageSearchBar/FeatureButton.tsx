@@ -10,16 +10,19 @@ interface FeatureButtonProps {
   icon: React.ReactNode
   width: string
   padding: string
-  performance: () => void
+  label: boolean
+  buttonPerformance?: () => void
+  inputPerformance?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 
 const FeatureButton = (props: FeatureButtonProps) => {
   return (
     <Button
+      component={props.label ? 'label' : 'button'}
       variant={props.variant}
       startIcon={props.icon}
-      onClick={props.performance}
+      onClick={props.buttonPerformance}
       sx={{
         width: props.width,
         height: '40px',
@@ -33,6 +36,7 @@ const FeatureButton = (props: FeatureButtonProps) => {
       }}
     >
       {props.feature}
+      {props.label && <input hidden type='file' accept='.xlsx, .xls, .csv' onChange={props.inputPerformance} />}
     </Button>
   )
 }
