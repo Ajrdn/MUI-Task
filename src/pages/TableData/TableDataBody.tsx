@@ -1,19 +1,17 @@
 import React from 'react'
+import TaskDataListStore from 'store/TaskDataListStore'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import TaskData from 'interface/TaskData'
 
 
-interface TableDataBodyProps {
-  taskDataList: TaskData[]
-}
+const TableDataBody = () => {
+  const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
 
-
-const TableDataBody = (props: TableDataBodyProps) => {
   return (
     <TableBody>
-      {props.taskDataList.map((taskData, index) => (
+      {taskDataList.map((taskData, index) => (
         <TableRow key={taskData.LOTNo}>
           <TableCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableCell>
           <TableCell align='center'>{taskData.workDate}</TableCell>
