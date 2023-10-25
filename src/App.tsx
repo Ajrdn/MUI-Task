@@ -2,8 +2,6 @@ import React from 'react'
 import { styled, ThemeProvider } from '@mui/material/styles'
 import { theme } from './theme/theme'
 import Box from '@mui/material/Box'
-import Fab from '@mui/material/Fab'
-import Add from '@mui/icons-material/Add'
 import TablePage from './pages/TablePage'
 
 
@@ -24,41 +22,6 @@ function App() {
       <PageBackground>
         <TablePage />
       </PageBackground>
-      <Fab sx={{
-        bgcolor: '#13243A',
-        position: 'absolute',
-        right: '30px',
-        bottom: '200px',
-        boxShadow: '0px 5px 6px #00000061'
-      }}>
-        <Add sx={{
-          color: 'white',
-        }}/>
-      </Fab>
-
-
-      <Fab sx={{
-        bgcolor: 'green',
-        position: 'absolute',
-        right: '30px',
-        bottom: '100px',
-        boxShadow: '0px 5px 6px #00000061'
-      }}>
-        <Add sx={{
-          color: 'white',
-        }}/>
-      </Fab>
-      <Fab sx={{
-        bgcolor: 'red',
-        position: 'absolute',
-        right: '30px',
-        bottom: '10px',
-        boxShadow: '0px 5px 6px #00000061'
-      }}>
-        <Add sx={{
-          color: 'white',
-        }}/>
-      </Fab>
     </ThemeProvider>
   )
 }
