@@ -35,6 +35,30 @@ function App() {
           color: 'white',
         }}/>
       </Fab>
+
+
+      <Fab sx={{
+        bgcolor: 'green',
+        position: 'absolute',
+        right: '30px',
+        bottom: '100px',
+        boxShadow: '0px 5px 6px #00000061'
+      }}>
+        <Add sx={{
+          color: 'white',
+        }}/>
+      </Fab>
+      <Fab sx={{
+        bgcolor: 'red',
+        position: 'absolute',
+        right: '30px',
+        bottom: '10px',
+        boxShadow: '0px 5px 6px #00000061'
+      }}>
+        <Add sx={{
+          color: 'white',
+        }}/>
+      </Fab>
     </ThemeProvider>
   )
 }
