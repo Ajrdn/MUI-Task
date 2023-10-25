@@ -5,7 +5,9 @@ import ModalBackground from 'components/ModalBackground/ModalBackground'
 const TableAddModal = () => {
   return (
     <ModalBackground>
-
+      <Box>
+        
+      </Box>
     </ModalBackground>
   )
 }
