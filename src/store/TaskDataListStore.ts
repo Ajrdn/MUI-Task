@@ -3,6 +3,7 @@ import TaskData from 'interface/TaskData'
 
 
 interface TaskDataListState {
+  taskDataTitleList: string[]
   taskDataList: TaskData[]
 
   setTaskDataList: (taskData: TaskData) => void
@@ -10,6 +11,15 @@ interface TaskDataListState {
 
 
 const TaskDataListStore = create<TaskDataListState>(set => ({
+  taskDataTitleList: [
+    'No.',
+    '작업일',
+    'LOT No.',
+    '품종',
+    '규격',
+    '슬라브 길이',
+    '중량',
+  ],
   taskDataList: [
     {
       workDate: '2023-10-24',
@@ -93,7 +103,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
   ],
 
-  setTaskDataList: taskData => set(state => ({taskDataList: [...state.taskDataList, taskData]}))
+  setTaskDataList: taskData => set(state => ({taskDataList: [...state.taskDataList, taskData]})),
 }))
 
 export default TaskDataListStore
