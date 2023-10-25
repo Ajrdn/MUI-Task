@@ -3,13 +3,13 @@ import dayjs, { Dayjs } from 'dayjs'
 
 
 interface TableSearchState {
-  searchDate: Dayjs | null
+  searchDate: Dayjs
   searchItem: string
   searchWord: string
   searchDetailItem: string
   searchDetailWord: string
 
-  setSearchDate: (date: Dayjs | null) => void
+  setSearchDate: (date: Dayjs) => void
 
   setSearchItem: (item: string) => void
   
