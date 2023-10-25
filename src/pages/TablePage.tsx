@@ -3,6 +3,9 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
 import TableData from './TableData/TableData'
+import TableAddFab from './TableAddFab/TableAddFab'
+import AlarmFab from 'components/AlarmFab/AlarmFab'
+import InformFab from 'components/InformFab/InformFab'
 
 
 const TablePageBackground = styled(Box)({
@@ -15,10 +18,15 @@ const TablePageBackground = styled(Box)({
 
 const TablePage = () => {
   return (
-    <TablePageBackground>
-      <TablePageSearchBar />
-      <TableData />
-    </TablePageBackground>
+    <>
+      <TablePageBackground>
+        <TablePageSearchBar />
+        <TableData />
+      </TablePageBackground>
+      <TableAddFab />
+      <InformFab />
+      <AlarmFab />
+    </>
   )
 }
 
