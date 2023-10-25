@@ -7,11 +7,14 @@ import TableDataBody from './TableDataBody'
 
 const TableData = () => {
   return (
-    <TableContainer component={Box}>
-      <Table sx={{
+    <TableContainer
+      component={Box}
+      sx={{
         border: '1px solid #C8C8C8',
-        borderRadius: '4px',
-      }}>
+        borderRadius: '8px',
+      }}
+    >
+      <Table>
         <TableHeader />
         <TableDataBody />
       </Table>
