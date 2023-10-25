@@ -6,7 +6,9 @@ interface TaskDataListState {
   taskDataTitleList: string[]
   taskDataList: TaskData[]
 
-  setTaskDataList: (taskData: TaskData) => void
+  setTaskDataListByObject: (taskData: TaskData) => void
+
+  setTaskDataListByExcel: (taskDataExcel: TaskData[]) => void
 }
 
 
@@ -103,7 +105,9 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
   ],
 
-  setTaskDataList: taskData => set(state => ({taskDataList: [...state.taskDataList, taskData]})),
+  setTaskDataListByObject: taskData => set(state => ({taskDataList: [...state.taskDataList, taskData]})),
+
+  setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataList: [...state.taskDataList, ...taskDataExcel]})),
 }))
 
 export default TaskDataListStore
