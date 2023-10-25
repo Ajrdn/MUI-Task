@@ -1,9 +1,12 @@
 import React from 'react'
+import ModalBackground from 'components/ModalBackground/ModalBackground'
 
 
 const AlarmModal = () => {
   return (
-    <div>AlarmModal</div>
+    <ModalBackground>
+
+    </ModalBackground>
   )
 }
 
