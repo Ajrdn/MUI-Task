@@ -10,7 +10,10 @@ const InformModal = () => {
   const setOpen = InformDataStore(state => state.setOpen)
 
   return (
-    <ModalBackground open={open} onClose={setOpen}>
+    <ModalBackground
+      open={open}
+      onClose={setOpen}
+    >
       <Box sx={{ bgcolor: 'red' }}>
         <Typography id='modal-modal-title' variant='h6' component='h2'>
           Text in a modal
