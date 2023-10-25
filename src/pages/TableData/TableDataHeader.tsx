@@ -1,24 +1,17 @@
 import React from 'react'
+import TaskDataListStore from 'store/TaskDataListStore'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
 
 const TableDataHeader = () => {
-  const titles: string[] = [
-    'No.',
-    '작업일',
-    'LOT No.',
-    '품종',
-    '규격',
-    '슬라브 길이',
-    '중량',
-  ]
+  const taskDataTitleList: string[] = TaskDataListStore(state => state.taskDataTitleList)
 
   return (
     <TableHead>
       <TableRow>
-        {titles.map(title => (
+        {taskDataTitleList.map(title => (
           <TableCell
             key={title}
             align='center'
