@@ -22,7 +22,7 @@ interface TableSearchState {
 
 
 const TableSearchStore = create<TableSearchState>(set => ({
-  searchDate: dayjs(),
+  searchDate: dayjs('2023-10-24'),
   searchItem: '',
   searchWord: '',
   searchDetailItem: '',
