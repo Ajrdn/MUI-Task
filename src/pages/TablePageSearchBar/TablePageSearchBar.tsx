@@ -1,4 +1,5 @@
 import React from 'react'
+import TableSearchStore from 'store/TableSearchStore'
 import { styled } from '@mui/material/styles'
 import Search from '@mui/icons-material/Search'
 import DownloadForOffline from '@mui/icons-material/DownloadForOffline'
@@ -18,13 +19,39 @@ const TablePageSearchBarBackground = styled(Box)({
 
 
 const TablePageSearchBar = () => {
+  const item = TableSearchStore(state => state.searchItem)
+  const setItem = TableSearchStore(state => state.setSearchItem)
+  const word = TableSearchStore(state => state.searchWord)
+  const setWord = TableSearchStore(state => state.setSearchWord)
+
+  const detailItem = TableSearchStore(state => state.searchDetailItem)
+  const setDetailItem = TableSearchStore(state => state.setSearchDetailItem)
+  const detailWord = TableSearchStore(state => state.searchDetailWord)
+  const setDetailWord = TableSearchStore(state => state.setSearchDetailWord)
+
   return (
     <TablePageSearchBarBackground>
       <ItemDatePicker />
-      <ItemSelectSearch selectLabel='항목' />
-      <ItemTextSearch textLabel='검색' />
-      <ItemSelectSearch selectLabel='상세 검색 항목' />
-      <ItemTextSearch textLabel='상세 검색' />
+      <ItemSelectSearch
+        selectLabel='항목'
+        item={item}
+        setItem={setItem}
+      />
+      <ItemTextSearch
+        textLabel='검색'
+        text={word}
+        setText={setWord}
+      />
+      <ItemSelectSearch
+        selectLabel='상세 검색 항목'
+        item={detailItem}
+        setItem={setDetailItem}
+      />
+      <ItemTextSearch
+        textLabel='상세 검색'
+        text={detailWord}
+        setText={setDetailWord}
+      />
       <FeatureButton
         feature='검색'
         variant='contained'
