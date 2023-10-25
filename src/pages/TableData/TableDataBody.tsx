@@ -109,7 +109,7 @@ const TableDataBody = () => {
   return (
     <TableBody>
       {taskDataList.map((taskData, index) => (
-        <TableRow>
+        <TableRow key={`${taskData.workDate}${index}`}>
           <TableCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableCell>
           <TableCell align='center'>{taskData.workDate}</TableCell>
           <TableCell align='center'>{taskData.LOTNo}</TableCell>
@@ -123,4 +123,4 @@ const TableDataBody = () => {
   )
 }
 
-export default  TableDataBody
+export default TableDataBody

@@ -18,7 +18,14 @@ const TableDataHeader = () => {
   return (
     <TableHead>
       <TableRow>
-        {titles.map(title => <TableCell align='center'>{title}</TableCell>)}
+        {titles.map(title => (
+          <TableCell
+            key={title}
+            align='center'
+          >
+            {title}
+          </TableCell>
+        ))}
       </TableRow>
     </TableHead>
   )
