@@ -1,5 +1,4 @@
 import React from 'react'
-import TableSearchStore from 'store/TableSearchStore'
 import { styled } from '@mui/material/styles'
 import Search from '@mui/icons-material/Search'
 import DownloadForOffline from '@mui/icons-material/DownloadForOffline'
@@ -9,6 +8,10 @@ import ItemSelectSearch from './ItemSelectSearch'
 import ItemDatePicker from './ItemDatePicker'
 import ItemTextSearch from './ItemTextSearch'
 import FeatureButton from './FeatureButton'
+import TaskData from 'interface/TaskData'
+import TableSearchStore from 'store/TableSearchStore'
+import TaskDataListStore from 'store/TaskDataListStore'
+import { TaskDataListDownloadXlsx } from 'utils/utils'
 
 
 const TablePageSearchBarBackground = styled(Box)({
@@ -28,6 +31,13 @@ const TablePageSearchBar = () => {
   const setDetailItem = TableSearchStore(state => state.setSearchDetailItem)
   const detailWord = TableSearchStore(state => state.searchDetailWord)
   const setDetailWord = TableSearchStore(state => state.setSearchDetailWord)
+
+  const taskDataTitleList: string[] = TaskDataListStore(state => state.taskDataTitleList)
+  const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
+
+  const excelDownload = () => {
+    TaskDataListDownloadXlsx(taskDataTitleList, taskDataList)
+  }
 
   return (
     <TablePageSearchBarBackground>
@@ -60,6 +70,7 @@ const TablePageSearchBar = () => {
         icon={<Search />}
         width='82px'
         padding='0 15px'
+        performance={() => {}}
       />
       <FeatureButton
         feature='액셀 다운로드'
@@ -69,6 +80,7 @@ const TablePageSearchBar = () => {
         icon={<DownloadForOffline />}
         width='127px'
         padding='0 10px'
+        performance={excelDownload}
       />
       <FeatureButton
         feature='액셀 업로드'
@@ -78,6 +90,7 @@ const TablePageSearchBar = () => {
         icon={<CloudUpload />}
         width='113px'
         padding='0 10px'
+        performance={() => {}}
       />
     </TablePageSearchBarBackground>
   )
