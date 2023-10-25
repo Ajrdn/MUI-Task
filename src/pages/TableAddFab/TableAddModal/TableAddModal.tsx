@@ -1,9 +1,12 @@
 import React from 'react'
+import ModalBackground from 'components/ModalBackground/ModalBackground'
 
 
 const TableAddModal = () => {
   return (
-    <div>TableAddModal</div>
+    <ModalBackground>
+
+    </ModalBackground>
   )
 }
 
