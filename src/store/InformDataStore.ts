@@ -7,13 +7,13 @@ interface InformDataState {
   content: string
   target: string
 
-  setShow: (newShow: boolean) => void
+  setShow: () => void
   
   setTitle: (newTitle: string) => void
 
   setContent: (newContent: string) => void
 
-  setTarget: (newTarget: boolean) => void
+  setTarget: (newTarget: string) => void
 }
 
 
@@ -23,7 +23,13 @@ const InformDataStore = create<InformDataState>(set => ({
   content: '',
   target: '',
 
+  setShow: () => set(state => ({show: !state.show})),
 
+  setTitle: newTitle => set(state => ({title: newTitle})),
+
+  setContent: newContent => set(state => ({content: newContent})),
+
+  setTarget: newTarget => set(state => ({target: newTarget})),
 }))
 
 export default InformDataStore
