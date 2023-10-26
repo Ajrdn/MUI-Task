@@ -5,7 +5,7 @@ import TaskData from 'interface/TaskData'
 export const TaskDataListDownloadXlsx = (taskDataTitleList: string[], taskDataList: TaskData[]) => {
   const data = taskDataList.map((taskData, index) => ({
     [taskDataTitleList[0]]: (index + 1).toString().padStart(2, '0'),
-    [taskDataTitleList[1]]: taskData.workDate,
+    [taskDataTitleList[1]]: taskData.workDate.format('YYYY-MM-DD'),
     [taskDataTitleList[2]]: taskData.LOTNo,
     [taskDataTitleList[3]]: taskData.variety,
     [taskDataTitleList[4]]: taskData.standard,
