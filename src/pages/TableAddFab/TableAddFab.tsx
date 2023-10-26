@@ -1,13 +1,17 @@
 import React from 'react'
+import TableAddModalDataStore from 'store/TableAddModalDataStore'
 import Fab from '@mui/material/Fab'
 import Add from '@mui/icons-material/Add'
 import TableAddModal from './TableAddModal/TableAddModal'
 
 
 const TableAddFab = () => {
+  const setOpen = TableAddModalDataStore(state => state.setOpen)
+
   return (
     <>
       <Fab
+        onClick={setOpen}
         sx={{
           bgcolor: '#13243A',
           position: 'absolute',

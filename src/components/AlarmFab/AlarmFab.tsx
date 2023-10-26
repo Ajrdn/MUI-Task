@@ -1,12 +1,16 @@
 import React from 'react'
+import AlarmModalDataStore from 'store/AlarmModalDataStore'
 import Fab from '@mui/material/Fab'
 import Alarm from '@mui/icons-material/Alarm'
 import AlarmModal from './AlarmModal/AlarmModal'
 
 const AlarmFab = () => {
+  const setOpen = AlarmModalDataStore(state => state.setOpen)
+
   return (
     <>
       <Fab
+        onClick={setOpen}
         sx={{
           bgcolor: 'red',
           position: 'absolute',
