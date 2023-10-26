@@ -10,6 +10,7 @@ import ItemDatePicker from './ItemDatePicker'
 import ItemTextSearch from './ItemTextSearch'
 import FeatureButton from './FeatureButton'
 import TaskData from 'interface/TaskData'
+import TableHeader from 'interface/TableHeader'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { TaskDataListDownloadXlsx } from 'utils/utils'
@@ -35,13 +36,13 @@ const TablePageSearchBar = () => {
   const detailWord = TableSearchStore(state => state.searchDetailWord)
   const setDetailWord = TableSearchStore(state => state.setSearchDetailWord)
 
-  const taskDataTitleList: string[] = TaskDataListStore(state => state.taskDataTitleList)
+  const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
   const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
 
   const setTaskDataListByExcel = TaskDataListStore(state => state.setTaskDataListByExcel)
 
   const excelDownload = () => {
-    TaskDataListDownloadXlsx(taskDataTitleList, taskDataList)
+    TaskDataListDownloadXlsx(taskDataTitleList.map(tableHeader => tableHeader.title), taskDataList)
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
