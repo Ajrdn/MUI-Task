@@ -34,7 +34,7 @@ function InformModal() {
   const setClose = () => {
     setTitle('')
     setContent('')
-    setTarget('')
+    setTarget('전체 공정')
     setOpen()
   }
 
