@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField'
 
 interface TableAddTextFieldProps {
   label: string
+  value: string
+  setValue: () => void
 }
 
 
@@ -14,6 +16,8 @@ function TableAddTextField(props: TableAddTextFieldProps) {
       placeholder={`${props.label} 입력`}
       variant='standard'
       focused
+      value={props.value}
+      onChange={props.setValue}
       sx={{
         width: '207px',
         height: '42px',
