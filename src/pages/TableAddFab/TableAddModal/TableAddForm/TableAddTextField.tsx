@@ -2,11 +2,17 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 
 
-function TableAddTextField() {
+interface TableAddTextFieldProps {
+  label: string
+  placeholder: string
+}
+
+
+function TableAddTextField(props: TableAddTextFieldProps) {
   return (
     <TextField
-      label='아이디'
-      placeholder='아이디를 입력하세요.'
+      label={props.label}
+      placeholder={props.placeholder}
       variant='standard'
       focused
       sx={{
