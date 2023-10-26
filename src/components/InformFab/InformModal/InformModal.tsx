@@ -1,27 +1,63 @@
 import React from 'react'
 import InformDataStore from 'store/InformModalDataStore'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { styled } from '@mui/material/styles'
 import ModalBackground from 'components/ModalBackground/ModalBackground'
+import ModalContentBox from 'components/ModalContentBox/ModalContentBox'
+import ModalCloseButton from 'components/ModalCloseButton/ModalCloseButton'
+import ModalTitle from 'components/ModalTitle/ModalTitle'
+import TitleField from './TitleField/TitleField'
+import ContentField from './ContentField/ContentField'
+import BottomField from './BottomField/BottomField'
 
 
-const InformModal = () => {
+const InformModalContentBox = styled(ModalContentBox)({
+  borderRadius: '25px',
+  backgroundColor: 'white',
+  width: '800px',
+  height: '592px',
+  padding: '60px 50px 70px',
+})
+
+
+const InformModalTitle = styled(ModalTitle)({
+  marginBottom: '40px',
+})
+
+
+function InformModal() {
   const open = InformDataStore(state => state.open)
   const setOpen = InformDataStore(state => state.setOpen)
+  const setTitle = InformDataStore(state => state.setTitle)
+  const setContent = InformDataStore(state => state.setContent)
+  const setTarget = InformDataStore(state => state.setTarget)
+
+  const setClose = () => {
+    setTitle('')
+    setContent('')
+    setTarget('전체 공정')
+    setOpen()
+  }
 
   return (
     <ModalBackground
       open={open}
-      onClose={setOpen}
+      onClose={setClose}
     >
-      <Box sx={{ bgcolor: 'red' }}>
-        <Typography id='modal-modal-title' variant='h6' component='h2'>
-          Text in a modal
-        </Typography>
-        <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
-      </Box>
+      <InformModalContentBox>
+        <InformModalTitle>
+          알림 보내기
+        </InformModalTitle>
+        <TitleField />
+        <ContentField />
+        <BottomField />
+        <ModalCloseButton
+          size='30px'
+          position='10px'
+          color='#878787'
+          backgroundColor='#EFEFEF'
+          onClick={setClose}
+        />
+      </InformModalContentBox>
     </ModalBackground>
   )
 }
