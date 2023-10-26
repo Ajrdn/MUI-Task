@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField'
 interface TableAddTextFieldProps {
   label: string
   value: string
-  setValue: () => void
+  setValue: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 
