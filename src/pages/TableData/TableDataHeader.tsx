@@ -3,20 +3,24 @@ import TaskDataListStore from 'store/TaskDataListStore'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
+import TableHeader from 'interface/TableHeader'
 
 
 const TableDataHeader = () => {
-  const taskDataTitleList: string[] = TaskDataListStore(state => state.taskDataTitleList)
+  const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
 
   return (
     <TableHead>
       <TableRow>
-        {taskDataTitleList.map(title => (
+        {taskDataTitleList.map(tableHeader => (
           <TableCell
-            key={title}
+            key={tableHeader.title}
             align='center'
+            sx={{
+              width: tableHeader.size
+            }}
           >
-            {title}
+            {tableHeader.title}
           </TableCell>
         ))}
       </TableRow>
