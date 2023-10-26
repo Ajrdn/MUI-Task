@@ -5,8 +5,8 @@ interface TaskData {
   LOTNo: string
   variety: string
   standard: string
-  length: number
-  weight: number
+  length: string
+  weight: string
 }
 
 export default TaskData
