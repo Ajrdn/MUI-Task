@@ -1,11 +1,21 @@
 import React from 'react'
+import InformDataStore from 'store/InformModalDataStore'
 import TextField from '@mui/material/TextField'
 
 
 function TitleField() {
+  const title = InformDataStore(state => state.title)
+  const setTitle = InformDataStore(state => state.setTitle)
+
+  const titleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value)
+  }
+
   return (
     <TextField
       placeholder='제목 입력'
+      value={title}
+      onChange={titleChange}
       sx={{
         width: '100%',
         '& .MuiInputBase-root': {
