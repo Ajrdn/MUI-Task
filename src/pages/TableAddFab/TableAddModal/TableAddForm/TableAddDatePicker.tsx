@@ -24,6 +24,17 @@ function TableAddDatePicker() {
         sx={{
           width: '207px',
           height: '42px',
+          '& input': {
+            fontSize: '16px',
+            fontFamily: 'Pretendard',
+            fontWeight: 400,
+            color: '#13243A',
+          },
+          '& label': {
+            fontFamily: 'Pretendard',
+            fontWeight: 600,
+            color: '#616161',
+          },
         }}
       />
     </LocalizationProvider>
