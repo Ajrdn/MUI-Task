@@ -17,7 +17,12 @@ const TableDataHeader = () => {
             key={tableHeader.title}
             align='center'
             sx={{
-              width: tableHeader.size
+              width: tableHeader.size,
+              color: '#13243A',
+              fontSize: '13px',
+              fontFamily: 'Pretendard',
+              fontWeight: 600,
+              textAlign: 'center',
             }}
           >
             {tableHeader.title}
