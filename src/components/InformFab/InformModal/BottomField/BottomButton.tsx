@@ -32,6 +32,7 @@ function BottomButton() {
     <Button
       variant='outlined'
       onClick={sendInform}
+      disabled={title === '' || content === '' ? true : false}
       sx={{
         width: '100px',
         height: '40px',
