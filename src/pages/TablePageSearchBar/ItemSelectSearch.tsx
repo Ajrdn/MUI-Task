@@ -2,18 +2,18 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
-import SelectMenu from 'interface/SelectMenu'
+import SearchMenu from 'interface/SearchMenu'
 
 
 interface ItemSelectSearchProps {
   selectLabel: string
-  item: SelectMenu
-  setItem: (item: SelectMenu) => void
+  item: SearchMenu
+  setItem: (item: SearchMenu) => void
 }
 
 
 const ItemSelectSearch = (props: ItemSelectSearchProps) => {
-  const menuList: SelectMenu[] = [
+  const menuList: SearchMenu[] = [
     '전체',
     'LOT No.',
     '품종',
@@ -25,7 +25,15 @@ const ItemSelectSearch = (props: ItemSelectSearchProps) => {
   const itemChange = (event: SelectChangeEvent) => {
     const menu = event.target.value
 
-    if(menu === '전체' || menu === 'LOT No.' || menu === '품종' || menu === '규격' || menu === '슬라브 길이' || menu === '중량') props.setItem(menu)
+    if(
+      menu === '전체' ||
+      menu === 'LOT No.' ||
+      menu === '품종' ||
+      menu === '규격' ||
+      menu === '슬라브 길이' ||
+      menu === '중량'
+    )
+      props.setItem(menu)
   }
 
   return (
@@ -42,7 +50,11 @@ const ItemSelectSearch = (props: ItemSelectSearchProps) => {
           height: '38px',
         }}
       >
-        {menuList.map(menu => <MenuItem key={menu} value={menu}>{menu}</MenuItem>)}
+        {menuList.map((menu) => (
+          <MenuItem key={menu} value={menu}>
+            {menu}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   )
