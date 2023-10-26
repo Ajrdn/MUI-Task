@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 
 
-const TitleField = () => {
+function TitleField() {
   return (
     <TextField
       placeholder='제목 입력'
