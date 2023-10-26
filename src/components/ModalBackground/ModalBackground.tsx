@@ -3,6 +3,7 @@ import Modal from '@mui/material/Modal'
 
 
 const ModalBackground = styled(Modal)({
+  backdropFilter: 'blur(3px)',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
