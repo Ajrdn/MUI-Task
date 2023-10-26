@@ -1,6 +1,6 @@
 interface TableHeader {
   title: string
-  size: number
+  size: string
 }
 
 export default TableHeader
