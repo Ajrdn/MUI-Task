@@ -17,6 +17,9 @@ const AlarmFab = () => {
           right: '30px',
           bottom: '10px',
           boxShadow: '0px 5px 6px #00000061',
+          '&:hover': {
+            backgroundColor: 'red',
+          }
         }}
       >
         <Alarm
