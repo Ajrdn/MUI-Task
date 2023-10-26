@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 
 interface FeatureButtonProps {
@@ -31,11 +32,16 @@ const FeatureButton = (props: FeatureButtonProps) => {
         color: props.color,
         boxShadow: 'none',
         p: props.padding,
-        fontSize: '15px',
-        textAlign: 'left',
       }}
     >
-      {props.feature}
+      <Typography sx={{
+        fontSize: '14px',
+        textAlign: 'left',
+        fontFamily: 'Pretendard',
+        fontWeight: 500,
+      }}>
+        {props.feature}
+      </Typography>
       {props.label && <input hidden type='file' accept='.xlsx, .xls, .csv' onChange={props.inputPerformance} />}
     </Button>
   )
