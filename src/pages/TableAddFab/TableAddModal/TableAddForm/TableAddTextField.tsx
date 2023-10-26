@@ -17,6 +17,9 @@ function TableAddTextField(props: TableAddTextFieldProps) {
       sx={{
         width: '207px',
         height: '42px',
+        '& .MuiInput-underline:after': {
+          borderBottomColor: '#C8C8C8',
+        },
       }}
     />
   )
