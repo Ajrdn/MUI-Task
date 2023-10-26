@@ -18,11 +18,21 @@ function TableAddForm() {
   return (
     <TableAddFormControl>
       <TableAddDatePicker />
-      <TableAddTextField />
-      <TableAddTextField />
-      <TableAddTextField />
-      <TableAddTextField />
-      <TableAddTextField />
+      <TableAddTextField
+        label='LOT No.'
+      />
+      <TableAddTextField
+        label='품종'
+      />
+      <TableAddTextField
+        label='규격'
+      />
+      <TableAddTextField
+        label='수량'
+      />
+      <TableAddTextField
+        label='중량'
+      />
     </TableAddFormControl>
   )
 }
