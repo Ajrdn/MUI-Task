@@ -1,9 +1,19 @@
 import React from 'react'
+import { styled } from '@mui/material/styles'
 import TaskDataListStore from 'store/TaskDataListStore'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import TaskData from 'interface/TaskData'
+
+
+const TableDataCell = styled(TableCell)({
+  color: '#13243A',
+  fontSize: '13px',
+  fontFamily: 'Pretendard',
+  fontWeight: 400,
+  textAlign: 'center',
+})
 
 
 const TableDataBody = () => {
@@ -13,13 +23,13 @@ const TableDataBody = () => {
     <TableBody>
       {taskDataList.map((taskData, index) => (
         <TableRow key={taskData.LOTNo}>
-          <TableCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableCell>
-          <TableCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableCell>
-          <TableCell align='center'>{taskData.LOTNo}</TableCell>
-          <TableCell align='center'>{taskData.variety}</TableCell>
-          <TableCell align='center'>{taskData.standard}</TableCell>
-          <TableCell align='center'>{taskData.length}</TableCell>
-          <TableCell align='center'>{taskData.weight}</TableCell>
+          <TableDataCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
+          <TableDataCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
+          <TableDataCell align='center'>{taskData.LOTNo}</TableDataCell>
+          <TableDataCell align='center'>{taskData.variety}</TableDataCell>
+          <TableDataCell align='center'>{taskData.standard}</TableDataCell>
+          <TableDataCell align='center'>{taskData.length}</TableDataCell>
+          <TableDataCell align='center'>{taskData.weight}</TableDataCell>
         </TableRow>
       ))}
     </TableBody>
