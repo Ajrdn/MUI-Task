@@ -44,7 +44,6 @@ function TableAddFormButton() {
     setLength('')
     setWeight('')
     setOpen()
-    setOpen()
   }
 
   return (
