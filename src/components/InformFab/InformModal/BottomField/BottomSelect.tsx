@@ -37,7 +37,20 @@ function BottomSelect() {
         fontWeight: 400,
       }}
     >
-      {menuList.map(menu => <MenuItem key={menu} value={menu}>{menu}</MenuItem>)}
+      {menuList.map(menu => (
+        <MenuItem
+          key={menu}
+          value={menu}
+          sx={{
+            color: '#878787',
+            fontSize: '18px',
+            fontFamily: 'Pretendard',
+            fontWeight: 400,
+          }}
+        >
+          {menu}
+        </MenuItem>
+      ))}
     </Select>
   )
 }
