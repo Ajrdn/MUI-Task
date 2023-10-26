@@ -32,6 +32,10 @@ const FeatureButton = (props: FeatureButtonProps) => {
         color: props.color,
         boxShadow: 'none',
         p: props.padding,
+        '&:hover': {
+          backgroundColor: props.variant === 'outlined' ? 'white' : props.backgroundColor,
+          borderColor: props.variant === 'outlined' ? props.backgroundColor : 'none',
+        },
       }}
     >
       <Typography sx={{
