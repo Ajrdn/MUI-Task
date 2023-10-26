@@ -26,7 +26,6 @@ function BottomSelect() {
 
   return (
     <Select
-      placeholder='대상 선택'
       value={target}
       onChange={targetChange}
       sx={{
