@@ -38,7 +38,16 @@ const ItemSelectSearch = (props: ItemSelectSearchProps) => {
 
   return (
     <FormControl>
-      <InputLabel id='item-select-label'>{props.selectLabel}</InputLabel>
+      <InputLabel
+        id='item-select-label'
+        sx={{
+          fontFamily: 'Pretendard',
+          fontWeight: 600,
+          color: '#878787',
+        }}
+      >
+        {props.selectLabel}
+      </InputLabel>
       <Select
         labelId='item-select-label'
         id='item-select'
@@ -48,6 +57,10 @@ const ItemSelectSearch = (props: ItemSelectSearchProps) => {
         sx={{
           width: '155px',
           height: '38px',
+          color: '#13243A',
+          fontSize: '16px',
+          fontFamily: 'Pretendard',
+          fontWeight: 400,
         }}
       >
         {menuList.map(menu => <MenuItem key={menu} value={menu}>{menu}</MenuItem>)}
