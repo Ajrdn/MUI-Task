@@ -13,7 +13,7 @@ function TitleField() {
 
   return (
     <TextField
-      focused
+      autoFocus
       placeholder='제목 입력'
       value={title}
       onChange={titleChange}
