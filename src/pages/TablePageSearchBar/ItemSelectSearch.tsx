@@ -50,7 +50,7 @@ const ItemSelectSearch = (props: ItemSelectSearchProps) => {
           height: '38px',
         }}
       >
-        {menuList.map(menu => (<MenuItem key={menu} value={menu}>{menu}</MenuItem>))}
+        {menuList.map(menu => <MenuItem key={menu} value={menu}>{menu}</MenuItem>)}
       </Select>
     </FormControl>
   )
