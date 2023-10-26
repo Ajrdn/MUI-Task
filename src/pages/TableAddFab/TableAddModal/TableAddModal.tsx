@@ -1,4 +1,5 @@
 import React from 'react'
+import dayjs from 'dayjs'
 import { styled } from '@mui/material/styles'
 import TableAddModalDataStore from 'store/TableAddModalDataStore'
 import ModalBackground from 'components/ModalBackground/ModalBackground'
@@ -25,8 +26,20 @@ const TableAddModalTitle = styled(ModalTitle)({
 function TableAddModal() {
   const open = TableAddModalDataStore(state => state.open)
   const setOpen = TableAddModalDataStore(state => state.setOpen)
+  const setWorkDate = TableAddModalDataStore(state => state.setWorkDate)
+  const setLOTNo = TableAddModalDataStore(state => state.setLOTNo)
+  const setVariety = TableAddModalDataStore(state => state.setVariety)
+  const setStandard = TableAddModalDataStore(state => state.setStandard)
+  const setLength = TableAddModalDataStore(state => state.setLength)
+  const setWeight = TableAddModalDataStore(state => state.setWeight)
 
   const setClose = () => {
+    setWorkDate(dayjs())
+    setLOTNo('')
+    setVariety('')
+    setStandard('')
+    setLength('')
+    setWeight('')
     setOpen()
   }
 
