@@ -6,7 +6,7 @@ const ModalContentBox = styled(Box)({
   borderRadius: '25px',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  alignItems: 'center',
 })
 
 export default ModalContentBox
