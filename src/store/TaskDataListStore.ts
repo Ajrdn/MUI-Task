@@ -1,10 +1,11 @@
 import dayjs from 'dayjs'
 import { create } from 'zustand'
 import TaskData from 'interface/TaskData'
+import TableHeader from 'interface/TableHeader'
 
 
 interface TaskDataListState {
-  taskDataTitleList: string[]
+  taskDataTitleList: TableHeader[]
   taskDataList: TaskData[]
 
   setTaskDataListByObject: (taskData: TaskData) => void
@@ -15,13 +16,34 @@ interface TaskDataListState {
 
 const TaskDataListStore = create<TaskDataListState>(set => ({
   taskDataTitleList: [
-    'No.',
-    '작업일',
-    'LOT No.',
-    '품종',
-    '규격',
-    '슬라브 길이',
-    '중량',
+    {
+      title: 'No.',
+      size: '64px',
+    },
+    {
+      title: '작업일',
+      size: '128px',
+    },
+    {
+      title: 'LOT No.',
+      size: '300px',
+    },
+    {
+      title: '품종',
+      size: '300px',
+    },
+    {
+      title: '규격',
+      size: '300px',
+    },
+    {
+      title: '슬라브 길이',
+      size: '300px',
+    },
+    {
+      title: '중량',
+      size: '128px',
+    },
   ],
   taskDataList: [
     {
