@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { create } from 'zustand'
 import TaskData from 'interface/TaskData'
 
@@ -24,7 +25,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
   ],
   taskDataList: [
     {
-      workDate: '2023-10-24',
+      workDate: dayjs('2023-10-24'),
       LOTNo: '231017-1k-01',
       variety: 'C7060P1',
       standard: '180x420',
@@ -32,7 +33,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 1735,
     },
     {
-      workDate: '2023-10-24',
+      workDate: dayjs('2023-10-24'),
       LOTNo: '231017-1k-02',
       variety: 'C7060P1',
       standard: '180x420',
@@ -40,7 +41,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 1735,
     },
     {
-      workDate: '2023-10-24',
+      workDate: dayjs('2023-10-24'),
       LOTNo: '231017-1k-03',
       variety: 'C7060P2',
       standard: '180x420',
@@ -48,7 +49,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 1735,
     },
     {
-      workDate: '2023-10-25',
+      workDate: dayjs('2023-10-25'),
       LOTNo: '231017-1k-04',
       variety: 'C7060P2',
       standard: '180x420',
@@ -56,7 +57,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 1735,
     },
     {
-      workDate: '2023-10-25',
+      workDate: dayjs('2023-10-25'),
       LOTNo: '231017-1k-05',
       variety: 'C7060P3',
       standard: '280x320',
@@ -64,7 +65,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 1735,
     },
     {
-      workDate: '2023-10-25',
+      workDate: dayjs('2023-10-25'),
       LOTNo: '231017-1k-06',
       variety: 'C7060P3',
       standard: '280x320',
@@ -72,7 +73,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 435,
     },
     {
-      workDate: '2023-10-26',
+      workDate: dayjs('2023-10-26'),
       LOTNo: '231017-1k-07',
       variety: 'C7060P4',
       standard: '280x320',
@@ -80,7 +81,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 435,
     },
     {
-      workDate: '2023-10-26',
+      workDate: dayjs('2023-10-26'),
       LOTNo: '231017-1k-08',
       variety: 'C7060P4',
       standard: '280x320',
@@ -88,7 +89,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 435,
     },
     {
-      workDate: '2023-10-26',
+      workDate: dayjs('2023-10-26'),
       LOTNo: '231017-1k-09',
       variety: 'C7060P5',
       standard: '380x360',
@@ -96,7 +97,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: 435,
     },
     {
-      workDate: '2023-10-27',
+      workDate: dayjs('2023-10-27'),
       LOTNo: '231017-1k-10',
       variety: 'C7060P5',
       standard: '380x360',
