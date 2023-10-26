@@ -1,5 +1,7 @@
+import { Dayjs } from 'dayjs'
+
 interface TaskData {
-  workDate: string
+  workDate: Dayjs
   LOTNo: string
   variety: string
   standard: string
