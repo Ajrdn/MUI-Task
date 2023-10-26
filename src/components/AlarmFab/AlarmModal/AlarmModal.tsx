@@ -38,6 +38,8 @@ const MessageBox = styled(Box)({
 const AlarmModal = () => {
   const open = AlarmModalDataStore(state => state.open)
   const setOpen = AlarmModalDataStore(state => state.setOpen)
+  const title = AlarmModalDataStore(state => state.title)
+  const content = AlarmModalDataStore(state => state.content)
 
   return (
     <AlarmModalBackground
@@ -51,10 +53,10 @@ const AlarmModal = () => {
             height: '42px',
           }} />
           <AlarmModalTitle>
-            작업 중단
+            {title}
           </AlarmModalTitle>
           <AlarmModalContent>
-            현재 작업을 중단해주시기 바랍니다.
+            {content}
           </AlarmModalContent>
         </MessageBox>
         <ModalCloseButton
