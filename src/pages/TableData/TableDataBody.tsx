@@ -14,7 +14,7 @@ const TableDataBody = () => {
       {taskDataList.map((taskData, index) => (
         <TableRow key={taskData.LOTNo}>
           <TableCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableCell>
-          <TableCell align='center'>{taskData.workDate}</TableCell>
+          <TableCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableCell>
           <TableCell align='center'>{taskData.LOTNo}</TableCell>
           <TableCell align='center'>{taskData.variety}</TableCell>
           <TableCell align='center'>{taskData.standard}</TableCell>
