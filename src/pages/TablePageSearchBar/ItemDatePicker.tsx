@@ -23,6 +23,17 @@ const ItemDatePicker = () => {
         sx={{
           width: '156px',
           height: '38px',
+          '& input': {
+            fontSize: '16px',
+            fontFamily: 'Pretendard',
+            fontWeight: 400,
+            color: '#13243A',
+          },
+          '& label': {
+            fontFamily: 'Pretendard',
+            fontWeight: 600,
+            color: '#878787',
+          },
         }}
       />
     </LocalizationProvider>
