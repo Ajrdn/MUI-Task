@@ -21,7 +21,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       size: '64px',
     },
     {
-      title: '작업일',
+      title: '작업일,
       size: '128px',
     },
     {
