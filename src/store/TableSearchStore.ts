@@ -1,22 +1,22 @@
 import { create } from 'zustand'
 import dayjs, { Dayjs } from 'dayjs'
-import { MenuTitle } from 'interface/SearchMenu'
+import SearchMenu from 'interface/SearchMenu'
 
 
 interface TableSearchState {
   searchDate: Dayjs
-  searchItem: MenuTitle
+  searchItem: SearchMenu
   searchWord: string
-  searchDetailItem: MenuTitle
+  searchDetailItem: SearchMenu
   searchDetailWord: string
 
   setSearchDate: (date: Dayjs) => void
 
-  setSearchItem: (item: MenuTitle) => void
+  setSearchItem: (item: SearchMenu) => void
 
   setSearchWord: (word: string) => void
 
-  setSearchDetailItem: (detailItem: MenuTitle) => void
+  setSearchDetailItem: (detailItem: SearchMenu) => void
 
   setSearchDetailWord: (detailWord: string) => void
 }
