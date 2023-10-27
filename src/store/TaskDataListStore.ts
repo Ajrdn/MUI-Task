@@ -7,13 +7,13 @@ import TableHeader from 'interface/TableHeader'
 interface TaskDataListState {
   taskDataTitleList: TableHeader[]
   taskDataList: TaskData[]
-  taskDataListByDate: TaskData[]
+  taskDataShowList: TaskData[]
 
   setTaskDataListByObject: (taskData: TaskData) => void
 
   setTaskDataListByExcel: (taskDataExcel: TaskData[]) => void
 
-  setTaskDataListByDate: (date: Dayjs) => void
+  setTaskDataShowListByDate: (date: Dayjs) => void
 }
 
 
@@ -130,7 +130,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: '435',
     },
   ],
-  taskDataListByDate: [
+  taskDataShowList: [
     {
       workDate: dayjs('2023-10-24'),
       LOTNo: '231017-1k-01',
@@ -161,7 +161,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
 
   setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataList: [...state.taskDataList, ...taskDataExcel]})),
 
-  setTaskDataListByDate: date => set(state => ({taskDataListByDate: state.taskDataList.filter(taskData => taskData.workDate.isSame(date))})),
+  setTaskDataShowListByDate: date => set(state => ({taskDataListByDate: state.taskDataList.filter(taskData => taskData.workDate.isSame(date))})),
 }))
 
 export default TaskDataListStore
