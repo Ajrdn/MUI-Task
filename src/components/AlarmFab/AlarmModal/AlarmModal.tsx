@@ -19,13 +19,13 @@ const AlarmModalContentBox = styled(ModalContentBox)({
   padding: '40px 60px',
   borderRadius: '19px',
   backgroundColor: '#FF5F57',
-  minWidth: '500px',
+  width: '500px',
   minHeight: '221px',
 })
 
 
 const MessageBox = styled(Box)({
-  minWidth: '380px',
+  width: '380px',
   minHeight: '141px',
   display: 'flex',
   flexDirection: 'column',
