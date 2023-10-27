@@ -92,7 +92,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       variety: 'C7060P3',
       standard: '280x320',
       length: '1235',
-      weight: '435,'
+      weight: '435',
     },
     {
       workDate: dayjs('2023-10-26'),
@@ -100,7 +100,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       variety: 'C7060P4',
       standard: '280x320',
       length: '1235',
-      weight: '435,'
+      weight: '435',
     },
     {
       workDate: dayjs('2023-10-26'),
@@ -108,7 +108,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       variety: 'C7060P4',
       standard: '280x320',
       length: '1235',
-      weight: '435,'
+      weight: '435',
     },
     {
       workDate: dayjs('2023-10-26'),
@@ -116,7 +116,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       variety: 'C7060P5',
       standard: '380x360',
       length: '1235',
-      weight: '435,'
+      weight: '435',
     },
     {
       workDate: dayjs('2023-10-27'),
@@ -124,7 +124,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       variety: 'C7060P5',
       standard: '380x360',
       length: '1235',
-      weight: '435,'
+      weight: '435',
     },
   ],
 
