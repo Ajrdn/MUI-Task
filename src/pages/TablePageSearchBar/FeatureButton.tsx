@@ -12,6 +12,7 @@ interface FeatureButtonProps {
   width: string
   padding: string
   label: boolean
+  disabled?: boolean
   buttonPerformance?: () => void
   inputPerformance?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -22,6 +23,7 @@ const FeatureButton = (props: FeatureButtonProps) => {
     <Button
       component={props.label ? 'label' : 'button'}
       variant={props.variant}
+      disabled={props.disabled}
       startIcon={props.icon}
       onClick={props.buttonPerformance}
       sx={{
