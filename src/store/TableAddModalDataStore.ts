@@ -5,7 +5,7 @@ import { create } from 'zustand'
 interface TableAddModalDataState {
   open: boolean
   workDate: Dayjs
-  LOTNo: string
+  lotNo: string
   variety: string
   standard: string
   length: string
@@ -15,7 +15,7 @@ interface TableAddModalDataState {
 
   setWorkDate: (newWorkDate: Dayjs) => void
 
-  setLOTNo: (newLOTNo: string) => void
+  setLotNo: (newLotNo: string) => void
   
   setVariety: (newVariety: string) => void
   
@@ -30,7 +30,7 @@ interface TableAddModalDataState {
 const TableAddModalDataStore = create<TableAddModalDataState>(set => ({
   open: false,
   workDate: dayjs(),
-  LOTNo: '',
+  lotNo: '',
   variety: '',
   standard: '',
   length: '',
@@ -40,7 +40,7 @@ const TableAddModalDataStore = create<TableAddModalDataState>(set => ({
 
   setWorkDate: newWorkDate => set(state => ({workDate: newWorkDate})),
 
-  setLOTNo: newLOTNo => set(state => ({LOTNo: newLOTNo})),
+  setLotNo: newLotNo => set(state => ({lotNo: newLotNo})),
 
   setVariety: newVariety => set(state => ({variety: newVariety})),
 

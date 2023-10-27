@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import React from 'react'
 import { utils, read } from 'xlsx'
 import { styled } from '@mui/material/styles'
@@ -11,10 +12,12 @@ import ItemTextSearch from './ItemTextSearch'
 import FeatureButton from './FeatureButton'
 import TaskData from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
+import SearchMenu from 'interface/SearchMenu'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { TaskDataListDownloadXlsx } from 'utils/utils'
-import dayjs from 'dayjs'
+import DetailItemSelectSearch from './DetailItemSelectSearch'
+import DetailItemTextSearch from './DetailItemTextSearch'
 
 
 const TablePageSearchBarBackground = styled(Box)({
@@ -35,17 +38,9 @@ interface ExcelData {
 }
 
 
-const TablePageSearchBar = () => {
-  const item = TableSearchStore(state => state.searchItem)
-  const setItem = TableSearchStore(state => state.setSearchItem)
-  const word = TableSearchStore(state => state.searchWord)
-  const setWord = TableSearchStore(state => state.setSearchWord)
-
-  const detailItem = TableSearchStore(state => state.searchDetailItem)
-  const setDetailItem = TableSearchStore(state => state.setSearchDetailItem)
-  const detailWord = TableSearchStore(state => state.searchDetailWord)
-  const setDetailWord = TableSearchStore(state => state.setSearchDetailWord)
-
+function TablePageSearchBar() {
+  const text = TableSearchStore(state => state.searchWord)
+  
   const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
   const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
 
@@ -73,7 +68,7 @@ const TablePageSearchBar = () => {
       const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
       const taskDataList: TaskData[] = data.map(taskData => ({
         workDate: dayjs(taskData['작업일']),
-        LOTNo: taskData['LOT No.'],
+        lotNo: taskData['LOT No.'],
         variety: taskData['품종'],
         standard: taskData['규격'],
         length: taskData['슬라브 길이'],
@@ -83,21 +78,26 @@ const TablePageSearchBar = () => {
     }
   }
 
+  const searchData = () => {
+
+  }
+
+  const searchMenuTitleTranslate = (title: SearchMenu): string => {
+    if(title === 'LOT No.') return 'LOTNo'
+    else if(title === '품종') return 'variety'
+    else if(title === '규격') return 'standard'
+    else if(title === '슬라브 길이') return 'length'
+    else if(title === '중량') return 'weight'
+    return 'all'
+  }
+
   return (
     <TablePageSearchBarBackground>
       <ItemDatePicker />
-      <ItemSelectSearch selectLabel='항목' item={item} setItem={setItem} />
-      <ItemTextSearch textLabel='검색' text={word} setText={setWord} />
-      <ItemSelectSearch
-        selectLabel='상세 검색 항목'
-        item={detailItem}
-        setItem={setDetailItem}
-      />
-      <ItemTextSearch
-        textLabel='상세 검색'
-        text={detailWord}
-        setText={setDetailWord}
-      />
+      <ItemSelectSearch />
+      <ItemTextSearch />
+      <DetailItemSelectSearch />
+      <DetailItemTextSearch />
       <FeatureButton
         feature='검색'
         variant='contained'
@@ -107,7 +107,8 @@ const TablePageSearchBar = () => {
         width='82px'
         padding='0 15px'
         label={false}
-        buttonPerformance={() => {}}
+        disabled={text === ''}
+        buttonPerformance={searchData}
       />
       <FeatureButton
         feature='액셀 다운로드'

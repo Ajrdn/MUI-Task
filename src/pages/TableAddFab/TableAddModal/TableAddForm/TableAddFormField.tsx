@@ -16,8 +16,8 @@ const TableAddFormFieldBox = styled(FormControl)({
 
 
 function TableAddFormField() {
-  const LOTNo = TableAddModalDataStore(state => state.LOTNo)
-  const setLOTNo = TableAddModalDataStore(state => state.setLOTNo)
+  const lotNo = TableAddModalDataStore(state => state.lotNo)
+  const setLotNo = TableAddModalDataStore(state => state.setLotNo)
   
   const variety = TableAddModalDataStore(state => state.variety)
   const setVariety = TableAddModalDataStore(state => state.setVariety)
@@ -31,8 +31,8 @@ function TableAddFormField() {
   const weight = TableAddModalDataStore(state => state.weight)
   const setWeight = TableAddModalDataStore(state => state.setWeight)
 
-  const LOTNoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLOTNo(event.target.value)
+  const lotNoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLotNo(event.target.value)
   }
 
   const varietyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +56,8 @@ function TableAddFormField() {
       <TableAddDatePicker />
       <TableAddTextField
         label='LOT No.'
-        value={LOTNo}
-        setValue={LOTNoChange}
+        value={lotNo}
+        setValue={lotNoChange}
       />
       <TableAddTextField
         label='품종'

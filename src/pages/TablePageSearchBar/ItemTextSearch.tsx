@@ -1,27 +1,24 @@
+import TableSearchStore from 'store/TableSearchStore'
 import TextField from '@mui/material/TextField'
 
 
-interface ItemTextSearchProps {
-  textLabel: string
-  text: string
-  setText: (text: string) => void
-  disabled?: boolean
-}
-
-
-const ItemTextSearch = (props: ItemTextSearchProps) => {
+function ItemTextSearch() {
+  const item = TableSearchStore(state => state.searchItem)
+  const text = TableSearchStore(state => state.searchWord)
+  const setText = TableSearchStore(state => state.setSearchWord)
+  
   const textChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setText(event.target.value)
+    setText(event.target.value)
   }
 
   return (
     <TextField
-      disabled={props.disabled}
-      label={props.textLabel}
+      disabled={item === '전체'}
+      label='검색'
       variant='outlined'
       placeholder='검색어 입력'
       InputLabelProps={{ shrink: true }}
-      value={props.text}
+      value={text}
       onChange={textChange}
       sx={{
         width: '330px',

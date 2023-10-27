@@ -6,7 +6,7 @@ export const TaskDataListDownloadXlsx = (taskDataTitleList: string[], taskDataLi
   const data = taskDataList.map((taskData, index) => ({
     [taskDataTitleList[0]]: (index + 1).toString().padStart(2, '0'),
     [taskDataTitleList[1]]: taskData.workDate.format('YYYY-MM-DD'),
-    [taskDataTitleList[2]]: taskData.LOTNo,
+    [taskDataTitleList[2]]: taskData.lotNo,
     [taskDataTitleList[3]]: taskData.variety,
     [taskDataTitleList[4]]: taskData.standard,
     [taskDataTitleList[5]]: taskData.length,

@@ -51,7 +51,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
   taskDataList: [
     {
       workDate: dayjs('2023-10-24'),
-      LOTNo: '231017-1k-01',
+      lotNo: '231017-1k-01',
       variety: 'C7060P1',
       standard: '180x420',
       length: '2805',
@@ -59,7 +59,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-24'),
-      LOTNo: '231017-1k-02',
+      lotNo: '231017-1k-02',
       variety: 'C7060P1',
       standard: '180x420',
       length: '2805',
@@ -67,7 +67,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-24'),
-      LOTNo: '231017-1k-03',
+      lotNo: '231017-1k-03',
       variety: 'C7060P2',
       standard: '180x420',
       length: '2805',
@@ -75,7 +75,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-25'),
-      LOTNo: '231017-1k-04',
+      lotNo: '231017-1k-04',
       variety: 'C7060P2',
       standard: '180x420',
       length: '2805',
@@ -83,7 +83,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-25'),
-      LOTNo: '231017-1k-05',
+      lotNo: '231017-1k-05',
       variety: 'C7060P3',
       standard: '280x320',
       length: '2805',
@@ -91,7 +91,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-25'),
-      LOTNo: '231017-1k-06',
+      lotNo: '231017-1k-06',
       variety: 'C7060P3',
       standard: '280x320',
       length: '1235',
@@ -99,7 +99,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-26'),
-      LOTNo: '231017-1k-07',
+      lotNo: '231017-1k-07',
       variety: 'C7060P4',
       standard: '280x320',
       length: '1235',
@@ -107,7 +107,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-26'),
-      LOTNo: '231017-1k-08',
+      lotNo: '231017-1k-08',
       variety: 'C7060P4',
       standard: '280x320',
       length: '1235',
@@ -115,7 +115,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-26'),
-      LOTNo: '231017-1k-09',
+      lotNo: '231017-1k-09',
       variety: 'C7060P5',
       standard: '380x360',
       length: '1235',
@@ -123,7 +123,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-27'),
-      LOTNo: '231017-1k-10',
+      lotNo: '231017-1k-10',
       variety: 'C7060P5',
       standard: '380x360',
       length: '1235',
@@ -133,7 +133,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
   taskDataShowList: [
     {
       workDate: dayjs('2023-10-24'),
-      LOTNo: '231017-1k-01',
+      lotNo: '231017-1k-01',
       variety: 'C7060P1',
       standard: '180x420',
       length: '2805',
@@ -141,7 +141,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-24'),
-      LOTNo: '231017-1k-02',
+      lotNo: '231017-1k-02',
       variety: 'C7060P1',
       standard: '180x420',
       length: '2805',
@@ -149,7 +149,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
     {
       workDate: dayjs('2023-10-24'),
-      LOTNo: '231017-1k-03',
+      lotNo: '231017-1k-03',
       variety: 'C7060P2',
       standard: '180x420',
       length: '2805',

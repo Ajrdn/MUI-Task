@@ -27,7 +27,7 @@ function TableAddModal() {
   const open = TableAddModalDataStore(state => state.open)
   const setOpen = TableAddModalDataStore(state => state.setOpen)
   const setWorkDate = TableAddModalDataStore(state => state.setWorkDate)
-  const setLOTNo = TableAddModalDataStore(state => state.setLOTNo)
+  const setLotNo = TableAddModalDataStore(state => state.setLotNo)
   const setVariety = TableAddModalDataStore(state => state.setVariety)
   const setStandard = TableAddModalDataStore(state => state.setStandard)
   const setLength = TableAddModalDataStore(state => state.setLength)
@@ -35,7 +35,7 @@ function TableAddModal() {
 
   const setClose = () => {
     setWorkDate(dayjs())
-    setLOTNo('')
+    setLotNo('')
     setVariety('')
     setStandard('')
     setLength('')

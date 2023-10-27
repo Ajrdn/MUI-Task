@@ -29,10 +29,10 @@ const TableDataBody = () => {
       {taskDataShowList.map((taskData, index) => {
         if(index === taskDataShowList.length - 1) {
           return (
-            <TableRow key={`${taskData.LOTNo}${index}`}>
+            <TableRow key={`${taskData.lotNo}${index}`}>
               <TableDataLastCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataLastCell>
               <TableDataLastCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataLastCell>
-              <TableDataLastCell align='center'>{taskData.LOTNo}</TableDataLastCell>
+              <TableDataLastCell align='center'>{taskData.lotNo}</TableDataLastCell>
               <TableDataLastCell align='center'>{taskData.variety}</TableDataLastCell>
               <TableDataLastCell align='center'>{taskData.standard}</TableDataLastCell>
               <TableDataLastCell align='center'>{taskData.length}</TableDataLastCell>
@@ -41,10 +41,10 @@ const TableDataBody = () => {
           )
         }
         return (
-          <TableRow key={`${taskData.LOTNo}${index}`}>
+          <TableRow key={`${taskData.lotNo}${index}`}>
             <TableDataCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
             <TableDataCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
-            <TableDataCell align='center'>{taskData.LOTNo}</TableDataCell>
+            <TableDataCell align='center'>{taskData.lotNo}</TableDataCell>
             <TableDataCell align='center'>{taskData.variety}</TableDataCell>
             <TableDataCell align='center'>{taskData.standard}</TableDataCell>
             <TableDataCell align='center'>{taskData.length}</TableDataCell>

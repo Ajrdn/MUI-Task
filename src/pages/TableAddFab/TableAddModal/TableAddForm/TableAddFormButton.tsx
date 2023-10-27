@@ -13,8 +13,8 @@ function TableAddFormButton() {
   const workDate = TableAddModalDataStore(state => state.workDate)
   const setWorkDate = TableAddModalDataStore(state => state.setWorkDate)
 
-  const LOTNo = TableAddModalDataStore(state => state.LOTNo)
-  const setLOTNo = TableAddModalDataStore(state => state.setLOTNo)
+  const lotNo = TableAddModalDataStore(state => state.lotNo)
+  const setLotNo = TableAddModalDataStore(state => state.setLotNo)
   
   const variety = TableAddModalDataStore(state => state.variety)
   const setVariety = TableAddModalDataStore(state => state.setVariety)
@@ -31,14 +31,14 @@ function TableAddFormButton() {
   const tableAdd = () => {
     addTaskDataList({
       workDate,
-      LOTNo,
+      lotNo,
       variety,
       standard,
       length,
       weight,
     })
     setWorkDate(dayjs())
-    setLOTNo('')
+    setLotNo('')
     setVariety('')
     setStandard('')
     setLength('')
@@ -48,7 +48,7 @@ function TableAddFormButton() {
 
   return (
     <Button
-      disabled={LOTNo === '' || variety === '' || standard === '' || length === '' || variety === '' ? true : false}
+      disabled={lotNo === '' || variety === '' || standard === '' || length === '' || variety === '' ? true : false}
       variant='outlined'
       onClick={tableAdd}
       sx={{

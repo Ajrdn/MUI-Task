@@ -2,7 +2,7 @@ import { Dayjs } from 'dayjs'
 
 interface TaskData {
   workDate: Dayjs
-  LOTNo: string
+  lotNo: string
   variety: string
   standard: string
   length: string
