@@ -1,16 +1,20 @@
 import dayjs, { Dayjs } from 'dayjs'
+import TableSearchStore from 'store/TableSearchStore'
+import TaskDataListStore from 'store/TaskDataListStore'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import TableSearchStore from 'store/TableSearchStore'
 
 
 const ItemDatePicker = () => {
   const date = TableSearchStore(state => state.searchDate)
   const setDate = TableSearchStore(state => state.setSearchDate)
 
+  const setTaskDataListByDate = TaskDataListStore(state => state.setTaskDataListByDate)
+
   const dateChange = (newDate: Dayjs | null) => {
     setDate(newDate ?? dayjs())
+    setTaskDataListByDate(newDate ?? dayjs())
   }
 
   return (
