@@ -21,17 +21,33 @@ const TableDataBody = () => {
 
   return (
     <TableBody>
-      {taskDataList.map((taskData, index) => (
-        <TableRow key={taskData.LOTNo}>
-          <TableDataCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
-          <TableDataCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
-          <TableDataCell align='center'>{taskData.LOTNo}</TableDataCell>
-          <TableDataCell align='center'>{taskData.variety}</TableDataCell>
-          <TableDataCell align='center'>{taskData.standard}</TableDataCell>
-          <TableDataCell align='center'>{taskData.length}</TableDataCell>
-          <TableDataCell align='center'>{taskData.weight}</TableDataCell>
-        </TableRow>
-      ))}
+      {taskDataList.map((taskData, index) => {
+        if(index === taskDataList.length - 1) {
+          console.log(taskData)
+          return (
+            <TableRow key={taskData.LOTNo}>
+              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
+              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
+              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.LOTNo}</TableDataCell>
+              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.variety}</TableDataCell>
+              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.standard}</TableDataCell>
+              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.length}</TableDataCell>
+              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.weight}</TableDataCell>
+            </TableRow>
+          )
+        }
+        return (
+          <TableRow key={taskData.LOTNo}>
+            <TableDataCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
+            <TableDataCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
+            <TableDataCell align='center'>{taskData.LOTNo}</TableDataCell>
+            <TableDataCell align='center'>{taskData.variety}</TableDataCell>
+            <TableDataCell align='center'>{taskData.standard}</TableDataCell>
+            <TableDataCell align='center'>{taskData.length}</TableDataCell>
+            <TableDataCell align='center'>{taskData.weight}</TableDataCell>
+          </TableRow>
+        )
+      })}
     </TableBody>
   )
 }
