@@ -36,6 +36,12 @@ function TableAddDatePicker() {
             fontWeight: 600,
             color: '#616161',
           },
+          '& .MuiIconButton-root': {
+            color: '#14325A',
+          },
+          '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline, & .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #14325A',
+          },
         }}
       />
     </LocalizationProvider>
