@@ -22,12 +22,12 @@ const TableDataLastCell = styled(TableDataCell)({
 
 
 const TableDataBody = () => {
-  const taskDataListByDate: TaskData[] = TaskDataListStore(state => state.taskDataListByDate)
+  const taskDataShowList: TaskData[] = TaskDataListStore(state => state.taskDataShowList)
 
   return (
     <TableBody>
-      {taskDataListByDate.map((taskData, index) => {
-        if(index === taskDataListByDate.length - 1) {
+      {taskDataShowList.map((taskData, index) => {
+        if(index === taskDataShowList.length - 1) {
           return (
             <TableRow key={`${taskData.LOTNo}${index}`}>
               <TableDataLastCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataLastCell>
