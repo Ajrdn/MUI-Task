@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { create } from 'zustand'
 import TaskData from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
+import { MenuValue } from 'interface/SearchMenu'
 
 
 interface TaskDataListState {
@@ -14,6 +15,8 @@ interface TaskDataListState {
   setTaskDataListByExcel: (taskDataExcel: TaskData[]) => void
 
   setTaskDataShowListByDate: (date: Dayjs) => void
+
+  setTaskDataShowListBySearchData: (select: MenuValue, word: string, detailSelect?: MenuValue, detailWord?: string) => void
 }
 
 
@@ -162,6 +165,12 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
   setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataList: [...state.taskDataList, ...taskDataExcel]})),
 
   setTaskDataShowListByDate: date => set(state => ({taskDataShowList: state.taskDataList.filter(taskData => taskData.workDate.isSame(date))})),
+
+  setTaskDataShowListBySearchData: (select, word, detailSelect?, detailWord?) => {
+    set(state => ({taskDataShowList: state.taskDataList.filter(taskData => taskData[select].includes(word))}))
+    if(typeof detailSelect !== 'undefined')
+      set(state => ({taskDataShowList: state.taskDataList.filter(taskData => taskData[detailSelect].includes(detailWord!))}))
+  }
 }))
 
 export default TaskDataListStore
