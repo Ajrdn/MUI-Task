@@ -7,6 +7,7 @@ const AlarmModalContent = styled(Typography)({
   textAlign: 'center',
   fontFamily: 'Pretendard',
   fontWeight: 400,
+  whiteSpace: 'normal',
 })
 
 export default AlarmModalContent
