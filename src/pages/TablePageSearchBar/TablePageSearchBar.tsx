@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React from 'react'
 import { utils, read } from 'xlsx'
 import { styled } from '@mui/material/styles'
 import Search from '@mui/icons-material/Search'
@@ -14,6 +14,7 @@ import TableHeader from 'interface/TableHeader'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { TaskDataListDownloadXlsx } from 'utils/utils'
+import dayjs from 'dayjs'
 
 
 const TablePageSearchBarBackground = styled(Box)({
@@ -23,9 +24,18 @@ const TablePageSearchBarBackground = styled(Box)({
 })
 
 
-const TablePageSearchBar = () => {
-  const [excelFile, setExcelFile] = useState()
+interface ExcelData {
+  'LOT No.': string
+  'No.': string
+  '규격': string
+  '슬라브 길이': string
+  '작업일': string
+  '중량': string
+  '품종': string
+}
 
+
+const TablePageSearchBar = () => {
   const item = TableSearchStore(state => state.searchItem)
   const setItem = TableSearchStore(state => state.setSearchItem)
   const word = TableSearchStore(state => state.searchWord)
@@ -60,16 +70,17 @@ const TablePageSearchBar = () => {
       })
       const sheetName = fileInformation.SheetNames[0]
       const rawData = fileInformation.Sheets[sheetName]
-      const data = utils.sheet_to_json(rawData) as any[]
-      console.log(data)
-      setExcelFile(data[0])
+      const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
+      const taskDataList: TaskData[] = data.map(taskData => ({
+        workDate: dayjs(taskData['작업일']),
+        LOTNo: taskData['LOT No.'],
+        variety: taskData['품종'],
+        standard: taskData['규격'],
+        length: taskData['슬라브 길이'],
+        weight: taskData['중량'],
+      }))
+      setTaskDataListByExcel(taskDataList)
     }
-  }
-
-  const excelDataUpdate = () => {
-    setTimeout(() => {
-      console.log(excelFile)
-    }, 100)
   }
 
   return (
