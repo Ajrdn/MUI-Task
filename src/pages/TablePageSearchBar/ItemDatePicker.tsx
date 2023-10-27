@@ -10,11 +10,11 @@ const ItemDatePicker = () => {
   const date = TableSearchStore(state => state.searchDate)
   const setDate = TableSearchStore(state => state.setSearchDate)
 
-  const setTaskDataListByDate = TaskDataListStore(state => state.setTaskDataListByDate)
+  const setTaskDataShowListByDate = TaskDataListStore(state => state.setTaskDataShowListByDate)
 
   const dateChange = (newDate: Dayjs | null) => {
     setDate(newDate ?? dayjs())
-    setTaskDataListByDate(newDate ?? dayjs())
+    setTaskDataShowListByDate(newDate ?? dayjs())
   }
 
   return (
