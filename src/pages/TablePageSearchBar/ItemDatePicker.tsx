@@ -4,6 +4,7 @@ import TaskDataListStore from 'store/TaskDataListStore'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import 'dayjs/locale/ko'
 
 
 const ItemDatePicker = () => {
@@ -18,7 +19,7 @@ const ItemDatePicker = () => {
   }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='ko'>
       <DatePicker
         value={date}
         onChange={dateChange}
