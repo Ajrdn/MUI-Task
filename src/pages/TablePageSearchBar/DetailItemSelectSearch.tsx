@@ -33,6 +33,7 @@ function DetailItemSelectSearch() {
         상세 검색 항목
       </InputLabel>
       <Select
+        disabled={item === '전체'}
         labelId='item-select-label'
         id='item-select'
         value={detailItem}
