@@ -4,6 +4,7 @@ import SearchMenu from 'interface/SearchMenu'
 
 
 interface TableSearchState {
+  menuList: SearchMenu[]
   searchDate: Dayjs
   searchItem: SearchMenu
   searchWord: string
@@ -23,6 +24,14 @@ interface TableSearchState {
 
 
 const TableSearchStore = create<TableSearchState>((set) => ({
+  menuList: [
+    '전체',
+    'LOT No.',
+    '품종',
+    '규격',
+    '슬라브 길이',
+    '중량',
+  ],
   searchDate: dayjs('2023-10-24'),
   searchItem: '전체',
   searchWord: '',
