@@ -161,7 +161,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
 
   setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataList: [...state.taskDataList, ...taskDataExcel]})),
 
-  setTaskDataShowListByDate: date => set(state => ({taskDataListByDate: state.taskDataList.filter(taskData => taskData.workDate.isSame(date))})),
+  setTaskDataShowListByDate: date => set(state => ({taskDataShowList: state.taskDataList.filter(taskData => taskData.workDate.isSame(date))})),
 }))
 
 export default TaskDataListStore
