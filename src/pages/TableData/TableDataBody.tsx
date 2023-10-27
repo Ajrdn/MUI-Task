@@ -16,6 +16,11 @@ const TableDataCell = styled(TableCell)({
 })
 
 
+const TableDataLastCell = styled(TableDataCell)({
+  borderBottom: 'none',
+})
+
+
 const TableDataBody = () => {
   const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
 
@@ -23,16 +28,15 @@ const TableDataBody = () => {
     <TableBody>
       {taskDataList.map((taskData, index) => {
         if(index === taskDataList.length - 1) {
-          console.log(taskData)
           return (
             <TableRow key={taskData.LOTNo}>
-              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
-              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
-              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.LOTNo}</TableDataCell>
-              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.variety}</TableDataCell>
-              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.standard}</TableDataCell>
-              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.length}</TableDataCell>
-              <TableDataCell align='center' sx={{ borderBottom: 'none' }}>{taskData.weight}</TableDataCell>
+              <TableDataLastCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataLastCell>
+              <TableDataLastCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataLastCell>
+              <TableDataLastCell align='center'>{taskData.LOTNo}</TableDataLastCell>
+              <TableDataLastCell align='center'>{taskData.variety}</TableDataLastCell>
+              <TableDataLastCell align='center'>{taskData.standard}</TableDataLastCell>
+              <TableDataLastCell align='center'>{taskData.length}</TableDataLastCell>
+              <TableDataLastCell align='center'>{taskData.weight}</TableDataLastCell>
             </TableRow>
           )
         }
