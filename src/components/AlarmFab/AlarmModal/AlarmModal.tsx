@@ -16,17 +16,17 @@ const AlarmModalBackground = styled(ModalBackground)({
 
 
 const AlarmModalContentBox = styled(ModalContentBox)({
-  justifyContent: 'center',
+  padding: '40px 60px',
   borderRadius: '19px',
   backgroundColor: '#FF5F57',
-  width: '500px',
-  height: '221px',
+  minWidth: '500px',
+  minHeight: '221px',
 })
 
 
 const MessageBox = styled(Box)({
-  width: '380px',
-  height: '141px',
+  minWidth: '380px',
+  minHeight: '141px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
