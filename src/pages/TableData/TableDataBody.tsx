@@ -22,14 +22,14 @@ const TableDataLastCell = styled(TableDataCell)({
 
 
 const TableDataBody = () => {
-  const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
+  const taskDataListByDate: TaskData[] = TaskDataListStore(state => state.taskDataListByDate)
 
   return (
     <TableBody>
-      {taskDataList.map((taskData, index) => {
-        if(index === taskDataList.length - 1) {
+      {taskDataListByDate.map((taskData, index) => {
+        if(index === taskDataListByDate.length - 1) {
           return (
-            <TableRow key={taskData.LOTNo}>
+            <TableRow key={`${taskData.LOTNo}${index}`}>
               <TableDataLastCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataLastCell>
               <TableDataLastCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataLastCell>
               <TableDataLastCell align='center'>{taskData.LOTNo}</TableDataLastCell>
@@ -41,7 +41,7 @@ const TableDataBody = () => {
           )
         }
         return (
-          <TableRow key={taskData.LOTNo}>
+          <TableRow key={`${taskData.LOTNo}${index}`}>
             <TableDataCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
             <TableDataCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
             <TableDataCell align='center'>{taskData.LOTNo}</TableDataCell>
