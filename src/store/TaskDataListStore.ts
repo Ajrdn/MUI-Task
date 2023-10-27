@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import { create } from 'zustand'
 import TaskData from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
@@ -7,10 +7,13 @@ import TableHeader from 'interface/TableHeader'
 interface TaskDataListState {
   taskDataTitleList: TableHeader[]
   taskDataList: TaskData[]
+  taskDataListByDate: TaskData[]
 
   setTaskDataListByObject: (taskData: TaskData) => void
 
   setTaskDataListByExcel: (taskDataExcel: TaskData[]) => void
+
+  setTaskDataListByDate: (date: Dayjs) => void
 }
 
 
@@ -127,10 +130,38 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       weight: '435',
     },
   ],
+  taskDataListByDate: [
+    {
+      workDate: dayjs('2023-10-24'),
+      LOTNo: '231017-1k-01',
+      variety: 'C7060P1',
+      standard: '180x420',
+      length: '2805',
+      weight: '1735',
+    },
+    {
+      workDate: dayjs('2023-10-24'),
+      LOTNo: '231017-1k-02',
+      variety: 'C7060P1',
+      standard: '180x420',
+      length: '2805',
+      weight: '1735',
+    },
+    {
+      workDate: dayjs('2023-10-24'),
+      LOTNo: '231017-1k-03',
+      variety: 'C7060P2',
+      standard: '180x420',
+      length: '2805',
+      weight: '1735',
+    },
+  ],
 
   setTaskDataListByObject: taskData => set(state => ({taskDataList: [...state.taskDataList, taskData]})),
 
   setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataList: [...state.taskDataList, ...taskDataExcel]})),
+
+  setTaskDataListByDate: date => set(state => ({taskDataListByDate: state.taskDataList.filter(taskData => taskData.workDate.isSame(date))})),
 }))
 
 export default TaskDataListStore
