@@ -3,6 +3,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import 'dayjs/locale/ko'
 import TableAddModalDataStore from 'store/TableAddModalDataStore'
 
 
@@ -15,7 +16,7 @@ function TableAddDatePicker() {
   }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='ko'>
       <DatePicker
         value={date}
         onChange={dateChange}
