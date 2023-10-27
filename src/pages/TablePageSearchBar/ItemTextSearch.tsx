@@ -5,6 +5,7 @@ interface ItemTextSearchProps {
   textLabel: string
   text: string
   setText: (text: string) => void
+  disabled?: boolean
 }
 
 
@@ -15,10 +16,11 @@ const ItemTextSearch = (props: ItemTextSearchProps) => {
 
   return (
     <TextField
-      focused
+      disabled={props.disabled}
       label={props.textLabel}
-      placeholder='검색어 입력'
       variant='outlined'
+      placeholder='검색어 입력'
+      InputLabelProps={{ shrink: true }}
       value={props.text}
       onChange={textChange}
       sx={{
