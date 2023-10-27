@@ -9,6 +9,7 @@ interface ItemSelectSearchProps {
   selectLabel: string
   item: SearchMenu
   setItem: (item: SearchMenu) => void
+  disabled?: boolean
 }
 
 
@@ -54,6 +55,7 @@ const ItemSelectSearch = (props: ItemSelectSearchProps) => {
         value={props.item}
         onChange={itemChange}
         label={props.selectLabel}
+        disabled={props.disabled}
         sx={{
           width: '155px',
           height: '38px',
