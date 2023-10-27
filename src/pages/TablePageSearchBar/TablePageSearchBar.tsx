@@ -12,7 +12,7 @@ import ItemTextSearch from './ItemTextSearch'
 import FeatureButton from './FeatureButton'
 import TaskData from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
-import SearchMenu from 'interface/SearchMenu'
+import { MenuTitle, MenuValue } from 'interface/SearchMenu'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { TaskDataListDownloadXlsx } from 'utils/utils'
@@ -39,12 +39,18 @@ interface ExcelData {
 
 
 function TablePageSearchBar() {
-  const text = TableSearchStore(state => state.searchWord)
+  const item = TableSearchStore(state => state.searchItem)
+  const detailItem = TableSearchStore(state => state.searchDetailItem)
+  const word = TableSearchStore(state => state.searchWord)
+  const detailWord = TableSearchStore(state => state.searchDetailWord)
+  const date = TableSearchStore(state => state.searchDate)
   
   const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
   const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
 
   const setTaskDataListByExcel = TaskDataListStore(state => state.setTaskDataListByExcel)
+  const setTaskDataShowListByDate = TaskDataListStore(state => state.setTaskDataShowListByDate)
+  const setTaskDataShowListBySearchData = TaskDataListStore(state => state.setTaskDataShowListBySearchData)
 
   const excelDownload = () => {
     TaskDataListDownloadXlsx(taskDataTitleList.map(tableHeader => tableHeader.title), taskDataList)
@@ -79,16 +85,21 @@ function TablePageSearchBar() {
   }
 
   const searchData = () => {
+    const select = searchMenuTitleTranslate(item)
+    const detailSelect = searchMenuTitleTranslate(detailItem)
 
+    if(select !== 'All' && detailSelect !== 'All') setTaskDataShowListBySearchData(select, word, detailSelect, detailWord)
+    else if(select !== 'All' && detailSelect === 'All') setTaskDataShowListBySearchData(select, word)
+    else setTaskDataShowListByDate(date)
   }
 
-  const searchMenuTitleTranslate = (title: SearchMenu): string => {
-    if(title === 'LOT No.') return 'LOTNo'
+  const searchMenuTitleTranslate = (title: MenuTitle): MenuValue | 'All' => {
+    if(title === 'LOT No.') return 'lotNo'
     else if(title === '품종') return 'variety'
     else if(title === '규격') return 'standard'
     else if(title === '슬라브 길이') return 'length'
     else if(title === '중량') return 'weight'
-    return 'all'
+    return 'All'
   }
 
   return (
@@ -107,7 +118,6 @@ function TablePageSearchBar() {
         width='82px'
         padding='0 15px'
         label={false}
-        disabled={text === ''}
         buttonPerformance={searchData}
       />
       <FeatureButton
