@@ -12,7 +12,7 @@ interface TaskDataListState {
 
   setTaskDataListByObject: (taskData: TaskData) => void
 
-  setTaskDataListByExcel: (taskDataExcel: TaskData[]) => void
+  setTaskDataListByList: (taskDataExcel: TaskData[]) => void
 
   setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
 
@@ -58,7 +58,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
 
   setTaskDataListByObject: taskData => set(state => ({taskDataDateList: [...state.taskDataDateList, taskData]})),
 
-  setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataDateList: [...state.taskDataDateList, ...taskDataExcel]})),
+  setTaskDataListByList: taskDataExcel => set(state => ({taskDataDateList: [...state.taskDataDateList, ...taskDataExcel]})),
 
   setTaskDataDateList: newTaskDataDateList => set(state => ({taskDataDateList: newTaskDataDateList})),
 
