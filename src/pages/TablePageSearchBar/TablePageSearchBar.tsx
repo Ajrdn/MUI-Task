@@ -48,7 +48,7 @@ function TablePageSearchBar() {
   const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
   const taskDataShowList: TaskData[] = TaskDataListStore(state => state.taskDataShowList)
 
-  const setTaskDataListByExcel = TaskDataListStore(state => state.setTaskDataListByExcel)
+  const setTaskDataListByList = TaskDataListStore(state => state.setTaskDataListByList)
   const setTaskDataShowListByDate = TaskDataListStore(state => state.setTaskDataShowListByDate)
   const setTaskDataShowListBySearchData = TaskDataListStore(state => state.setTaskDataShowListBySearchData)
 
@@ -80,7 +80,7 @@ function TablePageSearchBar() {
         length: taskData['슬라브 길이'],
         weight: taskData['중량'],
       }))
-      setTaskDataListByExcel(taskDataList)
+      setTaskDataListByList(taskDataList)
     }
   }
 
