@@ -16,7 +16,7 @@ interface TaskDataListState {
 
   setTaskDataDateList: (newTaskDataDateList: TaskDataClient[]) => void
 
-  setTaskDataShowListByDate: (date: Dayjs) => void
+  setTaskDataShowListByList: (newTaskDataDateList: TaskDataClient[]) => void
 
   setTaskDataShowListBySearchData: (select: MenuValue, word: string, detailSelect?: MenuValue, detailWord?: string) => void
 }
@@ -62,7 +62,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
 
   setTaskDataDateList: newTaskDataDateList => set(state => ({taskDataDateList: newTaskDataDateList})),
 
-  setTaskDataShowListByDate: date => set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData.workDate.isSame(date))})),
+  setTaskDataShowListByList: newTaskDataDateList => set(state => ({taskDataShowList: newTaskDataDateList})),
 
   setTaskDataShowListBySearchData: (select, word, detailSelect?, detailWord?) => {
     set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData[select].includes(word))}))
