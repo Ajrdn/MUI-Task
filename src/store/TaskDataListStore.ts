@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
 import { create } from 'zustand'
 import TaskData from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
