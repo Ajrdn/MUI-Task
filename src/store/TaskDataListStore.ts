@@ -7,12 +7,14 @@ import { MenuValue } from 'interface/SearchMenu'
 
 interface TaskDataListState {
   taskDataTitleList: TableHeader[]
-  taskDataList: TaskData[]
+  taskDataDateList: TaskData[]
   taskDataShowList: TaskData[]
 
   setTaskDataListByObject: (taskData: TaskData) => void
 
   setTaskDataListByExcel: (taskDataExcel: TaskData[]) => void
+
+  setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
 
   setTaskDataShowListByDate: (date: Dayjs) => void
 
@@ -51,7 +53,7 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
       size: '128px',
     },
   ],
-  taskDataList: [
+  taskDataDateList: [
     {
       workDate: dayjs('2023-10-24'),
       lotNo: '231017-1k-01',
@@ -160,16 +162,18 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
     },
   ],
 
-  setTaskDataListByObject: taskData => set(state => ({taskDataList: [...state.taskDataList, taskData]})),
+  setTaskDataListByObject: taskData => set(state => ({taskDataDateList: [...state.taskDataDateList, taskData]})),
 
-  setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataList: [...state.taskDataList, ...taskDataExcel]})),
+  setTaskDataListByExcel: taskDataExcel => set(state => ({taskDataDateList: [...state.taskDataDateList, ...taskDataExcel]})),
 
-  setTaskDataShowListByDate: date => set(state => ({taskDataShowList: state.taskDataList.filter(taskData => taskData.workDate.isSame(date))})),
+  setTaskDataDateList: newTaskDataDateList => set(state => ({taskDataDateList: newTaskDataDateList})),
+
+  setTaskDataShowListByDate: date => set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData.workDate.isSame(date))})),
 
   setTaskDataShowListBySearchData: (select, word, detailSelect?, detailWord?) => {
-    set(state => ({taskDataShowList: state.taskDataList.filter(taskData => taskData[select].includes(word))}))
+    set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData[select].includes(word))}))
     if(typeof detailSelect !== 'undefined')
-      set(state => ({taskDataShowList: state.taskDataList.filter(taskData => taskData[detailSelect].includes(detailWord!))}))
+      set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData[detailSelect].includes(detailWord!))}))
   }
 }))
 
