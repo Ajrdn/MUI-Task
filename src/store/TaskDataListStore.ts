@@ -1,20 +1,20 @@
 import { Dayjs } from 'dayjs'
 import { create } from 'zustand'
-import TaskData from 'interface/TaskData'
+import { TaskDataClient } from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
 import { MenuValue } from 'interface/SearchMenu'
 
 
 interface TaskDataListState {
   taskDataTitleList: TableHeader[]
-  taskDataDateList: TaskData[]
-  taskDataShowList: TaskData[]
+  taskDataDateList: TaskDataClient[]
+  taskDataShowList: TaskDataClient[]
 
-  setTaskDataListByObject: (taskData: TaskData) => void
+  setTaskDataListByObject: (taskData: TaskDataClient) => void
 
-  setTaskDataListByList: (taskDataExcel: TaskData[]) => void
+  setTaskDataListByList: (taskDataExcel: TaskDataClient[]) => void
 
-  setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
+  setTaskDataDateList: (newTaskDataDateList: TaskDataClient[]) => void
 
   setTaskDataShowListByDate: (date: Dayjs) => void
 
