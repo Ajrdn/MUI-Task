@@ -43,7 +43,6 @@ function TablePageSearchBar() {
   const detailItem = TableSearchStore(state => state.searchDetailItem)
   const word = TableSearchStore(state => state.searchWord)
   const detailWord = TableSearchStore(state => state.searchDetailWord)
-  const date = TableSearchStore(state => state.searchDate)
   
   const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
   const taskDataShowList: TaskDataClient[] = TaskDataListStore(state => state.taskDataShowList)
