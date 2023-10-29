@@ -1,8 +1,8 @@
 import { utils, writeFile } from 'xlsx'
-import TaskData from 'interface/TaskData'
+import { TaskDataClient } from 'interface/TaskData'
 
 
-export const TaskDataListDownloadXlsx = (taskDataTitleList: string[], taskDataList: TaskData[]) => {
+export const TaskDataListDownloadXlsx = (taskDataTitleList: string[], taskDataList: TaskDataClient[]) => {
   const data = taskDataList.map((taskData, index) => ({
     [taskDataTitleList[0]]: (index + 1).toString().padStart(2, '0'),
     [taskDataTitleList[1]]: taskData.workDate.format('YYYY-MM-DD'),
