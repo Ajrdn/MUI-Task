@@ -4,7 +4,7 @@ import TaskDataListStore from 'store/TaskDataListStore'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import TaskData from 'interface/TaskData'
+import { TaskDataClient } from 'interface/TaskData'
 
 
 const TableDataCell = styled(TableCell)({
@@ -22,7 +22,7 @@ const TableDataLastCell = styled(TableDataCell)({
 
 
 const TableDataBody = () => {
-  const taskDataShowList: TaskData[] = TaskDataListStore(state => state.taskDataShowList)
+  const taskDataShowList: TaskDataClient[] = TaskDataListStore(state => state.taskDataShowList)
 
   return (
     <TableBody>
