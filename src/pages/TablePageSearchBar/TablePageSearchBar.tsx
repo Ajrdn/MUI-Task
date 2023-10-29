@@ -46,14 +46,14 @@ function TablePageSearchBar() {
   const date = TableSearchStore(state => state.searchDate)
   
   const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
-  const taskDataList: TaskData[] = TaskDataListStore(state => state.taskDataList)
+  const taskDataShowList: TaskData[] = TaskDataListStore(state => state.taskDataShowList)
 
   const setTaskDataListByExcel = TaskDataListStore(state => state.setTaskDataListByExcel)
   const setTaskDataShowListByDate = TaskDataListStore(state => state.setTaskDataShowListByDate)
   const setTaskDataShowListBySearchData = TaskDataListStore(state => state.setTaskDataShowListBySearchData)
 
   const excelDownload = () => {
-    TaskDataListDownloadXlsx(taskDataTitleList.map(tableHeader => tableHeader.title), taskDataList)
+    TaskDataListDownloadXlsx(taskDataTitleList.map(tableHeader => tableHeader.title), taskDataShowList)
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
