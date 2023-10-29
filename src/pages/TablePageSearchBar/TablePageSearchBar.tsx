@@ -117,6 +117,7 @@ function TablePageSearchBar() {
         icon={<Search />}
         width='82px'
         padding='0 15px'
+        disabled={(item !== '전체' && word === '') || (detailItem !== '전체' && detailWord === '')}
         label={false}
         buttonPerformance={searchData}
       />
@@ -128,6 +129,7 @@ function TablePageSearchBar() {
         icon={<DownloadForOffline />}
         width='127px'
         padding='0 10px'
+        disabled={taskDataShowList.length === 0}
         label={false}
         buttonPerformance={excelDownload}
       />
