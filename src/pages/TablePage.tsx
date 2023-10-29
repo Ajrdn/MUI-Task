@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect }  from 'react'
+import dayjs, { Dayjs } from 'dayjs'
+import TableSearchStore from 'store/TableSearchStore'
+import TaskDataListStore from 'store/TaskDataListStore'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
@@ -6,6 +9,7 @@ import TableData from './TableData/TableData'
 import TableAddFab from './TableAddFab/TableAddFab'
 import AlarmFab from 'components/AlarmFab/AlarmFab'
 import InformFab from 'components/InformFab/InformFab'
+import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
 
 
 const TablePageBackground = styled(Box)({
@@ -16,7 +20,29 @@ const TablePageBackground = styled(Box)({
 })
 
 
-const TablePage = () => {
+function TablePage() {
+  const date: Dayjs = TableSearchStore(state => state.searchDate)
+  const setTaskDataDateList = TaskDataListStore(state => state.setTaskDataDateList)
+  const setTaskDataShowListByList = TaskDataListStore(state => state.setTaskDataShowListByList)
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`)
+    .then(response => response.json())
+    .then((data: TaskDataServer[]) => {
+      const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
+        workDate: dayjs(taskData.workDate),
+        lotNo: taskData.lotNo,
+        variety: taskData.variety,
+        standard: taskData.standard,
+        length: taskData.length,
+        weight: taskData.weight,
+      }))
+
+      setTaskDataDateList(taskDataDateList)
+      setTaskDataShowListByList(taskDataDateList)
+    })
+  }, [date, setTaskDataDateList, setTaskDataShowListByList])
+
   return (
     <>
       <TablePageBackground>
