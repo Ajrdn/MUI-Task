@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs'
 
-interface TaskData {
+export interface TaskDataClient {
   workDate: Dayjs
   lotNo: string
   variety: string
@@ -9,4 +9,11 @@ interface TaskData {
   weight: string
 }
 
-export default TaskData
+export interface TaskDataServer {
+  workDate: string
+  lotNo: string
+  variety: string
+  standard: string
+  length: string
+  weight: string
+}
