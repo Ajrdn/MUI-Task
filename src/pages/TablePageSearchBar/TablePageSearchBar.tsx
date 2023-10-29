@@ -10,7 +10,7 @@ import ItemSelectSearch from './ItemSelectSearch'
 import ItemDatePicker from './ItemDatePicker'
 import ItemTextSearch from './ItemTextSearch'
 import FeatureButton from './FeatureButton'
-import TaskData from 'interface/TaskData'
+import { TaskDataClient } from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
 import { MenuTitle, MenuValue } from 'interface/SearchMenu'
 import TableSearchStore from 'store/TableSearchStore'
@@ -46,7 +46,7 @@ function TablePageSearchBar() {
   const date = TableSearchStore(state => state.searchDate)
   
   const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
-  const taskDataShowList: TaskData[] = TaskDataListStore(state => state.taskDataShowList)
+  const taskDataShowList: TaskDataClient[] = TaskDataListStore(state => state.taskDataShowList)
 
   const setTaskDataListByList = TaskDataListStore(state => state.setTaskDataListByList)
   const setTaskDataShowListByDate = TaskDataListStore(state => state.setTaskDataShowListByDate)
@@ -72,7 +72,7 @@ function TablePageSearchBar() {
       const sheetName = fileInformation.SheetNames[0]
       const rawData = fileInformation.Sheets[sheetName]
       const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
-      const taskDataList: TaskData[] = data.map(taskData => ({
+      const taskDataList: TaskDataClient[] = data.map(taskData => ({
         workDate: dayjs(taskData['작업일']),
         lotNo: taskData['LOT No.'],
         variety: taskData['품종'],
