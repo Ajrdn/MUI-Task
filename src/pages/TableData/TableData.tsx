@@ -5,7 +5,7 @@ import TableHeader from './TableDataHeader'
 import TableDataBody from './TableDataBody'
 
 
-const TableData = () => {
+function TableData() {
   return (
     <TableContainer
       component={Box}

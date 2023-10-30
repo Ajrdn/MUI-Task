@@ -12,7 +12,7 @@ interface ModalCloseButtonProps {
 }
 
 
-const ModalCloseButton = (props: ModalCloseButtonProps) => {
+function ModalCloseButton(props: ModalCloseButtonProps) {
   return (
     <IconButton
       onClick={props.onClick}

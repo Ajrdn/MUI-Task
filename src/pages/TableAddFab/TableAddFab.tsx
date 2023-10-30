@@ -5,7 +5,7 @@ import Add from '@mui/icons-material/Add'
 import TableAddModal from './TableAddModal/TableAddModal'
 
 
-const TableAddFab = () => {
+function TableAddFab() {
   const setOpen = TableAddModalDataStore(state => state.setOpen)
 
   return (

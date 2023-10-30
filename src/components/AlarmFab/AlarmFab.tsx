@@ -4,7 +4,8 @@ import Fab from '@mui/material/Fab'
 import Alarm from '@mui/icons-material/Alarm'
 import AlarmModal from './AlarmModal/AlarmModal'
 
-const AlarmFab = () => {
+
+function AlarmFab() {
   const setOpen = AlarmModalDataStore(state => state.setOpen)
 
   return (

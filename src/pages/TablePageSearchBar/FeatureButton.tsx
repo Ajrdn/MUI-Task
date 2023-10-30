@@ -18,7 +18,7 @@ interface FeatureButtonProps {
 }
 
 
-const FeatureButton = (props: FeatureButtonProps) => {
+function FeatureButton(props: FeatureButtonProps) {
   return (
     <Button
       component={props.label ? 'label' : 'button'}
@@ -53,4 +53,4 @@ const FeatureButton = (props: FeatureButtonProps) => {
   )
 }
 
-export default  FeatureButton
+export default FeatureButton

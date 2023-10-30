@@ -5,7 +5,7 @@ import Alarm from '@mui/icons-material/Alarm'
 import InformModal from './InformModal/InformModal'
 
 
-const InformFab = () => {
+function InformFab() {
   const setOpen = InformDataStore(state => state.setOpen)
 
   return (

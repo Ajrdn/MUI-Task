@@ -35,7 +35,7 @@ const MessageBox = styled(Box)({
 })
 
 
-const AlarmModal = () => {
+function AlarmModal() {
   const open = AlarmModalDataStore(state => state.open)
   const setOpen = AlarmModalDataStore(state => state.setOpen)
   const title = AlarmModalDataStore(state => state.title)

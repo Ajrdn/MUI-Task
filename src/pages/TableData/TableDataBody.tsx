@@ -21,34 +21,34 @@ const TableDataLastCell = styled(TableDataCell)({
 })
 
 
-const TableDataBody = () => {
+function TableDataBody() {
   const taskDataShowList: TaskDataClient[] = TaskDataListStore(state => state.taskDataShowList)
 
   return (
     <TableBody>
       {taskDataShowList.map((taskData, index) => {
-        if(index === taskDataShowList.length - 1) {
+        if(index !== taskDataShowList.length - 1) {
           return (
             <TableRow key={`${taskData.lotNo}${index}`}>
-              <TableDataLastCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataLastCell>
-              <TableDataLastCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataLastCell>
-              <TableDataLastCell align='center'>{taskData.lotNo}</TableDataLastCell>
-              <TableDataLastCell align='center'>{taskData.variety}</TableDataLastCell>
-              <TableDataLastCell align='center'>{taskData.standard}</TableDataLastCell>
-              <TableDataLastCell align='center'>{taskData.length}</TableDataLastCell>
-              <TableDataLastCell align='center'>{taskData.weight}</TableDataLastCell>
+              <TableDataCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
+              <TableDataCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
+              <TableDataCell align='center'>{taskData.lotNo}</TableDataCell>
+              <TableDataCell align='center'>{taskData.variety}</TableDataCell>
+              <TableDataCell align='center'>{taskData.standard}</TableDataCell>
+              <TableDataCell align='center'>{taskData.length}</TableDataCell>
+              <TableDataCell align='center'>{taskData.weight}</TableDataCell>
             </TableRow>
           )
         }
         return (
           <TableRow key={`${taskData.lotNo}${index}`}>
-            <TableDataCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataCell>
-            <TableDataCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataCell>
-            <TableDataCell align='center'>{taskData.lotNo}</TableDataCell>
-            <TableDataCell align='center'>{taskData.variety}</TableDataCell>
-            <TableDataCell align='center'>{taskData.standard}</TableDataCell>
-            <TableDataCell align='center'>{taskData.length}</TableDataCell>
-            <TableDataCell align='center'>{taskData.weight}</TableDataCell>
+            <TableDataLastCell align='center'>{(index + 1).toString().padStart(2, '0')}</TableDataLastCell>
+            <TableDataLastCell align='center'>{taskData.workDate.format('YYYY-MM-DD')}</TableDataLastCell>
+            <TableDataLastCell align='center'>{taskData.lotNo}</TableDataLastCell>
+            <TableDataLastCell align='center'>{taskData.variety}</TableDataLastCell>
+            <TableDataLastCell align='center'>{taskData.standard}</TableDataLastCell>
+            <TableDataLastCell align='center'>{taskData.length}</TableDataLastCell>
+            <TableDataLastCell align='center'>{taskData.weight}</TableDataLastCell>
           </TableRow>
         )
       })}

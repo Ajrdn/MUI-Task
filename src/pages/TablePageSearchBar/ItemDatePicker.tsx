@@ -6,7 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import 'dayjs/locale/ko'
 
 
-const ItemDatePicker = () => {
+function ItemDatePicker() {
   const date = TableSearchStore(state => state.searchDate)
   const setDate = TableSearchStore(state => state.setSearchDate)
 
