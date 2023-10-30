@@ -10,7 +10,7 @@ function ItemSelectSearch() {
   const setItem = TableSearchStore(state => state.setSearchItem)
   const setWord = TableSearchStore(state => state.setSearchWord)
   const setDetailItem = TableSearchStore(state => state.setSearchDetailItem)
-  const setDetailText = TableSearchStore(state => state.setSearchDetailWord)
+  const setDetailWord = TableSearchStore(state => state.setSearchDetailWord)
   const menuList = TableSearchStore(state => state.menuList)
 
   const itemChange = (event: SelectChangeEvent) => {
@@ -19,7 +19,7 @@ function ItemSelectSearch() {
     if(menu === '전체' || menu === 'LOT No.' || menu === '품종' || menu === '규격' || menu === '슬라브 길이' || menu === '중량') setItem(menu)
     setDetailItem('전체')
     setWord('')
-    setDetailText('')
+    setDetailWord('')
   }
 
   return (
