@@ -1,6 +1,4 @@
-import dayjs from 'dayjs'
 import React from 'react'
-import { utils, read } from 'xlsx'
 import { styled } from '@mui/material/styles'
 import Search from '@mui/icons-material/Search'
 import DownloadForOffline from '@mui/icons-material/DownloadForOffline'
@@ -15,7 +13,7 @@ import TableHeader from 'interface/TableHeader'
 import { MenuTitle, MenuValue } from 'interface/SearchMenu'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
-import { TaskDataListDownloadXlsx } from 'utils/utils'
+import { TaskDataListDownloadXlsx, TaskDataListUploadXlsx } from 'utils/utils'
 import DetailItemSelectSearch from './DetailItemSelectSearch'
 import DetailItemTextSearch from './DetailItemTextSearch'
 
@@ -25,17 +23,6 @@ const TablePageSearchBarBackground = styled(Box)({
   display: 'flex',
   gap: '12px',
 })
-
-
-interface ExcelData {
-  'LOT No.': string
-  'No.': string
-  '규격': string
-  '슬라브 길이': string
-  '작업일': string
-  '중량': string
-  '품종': string
-}
 
 
 function TablePageSearchBar() {
@@ -57,31 +44,7 @@ function TablePageSearchBar() {
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return
-
-    const fileReader = new FileReader()
-    fileReader.readAsArrayBuffer(event.target.files[0])
-    fileReader.onload = (event: ProgressEvent<FileReader>) => {
-      if (!event.target) return
-      const bufferArray = event.target.result
-      const fileInformation = read(bufferArray, {
-        type: 'buffer',
-        cellText: false,
-        cellDates: true,
-      })
-      const sheetName = fileInformation.SheetNames[0]
-      const rawData = fileInformation.Sheets[sheetName]
-      const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
-      const taskDataList: TaskDataClient[] = data.map(taskData => ({
-        workDate: dayjs(taskData['작업일']),
-        lotNo: taskData['LOT No.'],
-        variety: taskData['품종'],
-        standard: taskData['규격'],
-        length: taskData['슬라브 길이'],
-        weight: taskData['중량'],
-      }))
-      setTaskDataListByList(taskDataList)
-    }
+    TaskDataListUploadXlsx(event, setTaskDataListByList)
   }
 
   const searchData = () => {
