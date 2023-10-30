@@ -8,13 +8,13 @@ import ItemSelectSearch from './ItemSelectSearch'
 import ItemDatePicker from './ItemDatePicker'
 import ItemTextSearch from './ItemTextSearch'
 import FeatureButton from './FeatureButton'
+import DetailItemSelectSearch from './DetailItemSelectSearch'
+import DetailItemTextSearch from './DetailItemTextSearch'
 import { MenuTitle, MenuValue } from 'interface/SearchMenu'
 import { TABLE_HEADER_LIST } from 'interface/TableHeader'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { TaskDataListDownloadXlsx, TaskDataListUploadXlsx } from 'utils/utils'
-import DetailItemSelectSearch from './DetailItemSelectSearch'
-import DetailItemTextSearch from './DetailItemTextSearch'
 
 
 const TablePageSearchBarBackground = styled(Box)({
