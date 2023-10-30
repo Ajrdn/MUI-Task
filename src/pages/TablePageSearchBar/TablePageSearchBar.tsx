@@ -8,9 +8,8 @@ import ItemSelectSearch from './ItemSelectSearch'
 import ItemDatePicker from './ItemDatePicker'
 import ItemTextSearch from './ItemTextSearch'
 import FeatureButton from './FeatureButton'
-import { TaskDataClient } from 'interface/TaskData'
-import TableHeader from 'interface/TableHeader'
 import { MenuTitle, MenuValue } from 'interface/SearchMenu'
+import { TABLE_HEADER_LIST } from 'interface/TableHeader'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { TaskDataListDownloadXlsx, TaskDataListUploadXlsx } from 'utils/utils'
@@ -26,33 +25,45 @@ const TablePageSearchBarBackground = styled(Box)({
 
 
 function TablePageSearchBar() {
-  const item = TableSearchStore(state => state.searchItem)
-  const detailItem = TableSearchStore(state => state.searchDetailItem)
-  const word = TableSearchStore(state => state.searchWord)
-  const detailWord = TableSearchStore(state => state.searchDetailWord)
-  
-  const taskDataTitleList: TableHeader[] = TaskDataListStore(state => state.taskDataTitleList)
-  const taskDataShowList: TaskDataClient[] = TaskDataListStore(state => state.taskDataShowList)
-  const taskDataDateList: TaskDataClient[] = TaskDataListStore(state => state.taskDataDateList)
+  const {
+    searchDate,
+    searchItem,
+    setSearchItem,
+    searchWord,
+    setSearchWord,
+    searchDetailItem,
+    setSearchDetailItem,
+    searchDetailWord,
+    setSearchDetailWord,
+  } = TableSearchStore()
 
-  const addTaskDataDateListByList = TaskDataListStore(state => state.addTaskDataDateListByList)
-  const setTaskDataShowList = TaskDataListStore(state => state.setTaskDataShowList)
-  const setTaskDataShowListBySearchData = TaskDataListStore(state => state.setTaskDataShowListBySearchData)
+  const {
+    taskDataShowList,
+    taskDataDateList,
+    setTaskDataDateList,
+    setTaskDataShowList,
+    setTaskDataShowListBySearchData,
+  } = TaskDataListStore()
 
   const excelDownload = () => {
-    TaskDataListDownloadXlsx(taskDataTitleList.map(tableHeader => tableHeader.title), taskDataShowList)
+    TaskDataListDownloadXlsx(TABLE_HEADER_LIST.map(tableHeader => tableHeader.title), taskDataShowList)
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    TaskDataListUploadXlsx(event, addTaskDataDateListByList)
+    TaskDataListUploadXlsx(event, searchDate.format('YYYY-MM-DD'), setTaskDataDateList)
+
+    setSearchItem('전체')
+    setSearchWord('')
+    setSearchDetailItem('전체')
+    setSearchDetailWord('')
   }
 
   const searchData = () => {
-    const select = searchMenuTitleTranslate(item)
-    const detailSelect = searchMenuTitleTranslate(detailItem)
+    const select = searchMenuTitleTranslate(searchItem)
+    const detailSelect = searchMenuTitleTranslate(searchDetailItem)
 
-    if(select !== 'All' && detailSelect !== 'All') setTaskDataShowListBySearchData(select, word, detailSelect, detailWord)
-    else if(select !== 'All' && detailSelect === 'All') setTaskDataShowListBySearchData(select, word)
+    if(select !== 'All' && detailSelect !== 'All') setTaskDataShowListBySearchData(select, searchWord, detailSelect, searchDetailWord)
+    else if(select !== 'All' && detailSelect === 'All') setTaskDataShowListBySearchData(select, searchWord)
     else setTaskDataShowList(taskDataDateList)
   }
 
@@ -80,7 +91,7 @@ function TablePageSearchBar() {
         icon={<Search />}
         width='82px'
         padding='0 15px'
-        disabled={(item !== '전체' && word === '') || (detailItem !== '전체' && detailWord === '')}
+        disabled={(searchItem !== '전체' && searchWord === '') || (searchDetailItem !== '전체' && searchDetailWord === '')}
         label={false}
         buttonPerformance={searchData}
       />
