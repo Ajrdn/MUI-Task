@@ -17,7 +17,7 @@ interface AlarmModalDataState {
 const AlarmModalDataStore = create<AlarmModalDataState>(set => ({
   open: false,
   title: '알람 없음',
-  content: '아무런 알람도 오지 않았습니다.',
+  content: '아무 알람도 오지 않았습니다.',
 
   setOpen: () => set(state => ({open: !state.open})),
 
