@@ -44,9 +44,8 @@ export const TaskDataListUploadXlsx = (
   event: React.ChangeEvent<HTMLInputElement>,
   date: string,
   setTaskDataDateList: (taskDataList: TaskDataClient[]) => void,
-  setTaskDataShowList: (taskDataList: TaskDataClient[]) => void,
 ) => {
-  if (!event.target.files) return
+  if (!event.target.files || event.target.files.length === 0) return
   
   const fileReader = new FileReader()
   fileReader.readAsArrayBuffer(event.target.files[0])
@@ -71,7 +70,7 @@ export const TaskDataListUploadXlsx = (
     }))
 
     fetch(`http://localhost:8000/taskDataList/${date}`, {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(taskDataList),
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +88,6 @@ export const TaskDataListUploadXlsx = (
       }))
       
       setTaskDataDateList(taskDataDateList)
-      setTaskDataShowList(taskDataDateList)
     }) 
   }
 }
