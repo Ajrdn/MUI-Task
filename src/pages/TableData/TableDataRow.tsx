@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import TableDataCopyStore from 'store/TableDataCopyStore'
 import { styled } from '@mui/material/styles'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
@@ -28,6 +29,8 @@ interface TableDataRowProps {
 
 function TableDataRow(props: TableDataRowProps) {
   const [selected, setSelected] = useState<boolean>(false)
+
+  
 
   const CopySelected = () => {
     setSelected(prev => !prev)
