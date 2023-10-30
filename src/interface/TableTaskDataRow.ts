@@ -1,7 +1,7 @@
 import { Dayjs } from 'dayjs'
 
 
-interface TaskDataRow {
+interface TableTaskDataRow {
   index: string
   workDate: Dayjs
   lotNo: string
@@ -9,6 +9,7 @@ interface TaskDataRow {
   standard: string
   length: string
   weight: string
+  selected: boolean
 }
 
-export default TaskDataRow
+export default TableTaskDataRow
