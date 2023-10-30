@@ -2,48 +2,79 @@ import React from 'react'
 import dayjs from 'dayjs'
 import TableAddModalDataStore from 'store/TableAddModalDataStore'
 import TaskDataListStore from 'store/TaskDataListStore'
+import TableSearchStore from 'store/TableSearchStore'
 import Button from '@mui/material/Button'
+import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
 
 
 function TableAddFormButton() {
-  const addTaskDataDateListByObject = TaskDataListStore(state => state.addTaskDataDateListByObject)
+  const {
+    setTaskDataDateList,
+  } = TaskDataListStore()
 
-  const setOpen = TableAddModalDataStore(state => state.setOpen)
+  const {
+    searchDate,
+    setSearchItem,
+    setSearchWord,
+    setSearchDetailItem,
+    setSearchDetailWord,
+  } = TableSearchStore()
 
-  const workDate = TableAddModalDataStore(state => state.workDate)
-  const setWorkDate = TableAddModalDataStore(state => state.setWorkDate)
-
-  const lotNo = TableAddModalDataStore(state => state.lotNo)
-  const setLotNo = TableAddModalDataStore(state => state.setLotNo)
-  
-  const variety = TableAddModalDataStore(state => state.variety)
-  const setVariety = TableAddModalDataStore(state => state.setVariety)
-  
-  const standard = TableAddModalDataStore(state => state.standard)
-  const setStandard = TableAddModalDataStore(state => state.setStandard)
-  
-  const length = TableAddModalDataStore(state => state.length)
-  const setLength = TableAddModalDataStore(state => state.setLength)
-  
-  const weight = TableAddModalDataStore(state => state.weight)
-  const setWeight = TableAddModalDataStore(state => state.setWeight)
+  const {
+    setOpen,
+    workDate,
+    setWorkDate,
+    lotNo,
+    setLotNo,
+    variety,
+    setVariety,
+    standard,
+    setStandard, length,
+    setLength,
+    weight,
+    setWeight,
+  } = TableAddModalDataStore()
 
   const tableAdd = () => {
-    addTaskDataDateListByObject({
-      workDate,
-      lotNo,
-      variety,
-      standard,
-      length,
-      weight,
+    fetch(`http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        workDate: workDate.format('YYYY-MM-DD'),
+        lotNo,
+        variety,
+        standard,
+        length,
+        weight,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-    setWorkDate(dayjs())
-    setLotNo('')
-    setVariety('')
-    setStandard('')
-    setLength('')
-    setWeight('')
-    setOpen()
+    .then(response => response.json())
+    .then((data: TaskDataServer[]) => {
+      const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
+        workDate: dayjs(taskData.workDate),
+        lotNo: taskData.lotNo,
+        variety: taskData.variety,
+        standard: taskData.standard,
+        length: taskData.length,
+        weight: taskData.weight,
+      }))
+
+      setSearchItem('전체')
+      setSearchWord('')
+      setSearchDetailItem('전체')
+      setSearchDetailWord('')
+      setTaskDataDateList(taskDataDateList)
+
+      setWorkDate(dayjs())
+      setLotNo('')
+      setVariety('')
+      setStandard('')
+      setLength('')
+      setWeight('')
+      setOpen()
+    })
   }
 
   return (
