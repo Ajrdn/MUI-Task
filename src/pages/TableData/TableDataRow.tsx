@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
+import TaskDataRow from 'interface/TaskDataRow'
 
 
 interface TableDataCellProps {
@@ -15,21 +16,27 @@ const TableDataCell = styled(TableCell)<TableDataCellProps>(({ selected }) => ({
   fontFamily: 'Pretendard',
   fontWeight: 400,
   textAlign: 'center',
-  backgroundColor: selected ? '#626262' : 'white',
+  backgroundColor: selected ? '#E8E8E8' : 'white',
 }))
 
 
 interface TableDataRowProps {
   cellDataList: string[]
+  taskDataRow: TaskDataRow
 }
 
 
 function TableDataRow(props: TableDataRowProps) {
   const [selected, setSelected] = useState<boolean>(false)
 
+  const CopySelected = () => {
+    setSelected(prev => !prev)
+    console.log(props.taskDataRow)
+  }
+
   return (
     <TableRow
-      onClick={() => setSelected(prev => !prev)}
+      onClick={CopySelected}
       sx={{
         '&:last-child > *': {
           borderBottom: 'none',
