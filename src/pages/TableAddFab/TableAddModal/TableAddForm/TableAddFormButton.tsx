@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 
 
 function TableAddFormButton() {
-  const addTaskDataList = TaskDataListStore(state => state.setTaskDataListByObject)
+  const addTaskDataDateListByObject = TaskDataListStore(state => state.addTaskDataDateListByObject)
 
   const setOpen = TableAddModalDataStore(state => state.setOpen)
 
@@ -29,7 +29,7 @@ function TableAddFormButton() {
   const setWeight = TableAddModalDataStore(state => state.setWeight)
 
   const tableAdd = () => {
-    addTaskDataList({
+    addTaskDataDateListByObject({
       workDate,
       lotNo,
       variety,

@@ -23,7 +23,7 @@ const TablePageBackground = styled(Box)({
 function TablePage() {
   const date: Dayjs = TableSearchStore(state => state.searchDate)
   const setTaskDataDateList = TaskDataListStore(state => state.setTaskDataDateList)
-  const setTaskDataShowListByList = TaskDataListStore(state => state.setTaskDataShowListByList)
+  const setTaskDataShowList = TaskDataListStore(state => state.setTaskDataShowList)
 
   useEffect(() => {
     fetch(`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`)
@@ -39,9 +39,9 @@ function TablePage() {
       }))
 
       setTaskDataDateList(taskDataDateList)
-      setTaskDataShowListByList(taskDataDateList)
+      setTaskDataShowList(taskDataDateList)
     })
-  }, [date, setTaskDataDateList, setTaskDataShowListByList])
+  }, [date, setTaskDataDateList, setTaskDataShowList])
 
   return (
     <>

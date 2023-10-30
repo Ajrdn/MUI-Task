@@ -35,8 +35,8 @@ function TablePageSearchBar() {
   const taskDataShowList: TaskDataClient[] = TaskDataListStore(state => state.taskDataShowList)
   const taskDataDateList: TaskDataClient[] = TaskDataListStore(state => state.taskDataDateList)
 
-  const setTaskDataListByList = TaskDataListStore(state => state.setTaskDataListByList)
-  const setTaskDataShowListByList = TaskDataListStore(state => state.setTaskDataShowListByList)
+  const addTaskDataDateListByList = TaskDataListStore(state => state.addTaskDataDateListByList)
+  const setTaskDataShowList = TaskDataListStore(state => state.setTaskDataShowList)
   const setTaskDataShowListBySearchData = TaskDataListStore(state => state.setTaskDataShowListBySearchData)
 
   const excelDownload = () => {
@@ -44,7 +44,7 @@ function TablePageSearchBar() {
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    TaskDataListUploadXlsx(event, setTaskDataListByList)
+    TaskDataListUploadXlsx(event, addTaskDataDateListByList)
   }
 
   const searchData = () => {
@@ -53,7 +53,7 @@ function TablePageSearchBar() {
 
     if(select !== 'All' && detailSelect !== 'All') setTaskDataShowListBySearchData(select, word, detailSelect, detailWord)
     else if(select !== 'All' && detailSelect === 'All') setTaskDataShowListBySearchData(select, word)
-    else setTaskDataShowListByList(taskDataDateList)
+    else setTaskDataShowList(taskDataDateList)
   }
 
   const searchMenuTitleTranslate = (title: MenuTitle): MenuValue | 'All' => {
