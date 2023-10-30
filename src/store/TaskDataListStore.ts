@@ -11,11 +11,11 @@ interface TaskDataListState {
 
   setTaskDataDateList: (newTaskDataDateList: TaskDataClient[]) => void
 
-  setTaskDataDateListByObject: (taskData: TaskDataClient) => void
+  addTaskDataDateListByObject: (taskData: TaskDataClient) => void
 
-  setTaskDataDateListByList: (taskDataList: TaskDataClient[]) => void
+  addTaskDataDateListByList: (taskDataList: TaskDataClient[]) => void
 
-  setTaskDataShowListByList: (newTaskDataDateList: TaskDataClient[]) => void
+  setTaskDataShowList: (newTaskDataDateList: TaskDataClient[]) => void
 
   setTaskDataShowListBySearchData: (select: MenuValue, word: string, detailSelect?: MenuValue, detailWord?: string) => void
 }
@@ -57,11 +57,11 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
 
   setTaskDataDateList: newTaskDataDateList => set(state => ({taskDataDateList: newTaskDataDateList})),
 
-  setTaskDataDateListByObject: taskData => set(state => ({taskDataDateList: [...state.taskDataDateList, taskData]})),
+  addTaskDataDateListByObject: taskData => set(state => ({taskDataDateList: [...state.taskDataDateList, taskData]})),
 
-  setTaskDataDateListByList: taskDataList => set(state => ({taskDataDateList: [...state.taskDataDateList, ...taskDataList]})),
+  addTaskDataDateListByList: taskDataList => set(state => ({taskDataDateList: [...state.taskDataDateList, ...taskDataList]})),
 
-  setTaskDataShowListByList: newTaskDataDateList => set(state => ({taskDataShowList: newTaskDataDateList})),
+  setTaskDataShowList: newTaskDataDateList => set(state => ({taskDataShowList: newTaskDataDateList})),
 
   setTaskDataShowListBySearchData: (select, word, detailSelect?, detailWord?) => {
     set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData[select].includes(word))}))
