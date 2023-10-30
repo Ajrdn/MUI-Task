@@ -30,11 +30,13 @@ interface TableDataRowProps {
 function TableDataRow(props: TableDataRowProps) {
   const [selected, setSelected] = useState<boolean>(false)
 
-  
+  const addTaskDataRowCopyList = TableDataCopyStore(state => state.addTaskDataRowCopyList)
+  const deleteTaskDataRowCopyList = TableDataCopyStore(state => state.deleteTaskDataRowCopyList)
 
   const CopySelected = () => {
+    if(!selected) addTaskDataRowCopyList(props.taskDataRow)
+    else deleteTaskDataRowCopyList(props.taskDataRow.index)
     setSelected(prev => !prev)
-    console.log(props.taskDataRow)
   }
 
   return (
