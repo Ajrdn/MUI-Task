@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell'
 import { TABLE_HEADER_LIST } from 'interface/TableHeader'
 
 
-const TableDataHeader = () => {
+function TableDataHeader() {
   return (
     <TableHead>
       <TableRow>
