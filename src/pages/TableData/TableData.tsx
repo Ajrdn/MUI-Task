@@ -13,6 +13,13 @@ function TableData() {
         border: '1px solid #C8C8C8',
         borderRadius: '8px',
       }}
+      onKeyDown={(event: React.KeyboardEvent) => {
+        console.log(event.key)
+      }}
+      tabIndex={0}
+      onBlur={() => {
+        console.log('포커스 빠짐')
+      }}
     >
       <Table>
         <TableHeader />
