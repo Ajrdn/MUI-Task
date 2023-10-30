@@ -40,7 +40,7 @@ export const TaskDataListDownloadXlsx = (
 }
 
 
-export const TaskDataListUploadXlsx = (event: React.ChangeEvent<HTMLInputElement>, setTaskDataListByList: (taskDataList: TaskDataClient[]) => void) => {
+export const TaskDataListUploadXlsx = (event: React.ChangeEvent<HTMLInputElement>, addTaskDataDateListByList: (taskDataList: TaskDataClient[]) => void) => {
   if (!event.target.files) return
   
   const fileReader = new FileReader()
@@ -64,6 +64,6 @@ export const TaskDataListUploadXlsx = (event: React.ChangeEvent<HTMLInputElement
       length: taskData['슬라브 길이'],
       weight: taskData['중량'],
     }))
-    setTaskDataListByList(taskDataList)
+    addTaskDataDateListByList(taskDataList)
   }
 }
