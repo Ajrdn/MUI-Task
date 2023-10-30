@@ -3,14 +3,33 @@ import TaskDataRow from 'interface/TaskDataRow'
 
 
 interface TableDataCopyState {
-  TaskDataRowCopyList: TaskDataRow[]
-  TaskDataRowPasteList: TaskDataRow[]
+  taskDataRowCopyList: TaskDataRow[]
+  taskDataRowPasteList: TaskDataRow[]
+
+  addTaskDataRowCopyList: (taskDataRow: TaskDataRow) => void
+
+  deleteTaskDataRowCopyList: (index: string) => void
+
+  clearTaskDataRowCopyList: () => void
+
+  setTaskDataRowPasteList: () => void
 }
 
 
 const TableDataCopyStore = create<TableDataCopyState>(set => ({
-  TaskDataRowCopyList: [],
-  TaskDataRowPasteList: [],
+  taskDataRowCopyList: [],
+  taskDataRowPasteList: [],
+
+  addTaskDataRowCopyList: taskDataRow => set(state => ({taskDataRowCopyList: [...state.taskDataRowCopyList, taskDataRow]})),
+
+  deleteTaskDataRowCopyList: index => set(state => ({taskDataRowCopyList: state.taskDataRowCopyList.filter(taskDataRow => taskDataRow.index !== index)})),
+
+  clearTaskDataRowCopyList: () => set(state => ({taskDataRowCopyList: []})),
+
+  setTaskDataRowPasteList: () => set(state => ({
+    taskDataRowPasteList: state.taskDataRowCopyList,
+    taskDataRowCopyList: [],
+  })),
 }))
 
 export default TableDataCopyStore
