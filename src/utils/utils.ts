@@ -1,12 +1,12 @@
 import dayjs from 'dayjs'
 import { utils, writeFile, read } from 'xlsx'
-import { TaskDataClient } from 'interface/TaskData'
+import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
 import ExcelData from 'interface/ExcelData'
 
 
 export const TaskDataListDownloadXlsx = (
   taskDataTitleList: string[],
-  taskDataList: TaskDataClient[]
+  taskDataList: TaskDataClient[],
 ) => {
   const data = taskDataList.map((taskData, index) => ({
     [taskDataTitleList[0]]: (index + 1).toString().padStart(2, '0'),
@@ -40,7 +40,12 @@ export const TaskDataListDownloadXlsx = (
 }
 
 
-export const TaskDataListUploadXlsx = (event: React.ChangeEvent<HTMLInputElement>, addTaskDataDateListByList: (taskDataList: TaskDataClient[]) => void) => {
+export const TaskDataListUploadXlsx = (
+  event: React.ChangeEvent<HTMLInputElement>,
+  date: string,
+  setTaskDataDateList: (taskDataList: TaskDataClient[]) => void,
+  setTaskDataShowList: (taskDataList: TaskDataClient[]) => void,
+) => {
   if (!event.target.files) return
   
   const fileReader = new FileReader()
@@ -56,14 +61,35 @@ export const TaskDataListUploadXlsx = (event: React.ChangeEvent<HTMLInputElement
     const sheetName = fileInformation.SheetNames[0]
     const rawData = fileInformation.Sheets[sheetName]
     const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
-    const taskDataList: TaskDataClient[] = data.map((taskData) => ({
-      workDate: dayjs(taskData['작업일']),
+    const taskDataList: TaskDataServer[] = data.map((taskData) => ({
+      workDate: taskData['작업일'],
       lotNo: taskData['LOT No.'],
       variety: taskData['품종'],
       standard: taskData['규격'],
       length: taskData['슬라브 길이'],
       weight: taskData['중량'],
     }))
-    addTaskDataDateListByList(taskDataList)
+
+    fetch(`http://localhost:8000/taskDataList/${date}`, {
+      method: 'POST',
+      body: JSON.stringify(taskDataList),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then((data: TaskDataServer[]) => {
+      const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
+        workDate: dayjs(taskData.workDate),
+        lotNo: taskData.lotNo,
+        variety: taskData.variety,
+        standard: taskData.standard,
+        length: taskData.length,
+        weight: taskData.weight,
+      }))
+      
+      setTaskDataDateList(taskDataDateList)
+      setTaskDataShowList(taskDataDateList)
+    }) 
   }
 }
