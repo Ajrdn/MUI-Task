@@ -1,14 +1,16 @@
 import { create } from 'zustand'
-import TaskDataRow from 'interface/TableTaskDataRow'
+import TableTaskDataRow from 'interface/TableTaskDataRow'
 
 
 interface TableDataCopyState {
-  taskDataRowCopyList: TaskDataRow[]
-  taskDataRowPasteList: TaskDataRow[]
+  taskDataRowCopyList: TableTaskDataRow[]
+  taskDataRowPasteList: TableTaskDataRow[]
 
-  addTaskDataRowCopyList: (taskDataRow: TaskDataRow) => void
+  addTaskDataRowCopyList: (taskDataRow: TableTaskDataRow) => void
 
-  deleteTaskDataRowCopyList: (index: string) => void
+  selectTaskDataRowCopyList: (index: number) => void
+
+  unselectTaskDataRowCopyList: (index: number) => void
 
   clearTaskDataRowCopyList: () => void
 
@@ -16,13 +18,28 @@ interface TableDataCopyState {
 }
 
 
-const TableDataCopyStore = create<TableDataCopyState>((set) => ({
+const TableDataCopyStore = create<TableDataCopyState>(set => ({
   taskDataRowCopyList: [],
   taskDataRowPasteList: [],
 
   addTaskDataRowCopyList: taskDataRow => set(state => ({taskDataRowCopyList: [...state.taskDataRowCopyList, taskDataRow]})),
 
-  deleteTaskDataRowCopyList: index => set(state => ({taskDataRowCopyList: state.taskDataRowCopyList.filter(taskDataRow => taskDataRow.index !== index)})),
+  selectTaskDataRowCopyList: index => set(state => ({taskDataRowCopyList: state.taskDataRowCopyList.map(taskDataRow => {
+    console.log(state.taskDataRowCopyList)
+    if(index === taskDataRow.index) return {
+      ...taskDataRow,
+      selected: true,
+    }
+    return taskDataRow
+  })})),
+
+  unselectTaskDataRowCopyList: index => set(state => ({taskDataRowCopyList: state.taskDataRowCopyList.map(taskDataRow => {
+    if(index === taskDataRow.index) return {
+      ...taskDataRow,
+      selected: false,
+    }
+    return taskDataRow
+  })})),
 
   clearTaskDataRowCopyList: () => set(state => ({taskDataRowCopyList: []})),
 
