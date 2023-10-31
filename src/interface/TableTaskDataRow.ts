@@ -2,7 +2,7 @@ import { Dayjs } from 'dayjs'
 
 
 interface TableTaskDataRow {
-  index: string
+  index: number
   workDate: Dayjs
   lotNo: string
   variety: string
