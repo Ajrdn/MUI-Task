@@ -3,49 +3,38 @@ import TableTaskDataRow from 'interface/TableTaskDataRow'
 
 
 interface TableDataCopyState {
-  taskDataRowCopyList: TableTaskDataRow[]
-  taskDataRowPasteList: TableTaskDataRow[]
+  tableTaskDataRowCopyList: TableTaskDataRow[]
+  tableTaskDataRowPasteList: TableTaskDataRow[]
 
-  addTaskDataRowCopyList: (taskDataRow: TableTaskDataRow) => void
+  addTableTaskDataRowCopyList: (tableTaskDataRow: TableTaskDataRow) => void
 
-  selectTaskDataRowCopyList: (index: number) => void
+  clickTableTaskDataRow: (index: number) => void
 
-  unselectTaskDataRowCopyList: (index: number) => void
+  clearTableTaskDataRowCopyList: () => void
 
-  clearTaskDataRowCopyList: () => void
-
-  setTaskDataRowPasteList: () => void
+  setTableTaskDataRowPasteList: () => void
 }
 
 
 const TableDataCopyStore = create<TableDataCopyState>(set => ({
-  taskDataRowCopyList: [],
-  taskDataRowPasteList: [],
+  tableTaskDataRowCopyList: [],
+  tableTaskDataRowPasteList: [],
 
-  addTaskDataRowCopyList: taskDataRow => set(state => ({taskDataRowCopyList: [...state.taskDataRowCopyList, taskDataRow]})),
+  addTableTaskDataRowCopyList: tableTaskDataRow => set(state => ({tableTaskDataRowCopyList: [...state.tableTaskDataRowCopyList, tableTaskDataRow]})),
 
-  selectTaskDataRowCopyList: index => set(state => ({taskDataRowCopyList: state.taskDataRowCopyList.map(taskDataRow => {
-    console.log(state.taskDataRowCopyList)
-    if(index === taskDataRow.index) return {
-      ...taskDataRow,
-      selected: true,
+  clickTableTaskDataRow: index => set(state => ({tableTaskDataRowCopyList: state.tableTaskDataRowCopyList.map(tableTaskDataRow => {
+    if(index === tableTaskDataRow.index) return {
+      ...tableTaskDataRow,
+      selected: !tableTaskDataRow.selected,
     }
-    return taskDataRow
+    return tableTaskDataRow
   })})),
 
-  unselectTaskDataRowCopyList: index => set(state => ({taskDataRowCopyList: state.taskDataRowCopyList.map(taskDataRow => {
-    if(index === taskDataRow.index) return {
-      ...taskDataRow,
-      selected: false,
-    }
-    return taskDataRow
-  })})),
+  clearTableTaskDataRowCopyList: () => set(state => ({tableTaskDataRowCopyList: []})),
 
-  clearTaskDataRowCopyList: () => set(state => ({taskDataRowCopyList: []})),
-
-  setTaskDataRowPasteList: () => set(state => ({
-    taskDataRowPasteList: state.taskDataRowCopyList,
-    taskDataRowCopyList: [],
+  setTableTaskDataRowPasteList: () => set(state => ({
+    tableTaskDataRowPasteList: state.tableTaskDataRowCopyList,
+    tableTaskDataRowCopyList: [],
   })),
 }))
 
