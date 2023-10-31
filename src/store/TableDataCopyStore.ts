@@ -34,7 +34,10 @@ const TableDataCopyStore = create<TableDataCopyState>(set => ({
 
   setTableTaskDataRowPasteList: () => set(state => ({
     tableTaskDataRowPasteList: state.tableTaskDataRowCopyList.filter(tableTaskDataRow => tableTaskDataRow.selected),
-    tableTaskDataRowCopyList: [],
+    tableTaskDataRowCopyList: state.tableTaskDataRowCopyList.map(tableTaskDataRow => ({
+      ...tableTaskDataRow,
+      selected: false,
+    })),
   })),
 }))
 
