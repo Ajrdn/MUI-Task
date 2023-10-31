@@ -20,25 +20,16 @@ const TableDataCopyStore = create<TableDataCopyState>((set) => ({
   taskDataRowCopyList: [],
   taskDataRowPasteList: [],
 
-  addTaskDataRowCopyList: (taskDataRow) =>
-    set((state) => ({
-      taskDataRowCopyList: [...state.taskDataRowCopyList, taskDataRow],
-    })),
+  addTaskDataRowCopyList: taskDataRow => set(state => ({taskDataRowCopyList: [...state.taskDataRowCopyList, taskDataRow]})),
 
-  deleteTaskDataRowCopyList: (index) =>
-    set((state) => ({
-      taskDataRowCopyList: state.taskDataRowCopyList.filter(
-        (taskDataRow) => taskDataRow.index !== index
-      ),
-    })),
+  deleteTaskDataRowCopyList: index => set(state => ({taskDataRowCopyList: state.taskDataRowCopyList.filter(taskDataRow => taskDataRow.index !== index)})),
 
-  clearTaskDataRowCopyList: () => set((state) => ({ taskDataRowCopyList: [] })),
+  clearTaskDataRowCopyList: () => set(state => ({taskDataRowCopyList: []})),
 
-  setTaskDataRowPasteList: () =>
-    set((state) => ({
-      taskDataRowPasteList: state.taskDataRowCopyList,
-      taskDataRowCopyList: [],
-    })),
+  setTaskDataRowPasteList: () => set(state => ({
+    taskDataRowPasteList: state.taskDataRowCopyList,
+    taskDataRowCopyList: [],
+  })),
 }))
 
 export default TableDataCopyStore
