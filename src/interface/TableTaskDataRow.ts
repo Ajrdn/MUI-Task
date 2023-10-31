@@ -1,15 +1,10 @@
-import { Dayjs } from 'dayjs'
+import { TaskDataClient } from './TaskData'
 
 
 interface TableTaskDataRow {
   index: number
-  workDate: Dayjs
-  lotNo: string
-  variety: string
-  standard: string
-  length: string
-  weight: string
   selected: boolean
+  taskData: TaskDataClient
 }
 
 export default TableTaskDataRow
