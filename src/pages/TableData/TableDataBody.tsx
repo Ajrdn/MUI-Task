@@ -16,7 +16,10 @@ function TableDataBody() {
     taskDataShowList.map((taskData, index) => addTableTaskDataRowCopyList({
       index,
       selected: false,
-      taskData: taskData,
+      taskData: {
+        ...taskData,
+        workDate: taskData.workDate.format('YYYY-MM-DD'),
+      },
     }))
   }, [taskDataShowList, addTableTaskDataRowCopyList])
 
@@ -28,7 +31,7 @@ function TableDataBody() {
             key={`${tableTaskDataRow.taskData.lotNo}${index}`}
             cellDataList={[
               (index + 1).toString().padStart(2, '0'),
-              tableTaskDataRow.taskData.workDate.format('YYYY-MM-DD'),
+              tableTaskDataRow.taskData.workDate,
               tableTaskDataRow.taskData.lotNo,
               tableTaskDataRow.taskData.variety,
               tableTaskDataRow.taskData.standard,
