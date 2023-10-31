@@ -1,10 +1,10 @@
-import { TaskDataClient } from './TaskData'
+import { TaskDataServer } from './TaskData'
 
 
 interface TableTaskDataRow {
   index: number
   selected: boolean
-  taskData: TaskDataClient
+  taskData: TaskDataServer
 }
 
 export default TableTaskDataRow
