@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import TableTaskDataRow from 'interface/TableTaskDataRow'
+import { TaskDataServer } from 'interface/TaskData'
 
 
 interface TableDataCopyState {
   tableTaskDataRowCopyList: TableTaskDataRow[]
-  tableTaskDataRowPasteList: TableTaskDataRow[]
+  tableTaskDataRowPasteList: TaskDataServer[]
 
   addTableTaskDataRowCopyList: (tableTaskDataRow: TableTaskDataRow) => void
 
@@ -36,7 +37,7 @@ const TableDataCopyStore = create<TableDataCopyState>(set => ({
   }))})),
 
   setTableTaskDataRowPasteList: () => set(state => ({
-    tableTaskDataRowPasteList: state.tableTaskDataRowCopyList.filter(tableTaskDataRow => tableTaskDataRow.selected),
+    tableTaskDataRowPasteList: state.tableTaskDataRowCopyList.filter(tableTaskDataRow => tableTaskDataRow.selected).map(tableTaskDataRow => tableTaskDataRow.taskData),
     tableTaskDataRowCopyList: state.tableTaskDataRowCopyList.map(tableTaskDataRow => ({
       ...tableTaskDataRow,
       selected: false,
