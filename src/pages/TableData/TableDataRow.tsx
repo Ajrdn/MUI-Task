@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
 import TableDataCopyStore from 'store/TableDataCopyStore'
 import { styled } from '@mui/material/styles'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
-import TaskDataRow from 'interface/TaskDataRow'
+import TableTaskDataRow from 'interface/TableTaskDataRow'
 
 
 interface TableDataCellProps {
@@ -23,20 +22,15 @@ const TableDataCell = styled(TableCell)<TableDataCellProps>(({ selected }) => ({
 
 interface TableDataRowProps {
   cellDataList: string[]
-  taskDataRow: TaskDataRow
+  taskDataRow: TableTaskDataRow
 }
 
 
 function TableDataRow(props: TableDataRowProps) {
-  const [selected, setSelected] = useState<boolean>(false)
-
-  const addTaskDataRowCopyList = TableDataCopyStore(state => state.addTaskDataRowCopyList)
-  const deleteTaskDataRowCopyList = TableDataCopyStore(state => state.deleteTaskDataRowCopyList)
+  const selectTableTaskDataRowCopyList = TableDataCopyStore(state => state.clickTableTaskDataRow)
 
   const CopySelected = () => {
-    if(!selected) addTaskDataRowCopyList(props.taskDataRow)
-    else deleteTaskDataRowCopyList(props.taskDataRow.index)
-    setSelected(prev => !prev)
+    selectTableTaskDataRowCopyList(props.taskDataRow.index)
   }
 
   return (
@@ -52,7 +46,7 @@ function TableDataRow(props: TableDataRowProps) {
         <TableDataCell
           key={cellData}
           align='center'
-          selected={selected}
+          selected={props.taskDataRow.selected}
         >
           {cellData}
         </TableDataCell>
