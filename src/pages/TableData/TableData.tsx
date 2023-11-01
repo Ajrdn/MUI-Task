@@ -1,11 +1,15 @@
 import React from 'react'
+import dayjs from 'dayjs'
 import TableDataCopyStore from 'store/TableDataCopyStore'
+import TableSearchStore from 'store/TableSearchStore'
+import TaskDataListStore from 'store/TaskDataListStore'
 import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import Box from '@mui/material/Box'
+import { useSnackbar } from 'notistack'
 import TableHeader from './TableDataHeader'
 import TableDataBody from './TableDataBody'
-import { useSnackbar } from 'notistack'
+import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
 
 
 function TableData() {
@@ -17,6 +21,10 @@ function TableData() {
     clearTableTaskDataRowCopyList,
     setTableTaskDataRowPasteList,
   } = TableDataCopyStore()
+
+  const searchDate = TableSearchStore(state => state.searchDate)
+
+  const setTaskDataDateList = TaskDataListStore(state => state.setTaskDataDateList)
 
   const snackbarOptions = {
     variant: '',
@@ -31,20 +39,43 @@ function TableData() {
           ...snackbarOptions,
           variant: 'success',
         })
-        setTableTaskDataRowPasteList()
       } else {
         enqueueSnackbar('복사할 데이터가 선택되지 않았습니다.', {
           ...snackbarOptions,
           variant: 'warning',
         })
       }
+      setTableTaskDataRowPasteList()
     } else if(event.ctrlKey && event.key === 'v') {
       if(tableTaskDataRowPasteList.length > 0) {
-        
-
-        enqueueSnackbar('성공적으로 붙여넣었습니다!', {
-          ...snackbarOptions,
-          variant: 'success',
+        const TaskDataServerList: TaskDataServer[] = tableTaskDataRowPasteList.map(taskDataServer => {
+          return {
+            ...taskDataServer,
+            workDate: searchDate.format('YYYY-MM-DD')
+          }
+        })
+        fetch(`http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`, {
+          method: 'PUT',
+          body: JSON.stringify(TaskDataServerList),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(response => response.json())
+        .then((data: TaskDataServer[]) => {
+          const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
+            workDate: dayjs(taskData.workDate),
+            lotNo: taskData.lotNo,
+            variety: taskData.variety,
+            standard: taskData.standard,
+            length: taskData.length,
+            weight: taskData.weight,
+          }))
+          setTaskDataDateList(taskDataDateList)
+          enqueueSnackbar('성공적으로 붙여넣었습니다!', {
+            ...snackbarOptions,
+            variant: 'success',
+          })
         })
       } else {
         enqueueSnackbar('붙여넣기할 데이터가 선택되지 않았습니다.', {
