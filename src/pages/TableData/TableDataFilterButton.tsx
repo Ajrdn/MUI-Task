@@ -9,7 +9,8 @@ function TableDataFilterButton() {
   const [open, setOpen] = useState<boolean>(false)
 
   const openChange = () => {
-    setOpen(true)
+    setOpen(prev => !prev)
+    console.log(open)
   }
 
   return (
