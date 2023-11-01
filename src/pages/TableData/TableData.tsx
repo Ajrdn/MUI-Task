@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import Box from '@mui/material/Box'
 import { useSnackbar } from 'notistack'
-import TableHeader from './TableDataHeader'
+import TableDataHeader from './TableDataHeader'
 import TableDataBody from './TableDataBody'
 import TaskData from 'interface/TaskData'
 
@@ -89,7 +89,7 @@ function TableData() {
       onBlur={clearTableTaskDataRowCopyList}
     >
       <Table>
-        <TableHeader />
+        <TableDataHeader />
         <TableDataBody />
       </Table>
     </TableContainer>
