@@ -4,7 +4,7 @@ import TableAddModalDataStore from 'store/TableAddModalDataStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import TableSearchStore from 'store/TableSearchStore'
 import Button from '@mui/material/Button'
-import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
+import TaskData from 'interface/TaskData'
 
 
 function TableAddFormButton() {
@@ -51,16 +51,7 @@ function TableAddFormButton() {
       },
     })
     .then(response => response.json())
-    .then((data: TaskDataServer[]) => {
-      const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
-        workDate: dayjs(taskData.workDate),
-        lotNo: taskData.lotNo,
-        variety: taskData.variety,
-        standard: taskData.standard,
-        length: taskData.length,
-        weight: taskData.weight,
-      }))
-
+    .then((taskDataDateList: TaskData[]) => {
       setSearchItem('전체')
       setSearchWord('')
       setSearchDetailItem('전체')

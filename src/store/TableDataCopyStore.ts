@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 import TableTaskDataRow from 'interface/TableTaskDataRow'
-import { TaskDataServer } from 'interface/TaskData'
+import TaskData from 'interface/TaskData'
 
 
 interface TableDataCopyState {
   tableTaskDataRowCopyList: TableTaskDataRow[]
   tableTaskDataRowCopyListLength: number
-  tableTaskDataRowPasteList: TaskDataServer[]
+  tableTaskDataRowPasteList: TaskData[]
 
-  addTableTaskDataRowCopyList: (tableTaskDataRow: TableTaskDataRow) => void
+  setTableTaskDataRowCopyList: (tableTaskDataRowList: TableTaskDataRow[]) => void
 
   clickTableTaskDataRow: (index: number) => void
 
@@ -23,7 +23,7 @@ const TableDataCopyStore = create<TableDataCopyState>(set => ({
   tableTaskDataRowCopyListLength: 0,
   tableTaskDataRowPasteList: [],
 
-  addTableTaskDataRowCopyList: tableTaskDataRow => set(state => ({tableTaskDataRowCopyList: [...state.tableTaskDataRowCopyList, tableTaskDataRow]})),
+  setTableTaskDataRowCopyList: tableTaskDataRowList => set({tableTaskDataRowCopyList: tableTaskDataRowList}),
 
   clickTableTaskDataRow: index => set(state => {
     const newTableTaskDataRowCopyList = state.tableTaskDataRowCopyList.map(tableTaskDataRow => {

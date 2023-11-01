@@ -1,5 +1,4 @@
 import React from 'react'
-import dayjs from 'dayjs'
 import TableDataCopyStore from 'store/TableDataCopyStore'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
@@ -9,7 +8,7 @@ import Box from '@mui/material/Box'
 import { useSnackbar } from 'notistack'
 import TableHeader from './TableDataHeader'
 import TableDataBody from './TableDataBody'
-import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
+import TaskData from 'interface/TaskData'
 
 
 function TableData() {
@@ -48,29 +47,21 @@ function TableData() {
       setTableTaskDataRowPasteList()
     } else if(event.ctrlKey && event.key === 'v') {
       if(tableTaskDataRowPasteList.length > 0) {
-        const TaskDataServerList: TaskDataServer[] = tableTaskDataRowPasteList.map(taskDataServer => {
+        const TaskDataList: TaskData[] = tableTaskDataRowPasteList.map(taskData => {
           return {
-            ...taskDataServer,
+            ...taskData,
             workDate: searchDate.format('YYYY-MM-DD')
           }
         })
         fetch(`http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`, {
           method: 'PUT',
-          body: JSON.stringify(TaskDataServerList),
+          body: JSON.stringify(TaskDataList),
           headers: {
             'Content-Type': 'application/json',
           },
         })
         .then(response => response.json())
-        .then((data: TaskDataServer[]) => {
-          const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
-            workDate: dayjs(taskData.workDate),
-            lotNo: taskData.lotNo,
-            variety: taskData.variety,
-            standard: taskData.standard,
-            length: taskData.length,
-            weight: taskData.weight,
-          }))
+        .then((taskDataDateList: TaskData[]) => {
           setTaskDataDateList(taskDataDateList)
           enqueueSnackbar('성공적으로 붙여넣었습니다!', {
             ...snackbarOptions,

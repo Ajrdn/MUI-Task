@@ -2,26 +2,25 @@ import React, { useEffect } from 'react'
 import TaskDataListStore from 'store/TaskDataListStore'
 import TableDataCopyStore from 'store/TableDataCopyStore'
 import TableBody from '@mui/material/TableBody'
-import { TaskDataClient } from 'interface/TaskData'
+import TaskData from 'interface/TaskData'
 import TableDataRow from './TableDataRow'
 import TableTaskDataRow from 'interface/TableTaskDataRow'
 
 
 function TableDataBody() {
-  const taskDataShowList: TaskDataClient[] = TaskDataListStore(state => state.taskDataShowList)
+  const taskDataShowList: TaskData[] = TaskDataListStore(state => state.taskDataShowList)
   const tableTaskDataRowCopyList: TableTaskDataRow[] = TableDataCopyStore(state => state.tableTaskDataRowCopyList)
-  const addTableTaskDataRowCopyList = TableDataCopyStore(state => state.addTableTaskDataRowCopyList)
+  const setTableTaskDataRowCopyList = TableDataCopyStore(state => state.setTableTaskDataRowCopyList)
 
   useEffect(() => {
-    taskDataShowList.map((taskData, index) => addTableTaskDataRowCopyList({
+    const tableTaskDataRowList: TableTaskDataRow[] = taskDataShowList.map((taskData, index) => ({
       index,
       selected: false,
-      taskData: {
-        ...taskData,
-        workDate: taskData.workDate.format('YYYY-MM-DD'),
-      },
+      taskData: taskData,
     }))
-  }, [taskDataShowList, addTableTaskDataRowCopyList])
+
+    setTableTaskDataRowCopyList(tableTaskDataRowList)
+  }, [taskDataShowList, setTableTaskDataRowCopyList])
 
   return (
     <TableBody>
@@ -38,7 +37,8 @@ function TableDataBody() {
               tableTaskDataRow.taskData.length,
               tableTaskDataRow.taskData.weight,
             ]}
-            taskDataRow={tableTaskDataRow}
+            index={index}
+            selected={tableTaskDataRow.selected}
           />
         )
       })}

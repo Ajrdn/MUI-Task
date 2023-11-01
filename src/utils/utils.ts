@@ -1,16 +1,15 @@
-import dayjs from 'dayjs'
 import { utils, writeFile, read } from 'xlsx'
-import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
+import TaskData from 'interface/TaskData'
 import ExcelData from 'interface/ExcelData'
 
 
 export const TaskDataListDownloadXlsx = (
   taskDataTitleList: string[],
-  taskDataList: TaskDataClient[],
+  taskDataList: TaskData[],
 ) => {
   const data = taskDataList.map((taskData, index) => ({
     [taskDataTitleList[0]]: (index + 1).toString().padStart(2, '0'),
-    [taskDataTitleList[1]]: taskData.workDate.format('YYYY-MM-DD'),
+    [taskDataTitleList[1]]: taskData.workDate,
     [taskDataTitleList[2]]: taskData.lotNo,
     [taskDataTitleList[3]]: taskData.variety,
     [taskDataTitleList[4]]: taskData.standard,
@@ -43,7 +42,7 @@ export const TaskDataListDownloadXlsx = (
 export const TaskDataListUploadXlsx = (
   event: React.ChangeEvent<HTMLInputElement>,
   date: string,
-  setTaskDataDateList: (taskDataList: TaskDataClient[]) => void,
+  setTaskDataDateList: (taskDataList: TaskData[]) => void,
 ) => {
   if (!event.target.files || event.target.files.length === 0) return
   
@@ -60,7 +59,7 @@ export const TaskDataListUploadXlsx = (
     const sheetName = fileInformation.SheetNames[0]
     const rawData = fileInformation.Sheets[sheetName]
     const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
-    const taskDataList: TaskDataServer[] = data.map(taskData => ({
+    const taskDataList: TaskData[] = data.map(taskData => ({
       workDate: taskData['작업일'],
       lotNo: taskData['LOT No.'],
       variety: taskData['품종'],
@@ -77,16 +76,7 @@ export const TaskDataListUploadXlsx = (
       },
     })
     .then(response => response.json())
-    .then((data: TaskDataServer[]) => {
-      const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
-        workDate: dayjs(taskData.workDate),
-        lotNo: taskData.lotNo,
-        variety: taskData.variety,
-        standard: taskData.standard,
-        length: taskData.length,
-        weight: taskData.weight,
-      }))
-      
+    .then((taskDataDateList: TaskData[]) => {
       setTaskDataDateList(taskDataDateList)
     }) 
   }

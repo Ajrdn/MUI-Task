@@ -1,5 +1,5 @@
 import React, { useEffect }  from 'react'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { styled } from '@mui/material/styles'
@@ -9,7 +9,7 @@ import TableData from './TableData/TableData'
 import TableAddFab from './TableAddFab/TableAddFab'
 import AlarmFab from 'components/AlarmFab/AlarmFab'
 import InformFab from 'components/InformFab/InformFab'
-import { TaskDataClient, TaskDataServer } from 'interface/TaskData'
+import TaskData from 'interface/TaskData'
 
 
 const TablePageBackground = styled(Box)({
@@ -28,16 +28,7 @@ function TablePage() {
   useEffect(() => {
     fetch(`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`)
     .then(response => response.json())
-    .then((data: TaskDataServer[]) => {
-      const taskDataDateList: TaskDataClient[] = data.map(taskData => ({
-        workDate: dayjs(taskData.workDate),
-        lotNo: taskData.lotNo,
-        variety: taskData.variety,
-        standard: taskData.standard,
-        length: taskData.length,
-        weight: taskData.weight,
-      }))
-
+    .then((taskDataDateList: TaskData[]) => {
       setTaskDataDateList(taskDataDateList)
       setTaskDataShowList(taskDataDateList)
     })

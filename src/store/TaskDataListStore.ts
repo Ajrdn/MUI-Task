@@ -1,15 +1,15 @@
 import { create } from 'zustand'
-import { TaskDataClient } from 'interface/TaskData'
+import TaskData from 'interface/TaskData'
 import { MenuValue } from 'interface/SearchMenu'
 
 
 interface TaskDataListState {
-  taskDataDateList: TaskDataClient[]
-  taskDataShowList: TaskDataClient[]
+  taskDataDateList: TaskData[]
+  taskDataShowList: TaskData[]
 
-  setTaskDataDateList: (newTaskDataDateList: TaskDataClient[]) => void
+  setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
 
-  setTaskDataShowList: (newTaskDataDateList: TaskDataClient[]) => void
+  setTaskDataShowList: (newTaskDataDateList: TaskData[]) => void
 
   setTaskDataShowListBySearchData: (select: MenuValue, word: string, detailSelect?: MenuValue, detailWord?: string) => void
 }
