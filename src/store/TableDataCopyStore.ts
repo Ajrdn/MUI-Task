@@ -5,6 +5,7 @@ import { TaskDataServer } from 'interface/TaskData'
 
 interface TableDataCopyState {
   tableTaskDataRowCopyList: TableTaskDataRow[]
+  tableTaskDataRowCopyListLength: number
   tableTaskDataRowPasteList: TaskDataServer[]
 
   addTableTaskDataRowCopyList: (tableTaskDataRow: TableTaskDataRow) => void
@@ -19,17 +20,24 @@ interface TableDataCopyState {
 
 const TableDataCopyStore = create<TableDataCopyState>(set => ({
   tableTaskDataRowCopyList: [],
+  tableTaskDataRowCopyListLength: 0,
   tableTaskDataRowPasteList: [],
 
   addTableTaskDataRowCopyList: tableTaskDataRow => set(state => ({tableTaskDataRowCopyList: [...state.tableTaskDataRowCopyList, tableTaskDataRow]})),
 
-  clickTableTaskDataRow: index => set(state => ({tableTaskDataRowCopyList: state.tableTaskDataRowCopyList.map(tableTaskDataRow => {
-    if(index === tableTaskDataRow.index) return {
-      ...tableTaskDataRow,
-      selected: !tableTaskDataRow.selected,
+  clickTableTaskDataRow: index => set(state => {
+    const newTableTaskDataRowCopyList = state.tableTaskDataRowCopyList.map(tableTaskDataRow => {
+      if(index === tableTaskDataRow.index) return {
+        ...tableTaskDataRow,
+        selected: !tableTaskDataRow.selected,
+      }
+      return tableTaskDataRow
+    })
+    return {
+      tableTaskDataRowCopyList: newTableTaskDataRowCopyList,
+      tableTaskDataRowCopyListLength: newTableTaskDataRowCopyList.filter(tableTaskDataRow => tableTaskDataRow.selected).length
     }
-    return tableTaskDataRow
-  })})),
+  }),
 
   clearTableTaskDataRowCopyList: () => set(state => ({tableTaskDataRowCopyList: state.tableTaskDataRowCopyList.map(tableTaskDataRow => ({
     ...tableTaskDataRow,
