@@ -19,12 +19,12 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
   taskDataDateList: [],
   taskDataShowList: [],
 
-  setTaskDataDateList: newTaskDataDateList => set(state => ({
+  setTaskDataDateList: newTaskDataDateList => set({
     taskDataDateList: newTaskDataDateList,
     taskDataShowList: newTaskDataDateList,
-  })),
+  }),
 
-  setTaskDataShowList: newTaskDataDateList => set(state => ({taskDataShowList: newTaskDataDateList})),
+  setTaskDataShowList: newTaskDataDateList => set({taskDataShowList: newTaskDataDateList}),
 
   setTaskDataShowListBySearchData: (select, word, detailSelect?, detailWord?) => {
     set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData[select].includes(word.toUpperCase()) || taskData[select].includes(word.toLowerCase()))}))
