@@ -11,7 +11,6 @@ import FeatureButton from './FeatureButton'
 import DetailItemSelectSearch from './DetailItemSelectSearch'
 import DetailItemTextSearch from './DetailItemTextSearch'
 import { MenuTitle, MenuValue } from 'interface/SearchMenu'
-import { TABLE_HEADER_LIST } from 'interface/TableHeader'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { TaskDataListDownloadXlsx, TaskDataListUploadXlsx } from 'utils/utils'
@@ -46,7 +45,7 @@ function TablePageSearchBar() {
   } = TaskDataListStore()
 
   const excelDownload = () => {
-    TaskDataListDownloadXlsx(TABLE_HEADER_LIST, taskDataShowList)
+    TaskDataListDownloadXlsx(taskDataShowList)
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

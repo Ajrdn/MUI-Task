@@ -3,18 +3,26 @@ import TaskData from 'interface/TaskData'
 import ExcelData from 'interface/ExcelData'
 
 
-export const TaskDataListDownloadXlsx = (
-  taskDataTitleList: string[],
-  taskDataList: TaskData[],
-) => {
+const TABLE_HEADER_LIST: string[] = [
+  'No.',
+  '작업일',
+  'LOT No.',
+  '품종',
+  '규격',
+  '슬라브 길이',
+  '중량',
+]
+
+
+export const TaskDataListDownloadXlsx = (taskDataList: TaskData[]) => {
   const data = taskDataList.map((taskData, index) => ({
-    [taskDataTitleList[0]]: (index + 1).toString().padStart(2, '0'),
-    [taskDataTitleList[1]]: taskData.workDate,
-    [taskDataTitleList[2]]: taskData.lotNo,
-    [taskDataTitleList[3]]: taskData.variety,
-    [taskDataTitleList[4]]: taskData.standard,
-    [taskDataTitleList[5]]: taskData.length,
-    [taskDataTitleList[6]]: taskData.weight,
+    [TABLE_HEADER_LIST[0]]: (index + 1).toString().padStart(2, '0'),
+    [TABLE_HEADER_LIST[1]]: taskData.workDate,
+    [TABLE_HEADER_LIST[2]]: taskData.lotNo,
+    [TABLE_HEADER_LIST[3]]: taskData.variety,
+    [TABLE_HEADER_LIST[4]]: taskData.standard,
+    [TABLE_HEADER_LIST[5]]: taskData.length,
+    [TABLE_HEADER_LIST[6]]: taskData.weight,
   }))
 
   const excelHandler = {
