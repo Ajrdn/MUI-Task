@@ -12,7 +12,7 @@ function TableData() {
   const { enqueueSnackbar } = useSnackbar()
 
   const {
-    tableTaskDataRowCopyList,
+    tableTaskDataRowCopyListLength,
     tableTaskDataRowPasteList,
     clearTableTaskDataRowCopyList,
     setTableTaskDataRowPasteList,
@@ -26,7 +26,7 @@ function TableData() {
 
   const copyData = (event: React.KeyboardEvent) => {
     if(event.ctrlKey && event.key === 'c') {
-      if(tableTaskDataRowCopyList) {
+      if(tableTaskDataRowCopyListLength > 0) {
         enqueueSnackbar('성공적으로 복사되었습니다!', {
           ...snackbarOptions,
           variant: 'success',
