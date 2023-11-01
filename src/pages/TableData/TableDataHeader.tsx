@@ -3,7 +3,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableDataFilterButton from './TableDataFilterButton'
-import { TableHeader } from 'interface/TableHeader'
+import TableHeader from 'interface/TableHeader'
 
 
 interface TableDataHeaderProps {
