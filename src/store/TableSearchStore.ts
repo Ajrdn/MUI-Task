@@ -32,7 +32,7 @@ const TableSearchStore = create<TableSearchState>((set) => ({
     '슬라브 길이',
     '중량',
   ],
-  searchDate: dayjs('2023-10-24'),
+  searchDate: dayjs(),
   searchItem: '전체',
   searchWord: '',
   searchDetailItem: '전체',
