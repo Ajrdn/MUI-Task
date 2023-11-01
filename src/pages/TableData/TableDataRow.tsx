@@ -42,9 +42,9 @@ function TableDataRow(props: TableDataRowProps) {
         },
       }}
     >
-      {props.cellDataList.map(cellData => (
+      {props.cellDataList.map((cellData, index) => (
         <TableDataCell
-          key={cellData}
+          key={`${cellData}${index}`}
           align='center'
           selected={props.taskDataRow.selected}
         >
