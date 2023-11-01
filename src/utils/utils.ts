@@ -60,7 +60,7 @@ export const TaskDataListUploadXlsx = (
     const sheetName = fileInformation.SheetNames[0]
     const rawData = fileInformation.Sheets[sheetName]
     const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
-    const taskDataList: TaskDataServer[] = data.map((taskData) => ({
+    const taskDataList: TaskDataServer[] = data.map(taskData => ({
       workDate: taskData['작업일'],
       lotNo: taskData['LOT No.'],
       variety: taskData['품종'],
