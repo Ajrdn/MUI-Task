@@ -46,7 +46,7 @@ function TablePageSearchBar() {
   } = TaskDataListStore()
 
   const excelDownload = () => {
-    TaskDataListDownloadXlsx(TABLE_HEADER_LIST.map(tableHeader => tableHeader.title), taskDataShowList)
+    TaskDataListDownloadXlsx(TABLE_HEADER_LIST, taskDataShowList)
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

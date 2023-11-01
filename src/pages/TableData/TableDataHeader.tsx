@@ -3,14 +3,19 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableDataFilterButton from './TableDataFilterButton'
-import { TABLE_HEADER_LIST } from 'interface/TableHeader'
+import { TableHeader } from 'interface/TableHeader'
 
 
-function TableDataHeader() {
+interface TableDataHeaderProps {
+  tableHeaderList: TableHeader[]
+}
+
+
+function TableDataHeader(props: TableDataHeaderProps) {
   return (
     <TableHead>
       <TableRow>
-        {TABLE_HEADER_LIST.map(tableHeader => (
+        {props.tableHeaderList.map(tableHeader => (
           <TableCell
             key={tableHeader.title}
             align='center'
