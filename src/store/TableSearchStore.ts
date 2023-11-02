@@ -12,7 +12,7 @@ interface TableSearchState {
 const TableSearchStore = create<TableSearchState>((set) => ({
   searchDate: dayjs(),
 
-  setSearchDate: date => set(state => ({searchDate: date})),
+  setSearchDate: date => set({searchDate: date}),
 }))
 
 export default TableSearchStore
