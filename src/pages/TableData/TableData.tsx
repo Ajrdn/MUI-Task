@@ -2,6 +2,7 @@ import React from 'react'
 import TableDataCopyStore from 'store/TableDataCopyStore'
 import TableSearchStore from 'store/TableSearchStore'
 import TaskDataListStore from 'store/TaskDataListStore'
+import TableHeaderFilterStore from 'store/TableHeaderFilterStore'
 import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import Box from '@mui/material/Box'
@@ -13,6 +14,8 @@ import TableHeader from 'interface/TableHeader'
 
 
 function TableData() {
+  const tableHeaderFilterStore = TableHeaderFilterStore()
+
   const tableHeaderList: TableHeader[] = [
     {
       title: 'No.',
@@ -25,27 +28,32 @@ function TableData() {
     {
       title: 'LOT No.',
       size: '300px',
-      filterFunction: () => {},
+      filterData: tableHeaderFilterStore.lotNo,
+      filterFunction: tableHeaderFilterStore.setLotNo,
     },
     {
       title: '품종',
       size: '300px',
-      filterFunction: () => {},
+      filterData: tableHeaderFilterStore.variety,
+      filterFunction: tableHeaderFilterStore.setVariety,
     },
     {
       title: '규격',
       size: '300px',
-      filterFunction: () => {},
+      filterData: tableHeaderFilterStore.standard,
+      filterFunction: tableHeaderFilterStore.setStandard,
     },
     {
       title: '슬라브 길이',
       size: '300px',
-      filterFunction: () => {},
+      filterData: tableHeaderFilterStore.length,
+      filterFunction: tableHeaderFilterStore.setLength,
     },
     {
       title: '중량',
       size: '128px',
-      filterFunction: () => {},
+      filterData: tableHeaderFilterStore.weight,
+      filterFunction: tableHeaderFilterStore.setWeight,
     },
   ];
 
