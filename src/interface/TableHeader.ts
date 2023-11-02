@@ -1,7 +1,8 @@
 interface TableHeader {
   title: string
   size: string
-  filterFunction?: (filterData: string, filterFunction: (newData: string) => void) => void
+  filterData?: string
+  filterFunction?: (newFilterData: string) => void
 }
 
 export default TableHeader
