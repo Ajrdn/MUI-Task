@@ -13,19 +13,20 @@ import { TaskDataListDownloadXlsx, TaskDataListUploadXlsx } from 'utils/utils'
 const TablePageSearchBarBackground = styled(Box)({
   width: '1520px',
   display: 'flex',
+  justifyContent: 'space-between',
+})
+
+
+const TablePageSearchBarButtonBox = styled(Box)({
+  display: 'flex',
   gap: '12px',
 })
 
 
 function TablePageSearchBar() {
-  const {
-    searchDate,
-  } = TableSearchStore()
+  const searchDate = TableSearchStore(state => state.searchDate)
 
-  const {
-    taskDataShowList,
-    setTaskDataDateList,
-  } = TaskDataListStore()
+  const { taskDataShowList, setTaskDataDateList } = TaskDataListStore()
 
   const excelDownload = () => {
     TaskDataListDownloadXlsx(taskDataShowList)
@@ -38,29 +39,31 @@ function TablePageSearchBar() {
   return (
     <TablePageSearchBarBackground>
       <ItemDatePicker />
-      <FeatureButton
-        feature='액셀 다운로드'
-        variant='contained'
-        color='white'
-        backgroundColor='#42A5F5'
-        icon={<DownloadForOffline />}
-        width='127px'
-        padding='0 10px'
-        disabled={taskDataShowList.length === 0}
-        label={false}
-        buttonPerformance={excelDownload}
-      />
-      <FeatureButton
-        feature='액셀 업로드'
-        variant='outlined'
-        color='#42A5F5'
-        backgroundColor='#42A5F5'
-        icon={<CloudUpload />}
-        width='113px'
-        padding='0 10px'
-        label
-        inputPerformance={excelUpload}
-      />
+      <TablePageSearchBarButtonBox>
+        <FeatureButton
+          feature='액셀 다운로드'
+          variant='contained'
+          color='white'
+          backgroundColor='#42A5F5'
+          icon={<DownloadForOffline />}
+          width='127px'
+          padding='0 10px'
+          disabled={taskDataShowList.length === 0}
+          label={false}
+          buttonPerformance={excelDownload}
+        />
+        <FeatureButton
+          feature='액셀 업로드'
+          variant='outlined'
+          color='#42A5F5'
+          backgroundColor='#42A5F5'
+          icon={<CloudUpload />}
+          width='113px'
+          padding='0 10px'
+          label
+          inputPerformance={excelUpload}
+        />
+      </TablePageSearchBarButtonBox>
     </TablePageSearchBarBackground>
   )
 }
