@@ -11,8 +11,6 @@ interface TaskDataListState {
 
   setTaskDataShowList: (newTaskDataDateList: TaskData[]) => void
 
-  setTaskDataShowListBySearchData: (select: MenuValue, word: string, detailSelect?: MenuValue, detailWord?: string) => void
-
   setTaskDataShowListByFilter: (lotNo: string, variety: string, standard: string, length: string, weight: string) => void
 }
 
@@ -27,12 +25,6 @@ const TaskDataListStore = create<TaskDataListState>(set => ({
   }),
 
   setTaskDataShowList: newTaskDataDateList => set({taskDataShowList: newTaskDataDateList}),
-
-  setTaskDataShowListBySearchData: (select, word, detailSelect?, detailWord?) => {
-    set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData => taskData[select].includes(word.toUpperCase()) || taskData[select].includes(word.toLowerCase()))}))
-    if(detailSelect)
-      set(state => ({taskDataShowList: state.taskDataShowList.filter(taskData => taskData[detailSelect].includes(detailWord!.toUpperCase()) || taskData[detailSelect].includes(detailWord!.toLowerCase()))}))
-  },
 
   setTaskDataShowListByFilter: (lotNo, variety, standard, length, weight) => set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData =>
     (taskData.lotNo.includes(lotNo.toUpperCase()) || taskData.lotNo.includes(lotNo.toLowerCase())) &&
