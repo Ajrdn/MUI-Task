@@ -2,9 +2,21 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 
 
-function TableDataFilterTextField() {
+interface TableDataFilterTextFieldProps {
+  filterData: string
+  filterFunction: (newFilterData: string) => void
+}
+
+
+function TableDataFilterTextField(props: TableDataFilterTextFieldProps) {
+  const filterDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.filterFunction(event.target.value)
+  }
+
   return (
     <TextField
+      value={props.filterData}
+      onChange={filterDataChange}
       placeholder='검색어 입력'
       sx={{
         '& input': {

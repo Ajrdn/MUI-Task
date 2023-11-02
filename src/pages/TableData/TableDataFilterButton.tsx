@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import TaskDataListStore from 'store/TaskDataListStore'
+import TableHeaderFilterStore from 'store/TableHeaderFilterStore'
 import { styled } from '@mui/material/styles'
 import FilterAlt from '@mui/icons-material/FilterAlt'
 import IconButton from '@mui/material/IconButton'
@@ -27,16 +29,37 @@ const TableDataFilterModalContentBox = styled(ModalContentBox)({
 })
 
 
-function TableDataFilterButton() {
+interface TableDataFilterButtonProps {
+  filterData: string
+  filterFunction: (newFilterData: string) => void
+}
+
+
+function TableDataFilterButton(props: TableDataFilterButtonProps) {
   const [open, setOpen] = useState<boolean>(false)
 
-  const openChange = () => {
+  const {
+    lotNo,
+    variety,
+    standard,
+    length,
+    weight,
+  } = TableHeaderFilterStore()
+
+  const setTaskDataShowListByFilter = TaskDataListStore(state => state.setTaskDataShowListByFilter)
+
+  const openFilterField = () => {
     setOpen(prev => !prev)
+  }
+
+  const closeFilterField = () => {
+    setOpen(prev => !prev)
+    setTaskDataShowListByFilter(lotNo, variety, standard, length, weight)
   }
 
   return (
     <>
-      <IconButton onClick={openChange}>
+      <IconButton onClick={openFilterField}>
         <FilterAlt
           sx={{
             width: '14px',
@@ -46,11 +69,11 @@ function TableDataFilterButton() {
       </IconButton>
       <TableDataFilterModalBackground
         open={open}
-        onClose={openChange}
+        onClose={closeFilterField}
         disablePortal
       >
         <TableDataFilterModalContentBox>
-          <TableDataFilterTextField />
+          <TableDataFilterTextField {...props} />
         </TableDataFilterModalContentBox>
       </TableDataFilterModalBackground>
     </>
