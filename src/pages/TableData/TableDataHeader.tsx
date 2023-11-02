@@ -37,7 +37,7 @@ function TableDataHeader(props: TableDataHeaderProps) {
   return (
     <TableHead>
       <TableRow>
-        {props.tableHeaderList.map((tableHeader) => (
+        {props.tableHeaderList.map(tableHeader => (
           <TableCell
             key={tableHeader.title}
             align='center'
@@ -48,7 +48,11 @@ function TableDataHeader(props: TableDataHeaderProps) {
           >
             <TableDataCell>
               <TableHeaderTitle>{tableHeader.title}</TableHeaderTitle>
-              {tableHeader.filterFunction && <TableDataFilterButton />}
+              {tableHeader.filterFunction &&
+              <TableDataFilterButton
+                filterData={tableHeader.filterData!}
+                filterFunction={tableHeader.filterFunction}
+              />}
             </TableDataCell>
           </TableCell>
         ))}
