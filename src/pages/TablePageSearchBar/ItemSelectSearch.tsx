@@ -6,12 +6,6 @@ import InputLabel from '@mui/material/InputLabel'
 
 
 function ItemSelectSearch() {
-  const item = TableSearchStore(state => state.searchItem)
-  const setItem = TableSearchStore(state => state.setSearchItem)
-  const setWord = TableSearchStore(state => state.setSearchWord)
-  const setDetailItem = TableSearchStore(state => state.setSearchDetailItem)
-  const setDetailWord = TableSearchStore(state => state.setSearchDetailWord)
-  const menuList = TableSearchStore(state => state.menuList)
 
   const itemChange = (event: SelectChangeEvent) => {
     const menu = event.target.value

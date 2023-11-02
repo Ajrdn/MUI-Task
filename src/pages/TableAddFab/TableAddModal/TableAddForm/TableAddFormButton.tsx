@@ -12,13 +12,7 @@ function TableAddFormButton() {
     setTaskDataDateList,
   } = TaskDataListStore()
 
-  const {
-    searchDate,
-    setSearchItem,
-    setSearchWord,
-    setSearchDetailItem,
-    setSearchDetailWord,
-  } = TableSearchStore()
+  const searchDate = TableSearchStore(state => state.searchDate)
 
   const {
     setOpen,
@@ -52,10 +46,6 @@ function TableAddFormButton() {
     })
     .then(response => response.json())
     .then((taskDataDateList: TaskData[]) => {
-      setSearchItem('전체')
-      setSearchWord('')
-      setSearchDetailItem('전체')
-      setSearchDetailWord('')
       setTaskDataDateList(taskDataDateList)
 
       setWorkDate(dayjs())
