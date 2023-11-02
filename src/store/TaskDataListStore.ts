@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import TaskData from 'interface/TaskData'
-import { MenuValue } from 'interface/SearchMenu'
 
 
 interface TaskDataListState {
