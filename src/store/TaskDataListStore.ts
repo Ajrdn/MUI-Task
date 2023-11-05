@@ -106,16 +106,19 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
   }),
 
   clearTaskDataShowList: () => set(state => ({
-    taskDataShowList: state.taskDataShowList.map((taskDataShow) => ({
+    taskDataShowList: state.taskDataShowList.map(taskDataShow => ({
       ...taskDataShow,
       selected: false,
     })),
   })),
 
   setTaskDataPasteList: () => set(state => {
-    state.clearTaskDataShowList()
     return {
-      taskDataPasteList: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).map(taskDataShow => taskDataShow.tableData)
+      taskDataPasteList: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).map(taskDataShow => taskDataShow.tableData),
+      taskDataShowList: state.taskDataShowList.map(taskDataShow => ({
+        ...taskDataShow,
+        selected: false,
+      })),
     }
   }),
 
