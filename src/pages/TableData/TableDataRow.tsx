@@ -1,4 +1,3 @@
-import TableDataCopyStore from 'store/TableDataCopyStore'
 import { styled } from '@mui/material/styles'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
@@ -20,29 +19,28 @@ const TableDataCell = styled(TableCell)<TableDataCellProps>(({ selected }) => ({
 
 
 interface TableDataRowProps {
-  cellDataList: string[]
+  tableRowData: string[]
   index: number
   selected: boolean
+  clickTableRow: (index: number) => void
 }
 
 
 function TableDataRow(props: TableDataRowProps) {
-  const selectTableTaskDataRowCopyList = TableDataCopyStore(state => state.clickTableTaskDataRow)
-
-  const CopySelected = () => {
-    selectTableTaskDataRowCopyList(props.index)
+  const rowSelected = () => {
+    props.clickTableRow(props.index)
   }
 
   return (
     <TableRow
-      onClick={CopySelected}
+      onClick={rowSelected}
       sx={{
         '&:last-child > *': {
           borderBottom: 'none',
         },
       }}
     >
-      {props.cellDataList.map((cellData, index) => (
+      {props.tableRowData.map((cellData, index) => (
         <TableDataCell
           key={`${cellData}${index}`}
           align='center'
