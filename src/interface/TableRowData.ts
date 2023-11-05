@@ -2,7 +2,7 @@ interface TableRowData<T> {
   index: number
   selected: boolean
   tableData: T
-  cellDataList: string[]
+  tableRowData: string[]
 }
 
 export default TableRowData
