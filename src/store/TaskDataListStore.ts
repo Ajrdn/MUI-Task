@@ -13,7 +13,7 @@ interface TaskDataListState {
 
   setTaskDataShowList: (newTaskDataDateList: TableRowData<TaskData>[]) => void
 
-  setTaskDataShowListByFilter: (lotNo: string,variety: string,standard: string,length: string,weight: string) => void
+  setTaskDataShowListByFilter: (lotNo: string, variety: string, standard: string, length: string, weight: string) => void
 
   clickTableRow: (index: number) => void
 
