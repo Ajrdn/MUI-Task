@@ -91,8 +91,8 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
     })),
   })),
 
-  clickTableRow: (index) => set(state => {
-    const newTaskDataShowList = state.taskDataShowList.map((taskDataShow) => {
+  clickTableRow: (index: number) => set(state => {
+    const newTaskDataShowList = state.taskDataShowList.map(taskDataShow => {
       if(index === taskDataShow.index) return {
         ...taskDataShow,
         selected: !taskDataShow.selected
@@ -112,15 +112,13 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
     })),
   })),
 
-  setTaskDataPasteList: () => set(state => {
-    return {
-      taskDataPasteList: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).map(taskDataShow => taskDataShow.tableData),
-      taskDataShowList: state.taskDataShowList.map(taskDataShow => ({
-        ...taskDataShow,
-        selected: false,
-      })),
-    }
-  }),
+  setTaskDataPasteList: () => set(state => ({
+    taskDataPasteList: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).map(taskDataShow => taskDataShow.tableData),
+    taskDataShowList: state.taskDataShowList.map(taskDataShow => ({
+      ...taskDataShow,
+      selected: false,
+    })),
+  })),
 
   setLotNo: (newLotNo: string) => set({lotNo: newLotNo}),
 
