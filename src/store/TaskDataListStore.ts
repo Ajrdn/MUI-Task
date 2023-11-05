@@ -8,6 +8,7 @@ interface TaskDataListState {
   taskDataShowList: TableRowData<TaskData>[]
   selectTaskDataShowListLength: number
   taskDataPasteList: TaskData[]
+  taskDataPasteListLength: number
   lotNo: string
   variety: string
   standard: string
@@ -16,7 +17,7 @@ interface TaskDataListState {
 
   setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
 
-  setTaskDataShowList: (newTaskDataDateList: TableRowData<TaskData>[]) => void
+  setTaskDataShowList: (newTaskDataShowList: TableRowData<TaskData>[]) => void
 
   setTaskDataShowListByFilter: (lotNo: string, variety: string, standard: string, length: string, weight: string) => void
 
@@ -43,6 +44,7 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
   taskDataShowList: [],
   selectTaskDataShowListLength: 0,
   taskDataPasteList: [],
+  taskDataPasteListLength: 0,
   lotNo: '',
   variety: '',
   standard: '',
@@ -67,7 +69,7 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
     })),
   }),
 
-  setTaskDataShowList: newTaskDataDateList => set({taskDataShowList: newTaskDataDateList}),
+  setTaskDataShowList: newTaskDataShowList => set({taskDataShowList: newTaskDataShowList}),
 
   setTaskDataShowListByFilter: (lotNo, variety, standard, length, weight) => set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData =>
     (taskData.lotNo.includes(lotNo.toUpperCase()) || taskData.lotNo.includes(lotNo.toLowerCase())) &&
@@ -114,6 +116,7 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
 
   setTaskDataPasteList: () => set(state => ({
     taskDataPasteList: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).map(taskDataShow => taskDataShow.tableData),
+    taskDataPasteListLength: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).length,
     taskDataShowList: state.taskDataShowList.map(taskDataShow => ({
       ...taskDataShow,
       selected: false,
