@@ -1,84 +1,37 @@
 import React from 'react'
-import TableDataCopyStore from 'store/TableDataCopyStore'
-import TableSearchStore from 'store/TableSearchStore'
-import TaskDataListStore from 'store/TaskDataListStore'
-import TableHeaderFilterStore from 'store/TableHeaderFilterStore'
 import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import Box from '@mui/material/Box'
 import { useSnackbar } from 'notistack'
 import TableDataHeader from './TableDataHeader'
 import TableDataBody from './TableDataBody'
-import TaskData from 'interface/TaskData'
 import TableHeader from 'interface/TableHeader'
+import TableRowData from 'interface/TableRowData'
 
 
-function TableData() {
-  const tableHeaderFilterStore = TableHeaderFilterStore()
+interface TableDataProps<T> {
+  tableHeaderList: TableHeader[]
+  pasteFunction: () => Promise<void>
+  tableDataShowList: TableRowData<T>[]
+  selectTableDataShowListLength: number
+  tableDataPasteListLength: number
+  clickTableRow: (index: number) => void
+  clearTableDataShowList: () => void
+  setTableDataPasteList: () => void
+}
 
-  const tableHeaderList: TableHeader[] = [
-    {
-      title: 'No.',
-      size: '64px',
-    },
-    {
-      title: '작업일',
-      size: '128px',
-    },
-    {
-      title: 'LOT No.',
-      size: '300px',
-      filterData: tableHeaderFilterStore.lotNo,
-      filterFunction: tableHeaderFilterStore.setLotNo,
-    },
-    {
-      title: '품종',
-      size: '300px',
-      filterData: tableHeaderFilterStore.variety,
-      filterFunction: tableHeaderFilterStore.setVariety,
-    },
-    {
-      title: '규격',
-      size: '300px',
-      filterData: tableHeaderFilterStore.standard,
-      filterFunction: tableHeaderFilterStore.setStandard,
-    },
-    {
-      title: '슬라브 길이',
-      size: '300px',
-      filterData: tableHeaderFilterStore.length,
-      filterFunction: tableHeaderFilterStore.setLength,
-    },
-    {
-      title: '중량',
-      size: '128px',
-      filterData: tableHeaderFilterStore.weight,
-      filterFunction: tableHeaderFilterStore.setWeight,
-    },
-  ];
 
+function TableData<T>(props: TableDataProps<T>) {
   const { enqueueSnackbar } = useSnackbar()
 
-  const {
-    tableTaskDataRowCopyListLength,
-    tableTaskDataRowPasteList,
-    clearTableTaskDataRowCopyList,
-    setTableTaskDataRowPasteList,
-  } = TableDataCopyStore()
-
-  const searchDate = TableSearchStore(state => state.searchDate)
-
-  const setTaskDataDateList = TaskDataListStore(state => state.setTaskDataDateList)
-
   const snackbarOptions = {
-    variant: '',
     autoHideDuration: 3000,
     disableWindowBlurListener: true,
   }
 
   const copyData = (event: React.KeyboardEvent) => {
     if(event.ctrlKey && event.key === 'c') {
-      if(tableTaskDataRowCopyListLength > 0) {
+      if(props.selectTableDataShowListLength > 0) {
         enqueueSnackbar('성공적으로 복사되었습니다!', {
           ...snackbarOptions,
           variant: 'success',
@@ -89,25 +42,11 @@ function TableData() {
           variant: 'warning',
         })
       }
-      setTableTaskDataRowPasteList()
+      props.setTableDataPasteList()
     } else if(event.ctrlKey && event.key === 'v') {
-      if(tableTaskDataRowPasteList.length > 0) {
-        const TaskDataList: TaskData[] = tableTaskDataRowPasteList.map(taskData => {
-          return {
-            ...taskData,
-            workDate: searchDate.format('YYYY-MM-DD')
-          }
-        })
-        fetch(`http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`, {
-          method: 'PUT',
-          body: JSON.stringify(TaskDataList),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then(response => response.json())
-        .then((taskDataDateList: TaskData[]) => {
-          setTaskDataDateList(taskDataDateList)
+      if(props.tableDataPasteListLength > 0) {
+        props.pasteFunction()
+        .finally(() => {
           enqueueSnackbar('성공적으로 붙여넣었습니다!', {
             ...snackbarOptions,
             variant: 'success',
@@ -131,11 +70,14 @@ function TableData() {
       }}
       onKeyUp={copyData}
       tabIndex={0}
-      onBlur={clearTableTaskDataRowCopyList}
+      onBlur={props.clearTableDataShowList}
     >
       <Table>
-        <TableDataHeader tableHeaderList={tableHeaderList} />
-        <TableDataBody />
+        <TableDataHeader tableHeaderList={props.tableHeaderList} />
+        <TableDataBody<T>
+          clickTableRow={props.clickTableRow}
+          tableDataShowList={props.tableDataShowList}
+        />
       </Table>
     </TableContainer>
   )
