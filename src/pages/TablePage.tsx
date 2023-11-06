@@ -32,8 +32,9 @@ function TablePage() {
     standard,
     length,
     weight, 
-    setTaskDataShowList,
     setTaskDataDateList,
+    setTaskDataShowList,
+    setTaskDataShowListByFilter,
     clickTableRow,
     clearTaskDataShowList,
     setTaskDataPasteList,
@@ -57,31 +58,31 @@ function TablePage() {
       title: 'LOT No.',
       size: '300px',
       filterData: lotNo,
-      filterFunction: setLotNo,
+      setFilterData: setLotNo,
     },
     {
       title: '품종',
       size: '300px',
       filterData: variety,
-      filterFunction: setVariety,
+      setFilterData: setVariety,
     },
     {
       title: '규격',
       size: '300px',
       filterData: standard,
-      filterFunction: setStandard,
+      setFilterData: setStandard,
     },
     {
       title: '슬라브 길이',
       size: '300px',
       filterData: length,
-      filterFunction: setLength,
+      setFilterData: setLength,
     },
     {
       title: '중량',
       size: '128px',
       filterData: weight,
-      filterFunction: setWeight,
+      setFilterData: setWeight,
     },
   ]
 
@@ -126,6 +127,7 @@ function TablePage() {
           clickTableRow={clickTableRow}
           clearTableDataShowList={clearTaskDataShowList}
           setTableDataPasteList={setTaskDataPasteList}
+          filterFunction={setTaskDataShowListByFilter}
         />
       </TablePageBackground>
       <TableAddFab />
