@@ -70,8 +70,8 @@ export const TableDataListUploadXlsx = <TableDataType, ExcelDataType>(
       },
     })
     .then(response => response.json())
-    .then((taskDataDateList: TableDataType[]) => {
-      setTableDataDateList(taskDataDateList)
+    .then((tableDataDateList: TableDataType[]) => {
+      setTableDataDateList(tableDataDateList)
     }) 
   }
 }
