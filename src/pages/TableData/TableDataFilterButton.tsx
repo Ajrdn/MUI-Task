@@ -44,6 +44,7 @@ interface TableDataFilterButtonProps {
 
 
 function TableDataFilterButton(props: TableDataFilterButtonProps) {
+  const [unchanged, setUnchanged] = useState<boolean>(true)
   const [open, setOpen] = useState<boolean>(false)
 
   const openFilterField = () => {
@@ -51,8 +52,15 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
   }
 
   const closeFilterField = () => {
+    if(unchanged) props.setFilterData('')
     setOpen(prev => !prev)
+    setUnchanged(true)
     props.filterFunction()
+  }
+
+  const filterDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUnchanged(false)
+    props.setFilterData(event.target.value)
   }
 
   return (
@@ -74,7 +82,7 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
         <TableDataFilterModalContentBox>
           <TableDataFilterTextField
             filterData={props.filterData}
-            setFilterData={props.setFilterData}
+            setFilterData={filterDataChange}
           />
         </TableDataFilterModalContentBox>
       </TableDataFilterModalBackground>
