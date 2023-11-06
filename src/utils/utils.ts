@@ -4,7 +4,7 @@ import MeltingExcelData from 'interface/MeltingExcelData'
 import MeltingTableData from 'interface/MeltingTableData'
 
 
-export const MeltingDataConverter= (excelData: MeltingExcelData[]): MeltingTableData[] => {
+export const MeltingDataConverter = (excelData: MeltingExcelData[]): MeltingTableData[] => {
   return excelData.map(meltingData => ({
     workDate: meltingData['작업일'],
     lotNo: meltingData['LOT No.'],
