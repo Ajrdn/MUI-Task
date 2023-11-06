@@ -5,9 +5,9 @@ import CloudUpload from '@mui/icons-material/CloudUpload'
 import Box from '@mui/material/Box'
 import ItemDatePicker from './ItemDatePicker'
 import FeatureButton from './FeatureButton'
-import TableSearchStore from 'store/TableSearchStore'
-import TaskDataListStore from 'store/TaskDataListStore'
-import { TaskDataListDownloadXlsx, TaskDataListUploadXlsx } from 'utils/utils'
+import { TableDataListDownloadXlsx, TableDataListUploadXlsx } from 'utils/utils'
+import { Dayjs } from 'dayjs'
+import ExcelData from 'interface/ExcelData'
 
 
 const TablePageSearchBarBackground = styled(Box)({
@@ -23,22 +23,31 @@ const TablePageSearchBarButtonBox = styled(Box)({
 })
 
 
-function TablePageSearchBar() {
-  const searchDate = TableSearchStore(state => state.searchDate)
+interface TablePageSearchBarProps<TableDataType, ExcelDataType> {
+  date: Dayjs
+  setDate: (date: Dayjs) => void
+  tableDataShowListLength: number
+  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
+  excelDataFunction: () => ExcelData[]
+  dataConverter: (excelData: ExcelDataType[]) => TableDataType[]
+}
 
-  const { taskDataShowList, setTaskDataDateList } = TaskDataListStore()
 
+function TablePageSearchBar<TableDataType, ExcelDataType>(props: TablePageSearchBarProps<TableDataType, ExcelDataType>) {
   const excelDownload = () => {
-    TaskDataListDownloadXlsx(taskDataShowList)
+    TableDataListDownloadXlsx(props.excelDataFunction())
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    TaskDataListUploadXlsx(event, searchDate.format('YYYY-MM-DD'), setTaskDataDateList)
+    TableDataListUploadXlsx<TableDataType, ExcelDataType>(event, props.date.format('YYYY-MM-DD'), props.setTableDataDateList, props.dataConverter)
   }
 
   return (
     <TablePageSearchBarBackground>
-      <ItemDatePicker />
+      <ItemDatePicker
+        date={props.date}
+        setDate={props.setDate}
+      />
       <TablePageSearchBarButtonBox>
         <FeatureButton
           feature='액셀 다운로드'
@@ -48,7 +57,7 @@ function TablePageSearchBar() {
           icon={<DownloadForOffline />}
           width='127px'
           padding='0 10px'
-          disabled={taskDataShowList.length === 0}
+          disabled={props.tableDataShowListLength === 0}
           label={false}
           buttonPerformance={excelDownload}
         />
