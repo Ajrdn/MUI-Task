@@ -1,17 +1,17 @@
 import { create } from 'zustand'
-import TaskData from 'interface/TaskData'
+import MeltingTableData from 'interface/MeltingTableData'
 import TableRowData from 'interface/TableRowData'
 import dayjs, { Dayjs } from 'dayjs'
 
 
 interface MeltingDataListState {
   searchDate: Dayjs
-  taskDataDateList: TaskData[]
-  taskDataShowList: TableRowData<TaskData>[]
-  taskDataShowListLength: number
-  selectTaskDataShowListLength: number
-  taskDataPasteList: TaskData[]
-  taskDataPasteListLength: number
+  meltingTableDataDateList: MeltingTableData[]
+  meltingTableDataShowList: TableRowData<MeltingTableData>[]
+  meltingTableDataShowListLength: number
+  selectMeltingTableDataShowListLength: number
+  meltingTableDataPasteList: MeltingTableData[]
+  meltingTableDataPasteListLength: number
   lotNo: string
   variety: string
   standard: string
@@ -20,15 +20,15 @@ interface MeltingDataListState {
 
   setSearchDate: (date: Dayjs) => void
 
-  setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
+  setMeltingTableDataDateList: (newMeltingTableDataDateList: MeltingTableData[]) => void
 
-  setTaskDataShowListByFilter: () => void
+  filterMeltingTableDataShowList: () => void
 
   clickTableRow: (index: number) => void
 
-  clearTaskDataShowList: () => void
+  clearMeltingTableDataShowList: () => void
 
-  setTaskDataPasteList: () => void
+  setMeltingTableDataPasteList: () => void
 
   setLotNo: (newLotNo: string) => void
 
@@ -44,12 +44,12 @@ interface MeltingDataListState {
 
 const MeltingDataListStore = create<MeltingDataListState>((set) => ({
   searchDate: dayjs(),
-  taskDataDateList: [],
-  taskDataShowList: [],
-  taskDataShowListLength: 0,
-  selectTaskDataShowListLength: 0,
-  taskDataPasteList: [],
-  taskDataPasteListLength: 0,
+  meltingTableDataDateList: [],
+  meltingTableDataShowList: [],
+  meltingTableDataShowListLength: 0,
+  selectMeltingTableDataShowListLength: 0,
+  meltingTableDataPasteList: [],
+  meltingTableDataPasteListLength: 0,
   lotNo: '',
   variety: '',
   standard: '',
@@ -58,77 +58,77 @@ const MeltingDataListStore = create<MeltingDataListState>((set) => ({
 
   setSearchDate: date => set({searchDate: date}),
 
-  setTaskDataDateList: newTaskDataDateList => set({
-    taskDataDateList: newTaskDataDateList,
-    taskDataShowList: newTaskDataDateList.map((taskDataDate, index) => ({
+  setMeltingTableDataDateList: newMeltingTableDataDateList => set({
+    meltingTableDataDateList: newMeltingTableDataDateList,
+    meltingTableDataShowList: newMeltingTableDataDateList.map((meltingTableDataDate, index) => ({
       index,
       selected: false,
-      tableData: taskDataDate,
+      tableData: meltingTableDataDate,
       tableRowData: [
         (index + 1).toString().padStart(2, '0'),
-        taskDataDate.workDate,
-        taskDataDate.lotNo,
-        taskDataDate.variety,
-        taskDataDate.standard,
-        taskDataDate.length,
-        taskDataDate.weight,
+        meltingTableDataDate.workDate,
+        meltingTableDataDate.lotNo,
+        meltingTableDataDate.variety,
+        meltingTableDataDate.standard,
+        meltingTableDataDate.length,
+        meltingTableDataDate.weight,
       ],
     })),
-    taskDataShowListLength: newTaskDataDateList.length,
+    meltingTableDataShowListLength: newMeltingTableDataDateList.length,
   }),
 
-  setTaskDataShowListByFilter: () => set(state => {
-    const newTaskDataShowList = state.taskDataDateList.filter(taskData =>
-      (taskData.lotNo.includes(state.lotNo.toUpperCase()) || taskData.lotNo.includes(state.lotNo.toLowerCase())) &&
-      (taskData.variety.includes(state.variety.toUpperCase()) || taskData.variety.includes(state.variety.toLowerCase())) &&
-      (taskData.standard.includes(state.standard.toUpperCase()) || taskData.standard.includes(state.standard.toLowerCase())) &&
-      (taskData.length.includes(state.length.toUpperCase()) || taskData.length.includes(state.length.toLowerCase())) &&
-      (taskData.weight.includes(state.weight.toUpperCase()) || taskData.weight.includes(state.weight.toLowerCase())))
+  filterMeltingTableDataShowList: () => set(state => {
+    const newMeltingTableDataShowList = state.meltingTableDataDateList.filter(meltingTableData =>
+      (meltingTableData.lotNo.includes(state.lotNo.toUpperCase()) || meltingTableData.lotNo.includes(state.lotNo.toLowerCase())) &&
+      (meltingTableData.variety.includes(state.variety.toUpperCase()) || meltingTableData.variety.includes(state.variety.toLowerCase())) &&
+      (meltingTableData.standard.includes(state.standard.toUpperCase()) || meltingTableData.standard.includes(state.standard.toLowerCase())) &&
+      (meltingTableData.length.includes(state.length.toUpperCase()) || meltingTableData.length.includes(state.length.toLowerCase())) &&
+      (meltingTableData.weight.includes(state.weight.toUpperCase()) || meltingTableData.weight.includes(state.weight.toLowerCase())))
     return {
-      taskDataShowList: newTaskDataShowList.map((taskDataDate, index) => ({
+      meltingTableDataShowList: newMeltingTableDataShowList.map((meltingTableDataDate, index) => ({
         index,
         selected: false,
-        tableData: taskDataDate,
+        tableData: meltingTableDataDate,
         tableRowData: [
           (index + 1).toString().padStart(2, '0'),
-          taskDataDate.workDate,
-          taskDataDate.lotNo,
-          taskDataDate.variety,
-          taskDataDate.standard,
-          taskDataDate.length,
-          taskDataDate.weight,
+          meltingTableDataDate.workDate,
+          meltingTableDataDate.lotNo,
+          meltingTableDataDate.variety,
+          meltingTableDataDate.standard,
+          meltingTableDataDate.length,
+          meltingTableDataDate.weight,
         ],
       })),
-      taskDataShowListLength: newTaskDataShowList.length,
+      meltingTableDataShowListLength: newMeltingTableDataShowList.length,
     }
   }),
 
   clickTableRow: index => set(state => {
-    const newTaskDataShowList = state.taskDataShowList.map(taskDataShow => {
-      if(index === taskDataShow.index) return {
-        ...taskDataShow,
-        selected: !taskDataShow.selected
+    const newMeltingTableDataShowList = state.meltingTableDataShowList.map(meltingTableDataShow => {
+      if(index === meltingTableDataShow.index) return {
+        ...meltingTableDataShow,
+        selected: !meltingTableDataShow.selected
       }
-      return taskDataShow
+      return meltingTableDataShow
     })
     return {
-      taskDataShowList: newTaskDataShowList,
-      selectTaskDataShowListLength: newTaskDataShowList.filter(taskDataShow => taskDataShow.selected).length,
+      meltingTableDataShowList: newMeltingTableDataShowList,
+      selectMeltingTableDataShowListLength: newMeltingTableDataShowList.filter(meltingTableDataShow => meltingTableDataShow.selected).length,
     }
   }),
 
-  clearTaskDataShowList: () => set(state => ({
-    taskDataShowList: state.taskDataShowList.map(taskDataShow => ({
-      ...taskDataShow,
+  clearMeltingTableDataShowList: () => set(state => ({
+    meltingTableDataShowList: state.meltingTableDataShowList.map(meltingTableDataShow => ({
+      ...meltingTableDataShow,
       selected: false,
     })),
   })),
 
-  setTaskDataPasteList: () => set(state => ({
-    taskDataPasteList: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).map(taskDataShow => taskDataShow.tableData),
-    taskDataPasteListLength: state.taskDataShowList.filter(taskDataShow => taskDataShow.selected).length,
-    taskDataShowList: state.taskDataShowList.map(taskDataShow => ({
-      ...taskDataShow,
+  setMeltingTableDataPasteList: () => set(state => ({
+    meltingTableDataPasteList: state.meltingTableDataShowList.filter(meltingTableDataShow => meltingTableDataShow.selected).map(meltingTableDataShow => meltingTableDataShow.tableData),
+    meltingTableDataPasteListLength: state.meltingTableDataShowList.filter(meltingTableDataShow => meltingTableDataShow.selected).length,
+    meltingTableDataShowList: state.meltingTableDataShowList.map(meltingTableDataShow => ({
+      ...meltingTableDataShow,
       selected: false,
     })),
   })),
