@@ -54,6 +54,8 @@ function TableDataHeader(props: TableDataHeaderProps) {
                 filterData={tableHeader.filterData!}
                 setFilterData={tableHeader.setFilterData}
                 filterFunction={props.filterFunction}
+                top={tableHeader.top!}
+                left={tableHeader.left!}
               />}
             </TableDataCell>
           </TableCell>
