@@ -1,9 +1,11 @@
 import { create } from 'zustand'
 import TaskData from 'interface/TaskData'
 import TableRowData from 'interface/TableRowData'
+import dayjs, { Dayjs } from 'dayjs'
 
 
 interface TaskDataListState {
+  searchDate: Dayjs
   taskDataDateList: TaskData[]
   taskDataShowList: TableRowData<TaskData>[]
   selectTaskDataShowListLength: number
@@ -14,6 +16,8 @@ interface TaskDataListState {
   standard: string
   length: string
   weight: string
+
+  setSearchDate: (date: Dayjs) => void
 
   setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
 
@@ -40,6 +44,7 @@ interface TaskDataListState {
 
 
 const TaskDataListStore = create<TaskDataListState>((set) => ({
+  searchDate: dayjs(),
   taskDataDateList: [],
   taskDataShowList: [],
   selectTaskDataShowListLength: 0,
@@ -50,6 +55,8 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
   standard: '',
   length: '',
   weight: '',
+
+  setSearchDate: date => set({searchDate: date}),
 
   setTaskDataDateList: newTaskDataDateList => set({
     taskDataDateList: newTaskDataDateList,
