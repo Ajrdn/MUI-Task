@@ -7,20 +7,27 @@ import TableDataFilterTextField from './TableDataFilterTextField'
 import ModalContentBox from 'components/ModalContentBox/ModalContentBox'
 
 
-const TableDataFilterModalBackground = styled(Modal)({
+interface TableDataFilterModalBackgroundProps {
+  top: string
+  left: string
+}
+
+
+const TableDataFilterModalBackground = styled(Modal)<TableDataFilterModalBackgroundProps>(({ top, left }) => ({
   '.MuiModal-backdrop': {
     backgroundColor: 'transparent',
   },
+  top: top,
+  left: left,
   position: 'absolute',
-  left: '-50px',
-})
+}))
 
 
 const TableDataFilterModalContentBox = styled(ModalContentBox)({
-  borderRadius: '4px',
-  width: '150px',
-  height: '50px',
-  padding: '20px',
+  borderRaius: '4px',
+  width: '209px',
+  height: '61px',
+  padding: '16px 12px 7px',
   backgroundColor: 'white',
   boxShadow: '0px 0px 5px #444',
   justifyContent: 'center',
@@ -31,6 +38,8 @@ interface TableDataFilterButtonProps {
   filterData: string
   setFilterData: (newFilterData: string) => void
   filterFunction: () => void
+  top: string
+  left: string
 }
 
 
@@ -59,7 +68,8 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
       <TableDataFilterModalBackground
         open={open}
         onClose={closeFilterField}
-        disablePortal
+        top={props.top}
+        left={props.left}
       >
         <TableDataFilterModalContentBox>
           <TableDataFilterTextField
