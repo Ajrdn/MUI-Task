@@ -51,7 +51,7 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
   length: '',
   weight: '',
 
-  setTaskDataDateList: (newTaskDataDateList) => set({
+  setTaskDataDateList: newTaskDataDateList => set({
     taskDataDateList: newTaskDataDateList,
     taskDataShowList: newTaskDataDateList.map((taskDataDate, index) => ({
       index,
@@ -93,7 +93,7 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
     })),
   })),
 
-  clickTableRow: (index: number) => set(state => {
+  clickTableRow: index => set(state => {
     const newTaskDataShowList = state.taskDataShowList.map(taskDataShow => {
       if(index === taskDataShow.index) return {
         ...taskDataShow,
@@ -123,15 +123,15 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
     })),
   })),
 
-  setLotNo: (newLotNo: string) => set({lotNo: newLotNo}),
+  setLotNo: newLotNo => set({lotNo: newLotNo}),
 
-  setVariety: (newVariety: string) => set({variety: newVariety}),
+  setVariety: newVariety => set({variety: newVariety}),
 
-  setStandard: (newStandard: string) => set({standard: newStandard}),
+  setStandard: newStandard => set({standard: newStandard}),
 
-  setLength: (newLength: string) => set({length: newLength}),
+  setLength: newLength => set({length: newLength}),
 
-  setWeight: (newWeight: string) => set({weight: newWeight}),
+  setWeight: newWeight => set({weight: newWeight}),
 }))
 
 export default TaskDataListStore
