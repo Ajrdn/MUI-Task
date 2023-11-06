@@ -4,13 +4,13 @@ import TableRowData from 'interface/TableRowData'
 import TableDataRow from './TableDataRow'
 
 
-interface TableDataBodyProps<T> {
+interface TableDataBodyProps<TableDataType> {
   clickTableRow: (index: number) => void
-  tableDataShowList: TableRowData<T>[]
+  tableDataShowList: TableRowData<TableDataType>[]
 }
 
 
-function TableDataBody<T>(props: TableDataBodyProps<T>) {
+function TableDataBody<TableDataType>(props: TableDataBodyProps<TableDataType>) {
   return (
     <TableBody>
       {props.tableDataShowList.map(taskDataShow => (

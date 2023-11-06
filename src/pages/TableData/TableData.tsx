@@ -9,10 +9,10 @@ import TableHeader from 'interface/TableHeader'
 import TableRowData from 'interface/TableRowData'
 
 
-interface TableDataProps<T> {
+interface TableDataProps<TableDataType> {
   tableHeaderList: TableHeader[]
   pasteFunction: () => Promise<void>
-  tableDataShowList: TableRowData<T>[]
+  tableDataShowList: TableRowData<TableDataType>[]
   selectTableDataShowListLength: number
   tableDataPasteListLength: number
   clickTableRow: (index: number) => void
@@ -22,7 +22,7 @@ interface TableDataProps<T> {
 }
 
 
-function TableData<T>(props: TableDataProps<T>) {
+function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
   const { enqueueSnackbar } = useSnackbar()
 
   const snackbarOptions = {
@@ -78,7 +78,7 @@ function TableData<T>(props: TableDataProps<T>) {
           tableHeaderList={props.tableHeaderList}
           filterFunction={props.filterFunction}
         />
-        <TableDataBody<T>
+        <TableDataBody<TableDataType>
           clickTableRow={props.clickTableRow}
           tableDataShowList={props.tableDataShowList}
         />
