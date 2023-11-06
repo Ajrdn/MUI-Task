@@ -1,11 +1,11 @@
-import React, { useEffect }  from 'react'
-import TaskDataListStore from 'store/TaskDataListStore'
+import React, { useEffect } from 'react'
+import MeltingDataListStore from 'store/MeltingDataListStore'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { MeltingDataConverter } from 'utils/utils'
 import MELTING_TABLE_HEADER_LIST from 'constant/Melting_Table_Header_List'
 import TableHeader from 'interface/TableHeader'
-import TaskData from 'interface/TaskData'
+import MeltingTableData from 'interface/MeltingTableData'
 import MeltingExcelData from 'interface/MeltingExcelData'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
 import TableData from './TableData/TableData'
@@ -24,37 +24,39 @@ const TablePageBackground = styled(Box)({
 function TablePage() {
   const {
     searchDate,
-    taskDataDateList,
-    taskDataShowList,
-    taskDataShowListLength,
-    selectTaskDataShowListLength,
-    taskDataPasteList,
-    taskDataPasteListLength,
+    meltingTableDataDateList,
+    meltingTableDataShowList,
+    meltingTableDataShowListLength,
+    selectMeltingTableDataShowListLength,
+    meltingTableDataPasteList,
+    meltingTableDataPasteListLength,
     lotNo,
     variety,
     standard,
     length,
     weight,
     setSearchDate,
-    setTaskDataDateList,
-    setTaskDataShowListByFilter,
+    setMeltingTableDataDateList,
+    filterMeltingTableDataShowList,
     clickTableRow,
-    clearTaskDataShowList,
-    setTaskDataPasteList,
+    clearMeltingTableDataShowList,
+    setMeltingTableDataPasteList,
     setLotNo,
     setVariety,
     setStandard,
     setLength,
     setWeight,
-  } = TaskDataListStore()
+  } = MeltingDataListStore()
 
   useEffect(() => {
-    fetch(`http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`)
-    .then(response => response.json())
-    .then((taskDataDateList: TaskData[]) => {
-      setTaskDataDateList(taskDataDateList)
-    })
-  }, [searchDate, setTaskDataDateList])
+    fetch(
+      `http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`
+    )
+      .then((response) => response.json())
+      .then((meltingTableDataDateList: MeltingTableData[]) => {
+        setMeltingTableDataDateList(meltingTableDataDateList)
+      })
+  }, [searchDate, setMeltingTableDataDateList])
 
   const tableHeaderList: TableHeader[] = [
     {
@@ -98,27 +100,30 @@ function TablePage() {
   ]
 
   const pasteFunction = (): Promise<void> => {
-    const TaskDataList: TaskData[] = taskDataPasteList.map(taskData => {
+    const TaskDataList: MeltingTableData[] = meltingTableDataPasteList.map((taskData) => {
       return {
         ...taskData,
-        workDate: searchDate.format('YYYY-MM-DD')
+        workDate: searchDate.format('YYYY-MM-DD'),
       }
     })
-    return fetch(`http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`, {
-      method: 'PUT',
-      body: JSON.stringify(TaskDataList),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then((taskDataDateList: TaskData[]) => {
-      setTaskDataDateList(taskDataDateList)
-    })
+    return fetch(
+      `http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(TaskDataList),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((meltingTableDataDateList: MeltingTableData[]) => {
+        setMeltingTableDataDateList(meltingTableDataDateList)
+      })
   }
 
   const excelData = () => {
-    return taskDataDateList.map((taskData, index) => ({
+    return meltingTableDataDateList.map((taskData, index) => ({
       [MELTING_TABLE_HEADER_LIST[0]]: (index + 1).toString().padStart(2, '0'),
       [MELTING_TABLE_HEADER_LIST[1]]: taskData.workDate,
       [MELTING_TABLE_HEADER_LIST[2]]: taskData.lotNo,
@@ -132,24 +137,24 @@ function TablePage() {
   return (
     <>
       <TablePageBackground>
-        <TablePageSearchBar<TaskData, MeltingExcelData>
+        <TablePageSearchBar<MeltingTableData, MeltingExcelData>
           date={searchDate}
           setDate={setSearchDate}
-          tableDataShowListLength={taskDataShowListLength}
-          setTableDataDateList={setTaskDataDateList}
+          tableDataShowListLength={meltingTableDataShowListLength}
+          setTableDataDateList={setMeltingTableDataDateList}
           excelDataFunction={excelData}
           dataConverter={MeltingDataConverter}
         />
-        <TableData<TaskData>
+        <TableData<MeltingTableData>
           tableHeaderList={tableHeaderList}
           pasteFunction={pasteFunction}
-          tableDataShowList={taskDataShowList}
-          selectTableDataShowListLength={selectTaskDataShowListLength}
-          tableDataPasteListLength={taskDataPasteListLength}
+          tableDataShowList={meltingTableDataShowList}
+          selectTableDataShowListLength={selectMeltingTableDataShowListLength}
+          tableDataPasteListLength={meltingTableDataPasteListLength}
           clickTableRow={clickTableRow}
-          clearTableDataShowList={clearTaskDataShowList}
-          setTableDataPasteList={setTaskDataPasteList}
-          filterFunction={setTaskDataShowListByFilter}
+          clearTableDataShowList={clearMeltingTableDataShowList}
+          setTableDataPasteList={setMeltingTableDataPasteList}
+          filterFunction={filterMeltingTableDataShowList}
         />
       </TablePageBackground>
       <TableAddFab />
