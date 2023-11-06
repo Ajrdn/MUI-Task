@@ -1,30 +1,22 @@
 import { utils, writeFile, read } from 'xlsx'
-import TaskData from 'interface/TaskData'
 import ExcelData from 'interface/ExcelData'
+import MeltingExcelData from 'interface/MeltingExcelData'
+import TaskData from 'interface/TaskData'
 
 
-const TABLE_HEADER_LIST: string[] = [
-  'No.',
-  '작업일',
-  'LOT No.',
-  '품종',
-  '규격',
-  '슬라브 길이',
-  '중량',
-]
-
-
-export const TaskDataListDownloadXlsx = (taskDataList: TaskData[]) => {
-  const data = taskDataList.map((taskData, index) => ({
-    [TABLE_HEADER_LIST[0]]: (index + 1).toString().padStart(2, '0'),
-    [TABLE_HEADER_LIST[1]]: taskData.workDate,
-    [TABLE_HEADER_LIST[2]]: taskData.lotNo,
-    [TABLE_HEADER_LIST[3]]: taskData.variety,
-    [TABLE_HEADER_LIST[4]]: taskData.standard,
-    [TABLE_HEADER_LIST[5]]: taskData.length,
-    [TABLE_HEADER_LIST[6]]: taskData.weight,
+export const MeltingDataConverter= (excelData: MeltingExcelData[]): TaskData[] => {
+  return excelData.map(meltingData => ({
+    workDate: meltingData['작업일'],
+    lotNo: meltingData['LOT No.'],
+    variety: meltingData['품종'],
+    standard: meltingData['규격'],
+    length: meltingData['슬라브 길이'],
+    weight: meltingData['중량'],
   }))
+}
 
+
+export const TableDataListDownloadXlsx = (excelData: ExcelData[]): void => {
   const excelHandler = {
     getExcelFileName: () => {
       return '작업 데이터.xlsx'
@@ -33,7 +25,7 @@ export const TaskDataListDownloadXlsx = (taskDataList: TaskData[]) => {
       return '작업 데이터'
     },
     getExcelData: () => {
-      return data
+      return excelData
     },
     getWorksheet: () => {
       return utils.json_to_sheet(excelHandler.getExcelData())
@@ -47,11 +39,12 @@ export const TaskDataListDownloadXlsx = (taskDataList: TaskData[]) => {
 }
 
 
-export const TaskDataListUploadXlsx = (
+export const TableDataListUploadXlsx = <TableDataType, ExcelDataType>(
   event: React.ChangeEvent<HTMLInputElement>,
   date: string,
-  setTaskDataDateList: (taskDataList: TaskData[]) => void,
-) => {
+  setTaskDataDateList: (taskDataList: TableDataType[]) => void,
+  dataConverter: (excelData: ExcelDataType[]) => TableDataType[]
+): void => {
   if (!event.target.files || event.target.files.length === 0) return
   
   const fileReader = new FileReader()
@@ -66,15 +59,8 @@ export const TaskDataListUploadXlsx = (
     })
     const sheetName = fileInformation.SheetNames[0]
     const rawData = fileInformation.Sheets[sheetName]
-    const data: ExcelData[] = utils.sheet_to_json<ExcelData>(rawData)
-    const taskDataList: TaskData[] = data.map(taskData => ({
-      workDate: taskData['작업일'],
-      lotNo: taskData['LOT No.'],
-      variety: taskData['품종'],
-      standard: taskData['규격'],
-      length: taskData['슬라브 길이'],
-      weight: taskData['중량'],
-    }))
+    const data: ExcelDataType[] = utils.sheet_to_json<ExcelDataType>(rawData)
+    const taskDataList: TableDataType[] = dataConverter(data)
 
     fetch(`http://localhost:8000/taskDataList/${date}`, {
       method: 'PUT',
@@ -84,7 +70,7 @@ export const TaskDataListUploadXlsx = (
       },
     })
     .then(response => response.json())
-    .then((taskDataDateList: TaskData[]) => {
+    .then((taskDataDateList: TableDataType[]) => {
       setTaskDataDateList(taskDataDateList)
     }) 
   }
