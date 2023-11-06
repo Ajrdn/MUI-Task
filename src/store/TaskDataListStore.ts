@@ -8,6 +8,7 @@ interface TaskDataListState {
   searchDate: Dayjs
   taskDataDateList: TaskData[]
   taskDataShowList: TableRowData<TaskData>[]
+  taskDataShowListLength: number
   selectTaskDataShowListLength: number
   taskDataPasteList: TaskData[]
   taskDataPasteListLength: number
@@ -20,8 +21,6 @@ interface TaskDataListState {
   setSearchDate: (date: Dayjs) => void
 
   setTaskDataDateList: (newTaskDataDateList: TaskData[]) => void
-
-  setTaskDataShowList: (newTaskDataShowList: TableRowData<TaskData>[]) => void
 
   setTaskDataShowListByFilter: () => void
 
@@ -47,6 +46,7 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
   searchDate: dayjs(),
   taskDataDateList: [],
   taskDataShowList: [],
+  taskDataShowListLength: 0,
   selectTaskDataShowListLength: 0,
   taskDataPasteList: [],
   taskDataPasteListLength: 0,
@@ -74,31 +74,34 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
         taskDataDate.weight,
       ],
     })),
+    taskDataShowListLength: newTaskDataDateList.length,
   }),
 
-  setTaskDataShowList: newTaskDataShowList => set({taskDataShowList: newTaskDataShowList}),
-
-  setTaskDataShowListByFilter: () => set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData =>
-    (taskData.lotNo.includes(state.lotNo.toUpperCase()) || taskData.lotNo.includes(state.lotNo.toLowerCase())) &&
-    (taskData.variety.includes(state.variety.toUpperCase()) || taskData.variety.includes(state.variety.toLowerCase())) &&
-    (taskData.standard.includes(state.standard.toUpperCase()) || taskData.standard.includes(state.standard.toLowerCase())) &&
-    (taskData.length.includes(state.length.toUpperCase()) || taskData.length.includes(state.length.toLowerCase())) &&
-    (taskData.weight.includes(state.weight.toUpperCase()) || taskData.weight.includes(state.weight.toLowerCase())))
-    .map((taskDataDate, index) => ({
-      index,
-      selected: false,
-      tableData: taskDataDate,
-      tableRowData: [
-        (index + 1).toString().padStart(2, '0'),
-        taskDataDate.workDate,
-        taskDataDate.lotNo,
-        taskDataDate.variety,
-        taskDataDate.standard,
-        taskDataDate.length,
-        taskDataDate.weight,
-      ],
-    })),
-  })),
+  setTaskDataShowListByFilter: () => set(state => {
+    const newTaskDataShowList = state.taskDataDateList.filter(taskData =>
+      (taskData.lotNo.includes(state.lotNo.toUpperCase()) || taskData.lotNo.includes(state.lotNo.toLowerCase())) &&
+      (taskData.variety.includes(state.variety.toUpperCase()) || taskData.variety.includes(state.variety.toLowerCase())) &&
+      (taskData.standard.includes(state.standard.toUpperCase()) || taskData.standard.includes(state.standard.toLowerCase())) &&
+      (taskData.length.includes(state.length.toUpperCase()) || taskData.length.includes(state.length.toLowerCase())) &&
+      (taskData.weight.includes(state.weight.toUpperCase()) || taskData.weight.includes(state.weight.toLowerCase())))
+    return {
+      taskDataShowList: newTaskDataShowList.map((taskDataDate, index) => ({
+        index,
+        selected: false,
+        tableData: taskDataDate,
+        tableRowData: [
+          (index + 1).toString().padStart(2, '0'),
+          taskDataDate.workDate,
+          taskDataDate.lotNo,
+          taskDataDate.variety,
+          taskDataDate.standard,
+          taskDataDate.length,
+          taskDataDate.weight,
+        ],
+      })),
+      taskDataShowListLength: newTaskDataShowList.length,
+    }
+  }),
 
   clickTableRow: index => set(state => {
     const newTaskDataShowList = state.taskDataShowList.map(taskDataShow => {
