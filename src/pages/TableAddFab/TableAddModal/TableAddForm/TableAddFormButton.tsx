@@ -1,10 +1,10 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import TableAddModalDataStore from 'store/TableAddModalDataStore'
-import TaskDataListStore from 'store/TaskDataListStore'
+import MeltingDataListStore from 'store/MeltingDataListStore'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-import TaskData from 'interface/TaskData'
+import MeltingTableData from 'interface/MeltingTableData'
 
 
 const AddButton = styled(Button)({
@@ -24,9 +24,9 @@ const AddButton = styled(Button)({
 
 
 function TableAddFormButton() {
-  const setTaskDataDateList = TaskDataListStore(state => state.setTaskDataDateList)
+  const setMeltingTableDataDateList = MeltingDataListStore(state => state.setMeltingTableDataDateList)
 
-  const searchDate = TaskDataListStore(state => state.searchDate)
+  const searchDate = MeltingDataListStore(state => state.searchDate)
 
   const {
     setOpen,
@@ -59,10 +59,9 @@ function TableAddFormButton() {
         'Content-Type': 'application/json',
       },
     })
-    .then(response => response.json())
-    .then((taskDataDateList: TaskData[]) => {
-      setTaskDataDateList(taskDataDateList)
-
+    .then((response) => response.json())
+    .then((taskDataDateList: MeltingTableData[]) => {
+      setMeltingTableDataDateList(taskDataDateList)
       setWorkDate(dayjs())
       setLotNo('')
       setVariety('')
@@ -75,7 +74,7 @@ function TableAddFormButton() {
 
   return (
     <AddButton
-      disabled={lotNo === '' || variety === '' || standard === '' || length === '' || variety === '' ? true : false}
+      disabled={lotNo === '' || variety === '' || standard === '' || length === '' || variety === ''}
       variant='outlined'
       onClick={tableAdd}
     >
