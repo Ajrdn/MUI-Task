@@ -26,21 +26,17 @@ const FilterTextField = styled(TextField)({
 
 interface TableDataFilterTextFieldProps {
   filterData: string
-  setFilterData: (newFilterData: string) => void
+  setFilterData: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 
 function TableDataFilterTextField(props: TableDataFilterTextFieldProps) {
-  const filterDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setFilterData(event.target.value)
-  }
-
   return (
     <FilterTextField
       focused
       label='검색어 입력'
       value={props.filterData}
-      onChange={filterDataChange}
+      onChange={props.setFilterData}
       placeholder='검색어 입력'
     />
   )
