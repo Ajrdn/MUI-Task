@@ -1,7 +1,7 @@
-interface TableRowData<T> {
+interface TableRowData<TableDataType> {
   index: number
   selected: boolean
-  tableData: T
+  tableData: TableDataType
   tableRowData: string[]
 }
 
