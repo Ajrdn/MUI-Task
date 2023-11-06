@@ -19,7 +19,7 @@ interface TaskDataListState {
 
   setTaskDataShowList: (newTaskDataShowList: TableRowData<TaskData>[]) => void
 
-  setTaskDataShowListByFilter: (lotNo: string, variety: string, standard: string, length: string, weight: string) => void
+  setTaskDataShowListByFilter: () => void
 
   clickTableRow: (index: number) => void
 
@@ -71,12 +71,12 @@ const TaskDataListStore = create<TaskDataListState>((set) => ({
 
   setTaskDataShowList: newTaskDataShowList => set({taskDataShowList: newTaskDataShowList}),
 
-  setTaskDataShowListByFilter: (lotNo, variety, standard, length, weight) => set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData =>
-    (taskData.lotNo.includes(lotNo.toUpperCase()) || taskData.lotNo.includes(lotNo.toLowerCase())) &&
-    (taskData.variety.includes(variety.toUpperCase()) || taskData.variety.includes(variety.toLowerCase())) &&
-    (taskData.standard.includes(standard.toUpperCase()) || taskData.standard.includes(standard.toLowerCase())) &&
-    (taskData.length.includes(length.toUpperCase()) || taskData.length.includes(length.toLowerCase())) &&
-    (taskData.weight.includes(lotNo.toUpperCase()) || taskData.weight.includes(weight.toLowerCase())))
+  setTaskDataShowListByFilter: () => set(state => ({taskDataShowList: state.taskDataDateList.filter(taskData =>
+    (taskData.lotNo.includes(state.lotNo.toUpperCase()) || taskData.lotNo.includes(state.lotNo.toLowerCase())) &&
+    (taskData.variety.includes(state.variety.toUpperCase()) || taskData.variety.includes(state.variety.toLowerCase())) &&
+    (taskData.standard.includes(state.standard.toUpperCase()) || taskData.standard.includes(state.standard.toLowerCase())) &&
+    (taskData.length.includes(state.length.toUpperCase()) || taskData.length.includes(state.length.toLowerCase())) &&
+    (taskData.weight.includes(state.weight.toUpperCase()) || taskData.weight.includes(state.weight.toLowerCase())))
     .map((taskDataDate, index) => ({
       index,
       selected: false,
