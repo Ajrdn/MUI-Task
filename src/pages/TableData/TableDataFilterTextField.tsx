@@ -4,13 +4,13 @@ import TextField from '@mui/material/TextField'
 
 interface TableDataFilterTextFieldProps {
   filterData: string
-  filterFunction: (newFilterData: string) => void
+  setFilterData: (newFilterData: string) => void
 }
 
 
 function TableDataFilterTextField(props: TableDataFilterTextFieldProps) {
   const filterDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.filterFunction(event.target.value)
+    props.setFilterData(event.target.value)
   }
 
   return (
