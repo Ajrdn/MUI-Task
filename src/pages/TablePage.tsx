@@ -10,7 +10,6 @@ import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
 import TableData from './TableData/TableData'
 import TableAddFab from './TableAddFab/TableAddFab'
 import AlarmFab from 'components/AlarmFab/AlarmFab'
-import InformFab from 'components/InformFab/InformFab'
 
 
 const TablePageBackground = styled(Box)({
@@ -130,7 +129,6 @@ function TablePage() {
         />
       </TablePageBackground>
       <TableAddFab />
-      <InformFab />
       <AlarmFab />
     </>
   )
