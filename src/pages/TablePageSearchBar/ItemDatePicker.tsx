@@ -1,23 +1,25 @@
 import dayjs, { Dayjs } from 'dayjs'
-import TableSearchStore from 'store/TableSearchStore'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import 'dayjs/locale/ko'
 
 
-function ItemDatePicker() {
-  const date = TableSearchStore(state => state.searchDate)
-  const setDate = TableSearchStore(state => state.setSearchDate)
+interface ItemDatePickerProps {
+  date: Dayjs
+  setDate: (date: Dayjs) => void
+}
 
+
+function ItemDatePicker(props: ItemDatePickerProps) {
   const dateChange = (newDate: Dayjs | null) => {
-    setDate(newDate ?? dayjs())
+    props.setDate(newDate ?? dayjs())
   }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='ko'>
       <DatePicker
-        value={date}
+        value={props.date}
         onChange={dateChange}
         format='YYYY. MM. DD'
         label='날짜'
