@@ -2,17 +2,14 @@ import React from 'react'
 import dayjs from 'dayjs'
 import TableAddModalDataStore from 'store/TableAddModalDataStore'
 import TaskDataListStore from 'store/TaskDataListStore'
-import TableSearchStore from 'store/TableSearchStore'
 import Button from '@mui/material/Button'
 import TaskData from 'interface/TaskData'
 
 
 function TableAddFormButton() {
-  const {
-    setTaskDataDateList,
-  } = TaskDataListStore()
+  const setTaskDataDateList = TaskDataListStore(state => state.setTaskDataDateList)
 
-  const searchDate = TableSearchStore(state => state.searchDate)
+  const searchDate = TaskDataListStore(state => state.searchDate)
 
   const {
     setOpen,
@@ -23,7 +20,8 @@ function TableAddFormButton() {
     variety,
     setVariety,
     standard,
-    setStandard, length,
+    setStandard,
+    length,
     setLength,
     weight,
     setWeight,
