@@ -30,6 +30,7 @@ const TableDataCell = styled(Box)({
 
 interface TableDataHeaderProps {
   tableHeaderList: TableHeader[]
+  filterFunction: () => void
 }
 
 
@@ -48,10 +49,11 @@ function TableDataHeader(props: TableDataHeaderProps) {
           >
             <TableDataCell>
               <TableHeaderTitle>{tableHeader.title}</TableHeaderTitle>
-              {tableHeader.filterFunction &&
+              {tableHeader.setFilterData &&
               <TableDataFilterButton
                 filterData={tableHeader.filterData!}
-                filterFunction={tableHeader.filterFunction}
+                setFilterData={tableHeader.setFilterData}
+                filterFunction={props.filterFunction}
               />}
             </TableDataCell>
           </TableCell>
