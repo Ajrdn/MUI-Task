@@ -42,7 +42,7 @@ export const theme = createTheme({
             borderColor: '#C8C8C8',
           },
           [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-            borderColor: '#C8C8C8',
+            border: '1px solid #C8C8C8',
           },
         },
         input: {
