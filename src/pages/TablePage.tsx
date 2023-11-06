@@ -2,15 +2,15 @@ import React, { useEffect }  from 'react'
 import TaskDataListStore from 'store/TaskDataListStore'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
+import { MeltingDataConverter } from 'utils/utils'
+import MELTING_TABLE_HEADER_LIST from 'constant/Melting_Table_Header_List'
 import TableHeader from 'interface/TableHeader'
 import TaskData from 'interface/TaskData'
+import MeltingExcelData from 'interface/MeltingExcelData'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
 import TableData from './TableData/TableData'
 import TableAddFab from './TableAddFab/TableAddFab'
 import AlarmFab from 'components/AlarmFab/AlarmFab'
-import MELTING_TABLE_HEADER_LIST from 'constant/Melting_Table_Header_List'
-import MeltingExcelData from 'interface/MeltingExcelData'
-import { MeltingDataConverter } from 'utils/utils'
 
 
 const TablePageBackground = styled(Box)({
@@ -26,6 +26,7 @@ function TablePage() {
     searchDate,
     taskDataDateList,
     taskDataShowList,
+    taskDataShowListLength,
     selectTaskDataShowListLength,
     taskDataPasteList,
     taskDataPasteListLength,
@@ -134,7 +135,7 @@ function TablePage() {
         <TablePageSearchBar<TaskData, MeltingExcelData>
           date={searchDate}
           setDate={setSearchDate}
-          tableDataShowListLength={taskDataShowList.length}
+          tableDataShowListLength={taskDataShowListLength}
           setTableDataDateList={setTaskDataDateList}
           excelDataFunction={excelData}
           dataConverter={MeltingDataConverter}
