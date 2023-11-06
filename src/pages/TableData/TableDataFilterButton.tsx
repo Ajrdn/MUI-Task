@@ -68,8 +68,9 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
       <IconButton onClick={openFilterField}>
         <FilterAlt
           sx={{
-            width: '14px',
-            height: '14px',
+            width: '10px',
+            height: '10px',
+            color: '#13243A',
           }}
         />
       </IconButton>
