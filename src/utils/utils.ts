@@ -42,7 +42,7 @@ export const TableDataListDownloadXlsx = (excelData: ExcelData[]): void => {
 export const TableDataListUploadXlsx = <TableDataType, ExcelDataType>(
   event: React.ChangeEvent<HTMLInputElement>,
   date: string,
-  setTaskDataDateList: (taskDataList: TableDataType[]) => void,
+  setTableDataDateList: (tableDataList: TableDataType[]) => void,
   dataConverter: (excelData: ExcelDataType[]) => TableDataType[]
 ): void => {
   if (!event.target.files || event.target.files.length === 0) return
@@ -60,18 +60,18 @@ export const TableDataListUploadXlsx = <TableDataType, ExcelDataType>(
     const sheetName = fileInformation.SheetNames[0]
     const rawData = fileInformation.Sheets[sheetName]
     const data: ExcelDataType[] = utils.sheet_to_json<ExcelDataType>(rawData)
-    const taskDataList: TableDataType[] = dataConverter(data)
+    const tableDataList: TableDataType[] = dataConverter(data)
 
     fetch(`http://localhost:8000/taskDataList/${date}`, {
       method: 'PUT',
-      body: JSON.stringify(taskDataList),
+      body: JSON.stringify(tableDataList),
       headers: {
         'Content-Type': 'application/json',
       },
     })
     .then(response => response.json())
     .then((taskDataDateList: TableDataType[]) => {
-      setTaskDataDateList(taskDataDateList)
+      setTableDataDateList(taskDataDateList)
     }) 
   }
 }
