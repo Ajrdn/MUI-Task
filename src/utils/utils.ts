@@ -19,10 +19,10 @@ export const MeltingDataConverter= (excelData: MeltingExcelData[]): MeltingTable
 export const TableDataListDownloadXlsx = (excelData: ExcelData[]): void => {
   const excelHandler = {
     getExcelFileName: () => {
-      return '작업 데이터.xlsx'
+      return '용해 데이터.xlsx'
     },
     getSheetName: () => {
-      return '작업 데이터'
+      return '용해 데이터'
     },
     getExcelData: () => {
       return excelData
