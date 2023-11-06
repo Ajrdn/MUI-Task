@@ -73,7 +73,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
       tabIndex={0}
       onBlur={props.clearTableDataShowList}
     >
-      <Table>
+      <Table stickyHeader>
         <TableDataHeader
           tableHeaderList={props.tableHeaderList}
           filterFunction={props.filterFunction}
