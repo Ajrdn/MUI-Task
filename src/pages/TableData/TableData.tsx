@@ -18,6 +18,7 @@ interface TableDataProps<T> {
   clickTableRow: (index: number) => void
   clearTableDataShowList: () => void
   setTableDataPasteList: () => void
+  filterFunction: () => void
 }
 
 
@@ -73,7 +74,10 @@ function TableData<T>(props: TableDataProps<T>) {
       onBlur={props.clearTableDataShowList}
     >
       <Table>
-        <TableDataHeader tableHeaderList={props.tableHeaderList} />
+        <TableDataHeader
+          tableHeaderList={props.tableHeaderList}
+          filterFunction={props.filterFunction}
+        />
         <TableDataBody<T>
           clickTableRow={props.clickTableRow}
           tableDataShowList={props.tableDataShowList}
