@@ -4,21 +4,24 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import 'dayjs/locale/ko'
-import TableAddModalDataStore from 'store/TableAddModalDataStore'
 
 
-function TableAddDatePicker() {
-  const date = TableAddModalDataStore(state => state.workDate)
-  const setDate = TableAddModalDataStore(state => state.setWorkDate)
+interface TableAddDatePickerProps {
+  date: Dayjs
+  setDate: (newDate: Dayjs) => void
+}
+
+
+function TableAddDatePicker(props: TableAddDatePickerProps) {
 
   const dateChange = (newDate: Dayjs | null) => {
-    setDate(newDate ?? dayjs())
+    props.setDate(newDate ?? dayjs())
   }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='ko'>
       <DatePicker
-        value={date}
+        value={props.date}
         onChange={dateChange}
         format='YYYY. MM. DD'
         label='수주일'

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import MeltingDataListStore from 'store/MeltingDataListStore'
+import React, { useState, useEffect } from 'react'
+import dayjs, { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { MeltingDataConverter } from 'utils/utils'
@@ -7,6 +7,7 @@ import MELTING_TABLE_HEADER_LIST from 'constant/Melting_Table_Header_List'
 import TableHeader from 'interface/TableHeader'
 import MeltingTableData from 'interface/MeltingTableData'
 import MeltingExcelData from 'interface/MeltingExcelData'
+import TableRowData from 'interface/TableRowData'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
 import TableData from './TableData/TableData'
 import TableAddFab from './TableAddFab/TableAddFab'
@@ -22,41 +23,41 @@ const TablePageBackground = styled(Box)({
 
 
 function TablePage() {
-  const {
-    searchDate,
-    meltingTableDataDateList,
-    meltingTableDataShowList,
-    meltingTableDataShowListLength,
-    selectMeltingTableDataShowListLength,
-    meltingTableDataPasteList,
-    meltingTableDataPasteListLength,
-    lotNo,
-    variety,
-    standard,
-    length,
-    weight,
-    setSearchDate,
-    setMeltingTableDataDateList,
-    filterMeltingTableDataShowList,
-    clickTableRow,
-    clearMeltingTableDataShowList,
-    setMeltingTableDataPasteList,
-    setLotNo,
-    setVariety,
-    setStandard,
-    setLength,
-    setWeight,
-  } = MeltingDataListStore()
+  const [date, setDate] = useState<Dayjs>(dayjs())
+  const [meltingTableDataDateList, setMeltingTableDataDateList] = useState<MeltingTableData[]>([])
+  const [meltingTableDataShowList, setMeltingTableDataShowList] = useState<TableRowData<MeltingTableData>[]>([])
+
+  const [lotNo, setLotNo] = useState<string>('')
+  const [variety, setVariety] = useState<string>('')
+  const [standard, setStandard] = useState<string>('')
+  const [length, setLength] = useState<string>('')
+  const [weight, setWeight] = useState<string>('')
+
+  const setMeltingTableDataList = (newMeltingTableDataList: MeltingTableData[]) => {
+    setMeltingTableDataDateList(newMeltingTableDataList)
+    setMeltingTableDataShowList(newMeltingTableDataList.map((meltingTableData, index) => ({
+      index,
+      selected: false,
+      tableData: meltingTableData,
+      tableRowData: [
+        (index + 1).toString().padStart(2, '0'),
+        meltingTableData.workDate,
+        meltingTableData.lotNo,
+        meltingTableData.variety,
+        meltingTableData.standard,
+        meltingTableData.length,
+        meltingTableData.weight,
+      ],
+    })))
+  }
 
   useEffect(() => {
-    fetch(
-      `http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`
-    )
-      .then((response) => response.json())
+    fetch(`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`)
+      .then(response => response.json())
       .then((meltingTableDataDateList: MeltingTableData[]) => {
-        setMeltingTableDataDateList(meltingTableDataDateList)
+        setMeltingTableDataList(meltingTableDataDateList)
       })
-  }, [searchDate, setMeltingTableDataDateList])
+  }, [date])
 
   const tableHeaderList: TableHeader[] = [
     {
@@ -109,66 +110,64 @@ function TablePage() {
     },
   ]
 
-  const excelData = meltingTableDataDateList.map((taskData, index) => ({
+  const excelData = meltingTableDataShowList.map((tableDataShow, index) => ({
     [MELTING_TABLE_HEADER_LIST[0]]: (index + 1).toString().padStart(2, '0'),
-    [MELTING_TABLE_HEADER_LIST[1]]: taskData.workDate,
-    [MELTING_TABLE_HEADER_LIST[2]]: taskData.lotNo,
-    [MELTING_TABLE_HEADER_LIST[3]]: taskData.variety,
-    [MELTING_TABLE_HEADER_LIST[4]]: taskData.standard,
-    [MELTING_TABLE_HEADER_LIST[5]]: taskData.length,
-    [MELTING_TABLE_HEADER_LIST[6]]: taskData.weight,
+    [MELTING_TABLE_HEADER_LIST[1]]: tableDataShow.tableData.workDate,
+    [MELTING_TABLE_HEADER_LIST[2]]: tableDataShow.tableData.lotNo,
+    [MELTING_TABLE_HEADER_LIST[3]]: tableDataShow.tableData.variety,
+    [MELTING_TABLE_HEADER_LIST[4]]: tableDataShow.tableData.standard,
+    [MELTING_TABLE_HEADER_LIST[5]]: tableDataShow.tableData.length,
+    [MELTING_TABLE_HEADER_LIST[6]]: tableDataShow.tableData.weight,
   }))
 
-  const pasteFunction = (): Promise<void> => {
-    const TaskDataList: MeltingTableData[] = meltingTableDataPasteList.map(taskData => {
-      return {
-        ...taskData,
-        workDate: searchDate.format('YYYY-MM-DD'),
-      }
-    })
-    return fetch(
-      `http://localhost:8000/taskDataList/${searchDate.format('YYYY-MM-DD')}`,
-      {
-        method: 'PUT',
-        body: JSON.stringify(TaskDataList),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then(response => response.json())
-      .then((meltingTableDataDateList: MeltingTableData[]) => {
-        setMeltingTableDataDateList(meltingTableDataDateList)
-      })
+  const filterMeltingTableDataShowList = () => {
+    const newMeltingTableDataShowList = meltingTableDataDateList.filter(meltingTableData =>
+      (meltingTableData.lotNo.includes(lotNo.toUpperCase()) || meltingTableData.lotNo.includes(lotNo.toLowerCase())) &&
+      (meltingTableData.variety.includes(variety.toUpperCase()) || meltingTableData.variety.includes(variety.toLowerCase())) &&
+      (meltingTableData.standard.includes(standard.toUpperCase()) || meltingTableData.standard.includes(standard.toLowerCase())) &&
+      (meltingTableData.length.includes(length.toUpperCase()) || meltingTableData.length.includes(length.toLowerCase())) &&
+      (meltingTableData.weight.includes(weight.toUpperCase()) || meltingTableData.weight.includes(weight.toLowerCase())))
+    setMeltingTableDataShowList(newMeltingTableDataShowList.map((meltingTableDataDate, index) => ({
+      index,
+      selected: false,
+      tableData: meltingTableDataDate,
+      tableRowData: [
+        (index + 1).toString().padStart(2, '0'),
+        meltingTableDataDate.workDate,
+        meltingTableDataDate.lotNo,
+        meltingTableDataDate.variety,
+        meltingTableDataDate.standard,
+        meltingTableDataDate.length,
+        meltingTableDataDate.weight,
+      ],
+    })))
   }
 
   return (
     <>
       <TablePageBackground>
         <TablePageSearchBar<MeltingTableData, MeltingExcelData>
-          date={searchDate} // 날짜
-          setDate={setSearchDate} // 날짜 변경 시 실행할 함수
-          tableDataShowListLength={meltingTableDataShowListLength} // 보여지는 테이블 행 수
-          setTableDataDateList={setMeltingTableDataDateList} // 날짜에 따라 가져올 테이블 데이터 함수
+          date={date} // 날짜
+          setDate={setDate} // 날짜 변경 시 실행할 함수
+          tableDataShowListLength={meltingTableDataShowList.length} // 보여지는 테이블 행 수
+          setTableDataDateList={setMeltingTableDataList} // 날짜에 따라 가져올 테이블 데이터 함수
           excelData={excelData} // 액셀에 나타낼 데이터
           dataConverter={MeltingDataConverter} // 액셀에서 받아온 데이터를 테이블 형태로 바꿔주는 함수
         />
         <TableData<MeltingTableData>
+          date={date}
           tableHeaderList={tableHeaderList} // 테이블 헤더 리스트
-          pasteFunction={pasteFunction} // 복사 시 실행할 함수
           tableDataShowList={meltingTableDataShowList} // 보여줄 테이블 데이터
-          selectTableDataShowListLength={selectMeltingTableDataShowListLength} // 선택된(클릭 시 회색을 띄우는) 행 수
-          tableDataPasteListLength={meltingTableDataPasteListLength} // 복사된 데이터 수
-          clickTableRow={clickTableRow} // 데이터 행 클릭 시 실행할 함수
-          clearTableDataShowList={clearMeltingTableDataShowList} // 데이블 바깥 클릭 시 실행할 함수
-          setTableDataPasteList={setMeltingTableDataPasteList} // 복사 시(ctrl + v를 할 시) 실행할 함수
+          setTableDataShowList={setMeltingTableDataShowList} // 보여줄 테이블 데이터 변경 함수
+          setTableDataDateList={setMeltingTableDataList} // 원본 테이블 데이터 변경 함수
           filterFunction={filterMeltingTableDataShowList} // 필터링할 함수
-          copy
-          modify
-          delete
+          copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`}
+          copyMethod='Put'
         />
       </TablePageBackground>
-      <TableAddFab />
+      <TableAddFab
+        setMeltingTableDataList={setMeltingTableDataList}
+      />
       <AlarmFab />
     </>
   )

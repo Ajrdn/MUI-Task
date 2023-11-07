@@ -1,17 +1,22 @@
-import React from 'react'
-import TableAddModalDataStore from 'store/TableAddModalDataStore'
+import React, { useState } from 'react'
 import Fab from '@mui/material/Fab'
 import Add from '@mui/icons-material/Add'
+import MeltingTableData from 'interface/MeltingTableData'
 import TableAddModal from './TableAddModal/TableAddModal'
 
 
-function TableAddFab() {
-  const setOpen = TableAddModalDataStore(state => state.setOpen)
+interface TableAddFabProps {
+  setMeltingTableDataList: (newMeltingTableDataList: MeltingTableData[]) => void
+}
+
+
+function TableAddFab(props: TableAddFabProps) {
+  const [open, setOpen] = useState<boolean>(false)
 
   return (
     <>
       <Fab
-        onClick={setOpen}
+        onClick={() => setOpen(true)}
         sx={{
           bgcolor: '#13243A',
           position: 'absolute',
@@ -29,7 +34,11 @@ function TableAddFab() {
           }}
         />
       </Fab>
-      <TableAddModal />
+      <TableAddModal
+        open={open}
+        setOpen={setOpen}
+        setMeltingTableDataList={props.setMeltingTableDataList}
+      />
     </>
   )
 }

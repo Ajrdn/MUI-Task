@@ -1,7 +1,7 @@
-import React from 'react'
-import dayjs from 'dayjs'
+import React, { useState } from 'react'
+import dayjs, { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
-import TableAddModalDataStore from 'store/TableAddModalDataStore'
+import MeltingTableData from 'interface/MeltingTableData'
 import ModalBackground from 'components/ModalBackground/ModalBackground'
 import ModalContentBox from 'components/ModalContentBox/ModalContentBox'
 import ModalTitle from 'components/ModalTitle/ModalTitle'
@@ -23,15 +23,20 @@ const TableAddModalTitle = styled(ModalTitle)({
 })
 
 
-function TableAddModal() {
-  const open = TableAddModalDataStore(state => state.open)
-  const setOpen = TableAddModalDataStore(state => state.setOpen)
-  const setWorkDate = TableAddModalDataStore(state => state.setWorkDate)
-  const setLotNo = TableAddModalDataStore(state => state.setLotNo)
-  const setVariety = TableAddModalDataStore(state => state.setVariety)
-  const setStandard = TableAddModalDataStore(state => state.setStandard)
-  const setLength = TableAddModalDataStore(state => state.setLength)
-  const setWeight = TableAddModalDataStore(state => state.setWeight)
+interface TableAddModalProps {
+  open: boolean
+  setOpen: (newOpen: boolean) => void
+  setMeltingTableDataList: (newMeltingTableDataList: MeltingTableData[]) => void
+}
+
+
+function TableAddModal(props: TableAddModalProps) {
+  const [workDate, setWorkDate] = useState<Dayjs>(dayjs())
+  const [lotNo, setLotNo] = useState<string>('')
+  const [variety, setVariety] = useState<string>('')
+  const [standard, setStandard] = useState<string>('')
+  const [length, setLength] = useState<string>('')
+  const [weight, setWeight] = useState<string>('')
 
   const setClose = () => {
     setWorkDate(dayjs())
@@ -40,19 +45,34 @@ function TableAddModal() {
     setStandard('')
     setLength('')
     setWeight('')
-    setOpen()
+    props.setOpen(false)
   }
 
   return (
     <ModalBackground
-      open={open}
+      open={props.open}
       onClose={setClose}
     >
       <TableAddModalContentBox>
         <TableAddModalTitle>
           용해절단 작업일지 추가
         </TableAddModalTitle>
-        <TableAddForm />
+        <TableAddForm
+          setMeltingTableDataList={props.setMeltingTableDataList}
+          setOpen={props.setOpen}
+          workDate={workDate}
+          lotNo={lotNo}
+          variety={variety}
+          standard={standard}
+          length={length}
+          weight={weight}
+          setWorkDate={setWorkDate}
+          setLotNo={setLotNo}
+          setVariety={setVariety}
+          setStandard={setStandard}
+          setLength={setLength}
+          setWeight={setWeight}
+        />
         <ModalCloseButton
           size='30px'
           position='10px'

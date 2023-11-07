@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import Box from '@mui/material/Box'
@@ -7,17 +7,17 @@ import TableDataHeader from './TableDataHeader'
 import TableDataBody from './TableDataBody'
 import TableHeader from 'interface/TableHeader'
 import TableRowData from 'interface/TableRowData'
+import { Dayjs } from 'dayjs'
 
 
 interface TableDataProps<TableDataType> {
+  date: Dayjs
   tableHeaderList: TableHeader[]
-  pasteFunction: () => Promise<void>
   tableDataShowList: TableRowData<TableDataType>[]
-  selectTableDataShowListLength: number
-  tableDataPasteListLength: number
-  clickTableRow: (index: number) => void
-  clearTableDataShowList: () => void
-  setTableDataPasteList: () => void
+  setTableDataShowList: (newTableDataShowList: TableRowData<TableDataType>[]) => void
+  setTableDataDateList: (newMeltingTableDataList: TableDataType[]) => void
+  copyUrl: string
+  copyMethod: string
   filterFunction: () => void
   copy?: boolean
   modify?: boolean
@@ -26,6 +26,7 @@ interface TableDataProps<TableDataType> {
 
 
 function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
+  const [tableDataPasteList, setTableDataPasteList] = useState<TableDataType[]>([])
   const { enqueueSnackbar } = useSnackbar()
 
   const snackbarOptions = {
@@ -35,12 +36,13 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
 
   const copyData = (event: React.KeyboardEvent) => {
     if(event.ctrlKey && event.key === 'c') {
-      if(props.selectTableDataShowListLength > 0) {
+      const selectTableDataShowListLength = props.tableDataShowList.filter(tableDataShow => tableDataShow.selected).length
+      if(selectTableDataShowListLength > 0) {
         enqueueSnackbar('성공적으로 복사되었습니다!', {
           ...snackbarOptions,
           variant: 'success',
         })
-        props.setTableDataPasteList()
+        copyMeltingTableData()
       } else {
         enqueueSnackbar('복사할 데이터가 선택되지 않았습니다.', {
           ...snackbarOptions,
@@ -48,8 +50,26 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         })
       }
     } else if(event.ctrlKey && event.key === 'v') {
-      if(props.tableDataPasteListLength > 0) {
-        props.pasteFunction()
+      if(tableDataPasteList.length > 0) {
+        const tableDataList: TableDataType[] = tableDataPasteList.map(tableData => {
+          return {
+            ...tableData,
+            workDate: props.date.format('YYYY-MM-DD'),
+          }
+        })
+        console.log(tableDataList)
+        fetch(props.copyUrl, {
+          method: props.copyMethod,
+          body: JSON.stringify(tableDataList),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(response => response.json())
+        .then((tableDataDateList: TableDataType[]) => {
+          console.log(tableDataDateList)
+          props.setTableDataDateList(tableDataDateList)
+        })
         .finally(() => {
           enqueueSnackbar('성공적으로 붙여넣었습니다!', {
             ...snackbarOptions,
@@ -65,6 +85,28 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
     }
   }
 
+  const clearTableDataShowList = () => {
+    props.setTableDataShowList(props.tableDataShowList.map(meltingTableData => ({
+      ...meltingTableData,
+      selected: false,
+    })))
+  }
+
+  const copyMeltingTableData = () => {
+    setTableDataPasteList(props.tableDataShowList.filter(tableDataShow => tableDataShow.selected).map(tableDataShow => tableDataShow.tableData))
+    clearTableDataShowList()
+  }
+
+  const clickTableRow = (index: number) => {
+    props.setTableDataShowList(props.tableDataShowList.map(tableDataShow => {
+      if(index === tableDataShow.index) return {
+        ...tableDataShow,
+        selected: !tableDataShow.selected
+      }
+      return tableDataShow
+    }))
+  }
+
   return (
     <TableContainer
       component={Box}
@@ -74,7 +116,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
       }}
       onKeyUp={copyData}
       tabIndex={0}
-      onBlur={props.clearTableDataShowList}
+      onBlur={clearTableDataShowList}
     >
       <Table stickyHeader>
         <TableDataHeader
@@ -85,7 +127,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
           delete={props.delete}
         />
         <TableDataBody<TableDataType>
-          clickTableRow={props.clickTableRow}
+          clickTableRow={clickTableRow}
           tableDataShowList={props.tableDataShowList}
           copy={props.copy}
           modify={props.modify}
