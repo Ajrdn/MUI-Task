@@ -120,7 +120,7 @@ function TablePage() {
   }))
 
   const pasteFunction = (): Promise<void> => {
-    const TaskDataList: MeltingTableData[] = meltingTableDataPasteList.map((taskData) => {
+    const TaskDataList: MeltingTableData[] = meltingTableDataPasteList.map(taskData => {
       return {
         ...taskData,
         workDate: searchDate.format('YYYY-MM-DD'),
@@ -136,7 +136,7 @@ function TablePage() {
         },
       }
     )
-      .then((response) => response.json())
+      .then(response => response.json())
       .then((meltingTableDataDateList: MeltingTableData[]) => {
         setMeltingTableDataDateList(meltingTableDataDateList)
       })
@@ -163,6 +163,9 @@ function TablePage() {
           clearTableDataShowList={clearMeltingTableDataShowList} // 데이블 바깥 클릭 시 실행할 함수
           setTableDataPasteList={setMeltingTableDataPasteList} // 복사 시(ctrl + v를 할 시) 실행할 함수
           filterFunction={filterMeltingTableDataShowList} // 필터링할 함수
+          copy
+          modify
+          delete
         />
       </TablePageBackground>
       <TableAddFab />

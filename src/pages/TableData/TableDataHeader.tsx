@@ -19,7 +19,6 @@ const TableHeaderTitle = styled(Typography)({
 
 
 const TableDataCell = styled(Box)({
-  position: 'relative',
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
@@ -31,6 +30,9 @@ const TableDataCell = styled(Box)({
 interface TableDataHeaderProps {
   tableHeaderList: TableHeader[]
   filterFunction: () => void
+  copy?: boolean
+  modify?: boolean
+  delete?: boolean
 }
 
 
@@ -60,6 +62,36 @@ function TableDataHeader(props: TableDataHeaderProps) {
             </TableDataCell>
           </TableCell>
         ))}
+        {props.copy &&
+        <TableCell
+          align='center'
+          sx={{
+            width: '64px',
+          }}
+        >
+          <TableHeaderTitle>복제</TableHeaderTitle>
+        </TableCell>
+        }
+        {props.modify &&
+        <TableCell
+          align='center'
+          sx={{
+            width: '64px',
+          }}
+        >
+          <TableHeaderTitle>수정</TableHeaderTitle>
+        </TableCell>
+        }
+        {props.delete &&
+        <TableCell
+          align='center'
+          sx={{
+            width: '64px',
+          }}
+        >
+          <TableHeaderTitle>삭제</TableHeaderTitle>
+        </TableCell>
+        }
       </TableRow>
     </TableHead>
   )

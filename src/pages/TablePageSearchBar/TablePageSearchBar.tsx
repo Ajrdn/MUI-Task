@@ -28,14 +28,14 @@ interface TablePageSearchBarProps<TableDataType, ExcelDataType> {
   setDate: (date: Dayjs) => void
   tableDataShowListLength: number
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
-  excelDataFunction: () => ExcelData[]
+  excelData: ExcelData[]
   dataConverter: (excelData: ExcelDataType[]) => TableDataType[]
 }
 
 
 function TablePageSearchBar<TableDataType, ExcelDataType>(props: TablePageSearchBarProps<TableDataType, ExcelDataType>) {
   const excelDownload = () => {
-    TableDataListDownloadXlsx(props.excelDataFunction())
+    TableDataListDownloadXlsx(props.excelData)
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

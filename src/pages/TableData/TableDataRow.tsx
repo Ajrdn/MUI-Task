@@ -1,6 +1,9 @@
 import { styled } from '@mui/material/styles'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
+import CopyAll from '@mui/icons-material/CopyAll'
+import DeleteOutline from '@mui/icons-material/DeleteOutline'
+import { Button, IconButton } from '@mui/material'
 
 
 interface TableDataCellProps {
@@ -13,9 +16,18 @@ const TableDataCell = styled(TableCell)<TableDataCellProps>(({ selected }) => ({
   fontSize: '13px',
   fontFamily: 'Pretendard',
   fontWeight: 400,
-  textAlign: 'center',
   backgroundColor: selected ? '#E8E8E8' : 'white',
 }))
+
+
+const TableFunctionCell = styled(TableCell)({
+  '& button': {
+    color: '#0F3D7A',
+    fontSize: '15px',
+    fontFamily: 'Pretendard',
+    fontWeight: 500,
+  },
+})
 
 
 interface TableDataRowProps {
@@ -23,6 +35,9 @@ interface TableDataRowProps {
   index: number
   selected: boolean
   clickTableRow: (index: number) => void
+  copy?: boolean
+  modify?: boolean
+  delete?: boolean
 }
 
 
@@ -33,7 +48,6 @@ function TableDataRow(props: TableDataRowProps) {
 
   return (
     <TableRow
-      onClick={rowSelected}
       sx={{
         '&:last-child > *': {
           borderBottom: 'none',
@@ -45,10 +59,45 @@ function TableDataRow(props: TableDataRowProps) {
           key={`${cellData}${index}`}
           align='center'
           selected={props.selected}
-        >
+          onClick={rowSelected}
+          >
           {cellData}
         </TableDataCell>
       ))}
+      {props.copy &&
+        <TableFunctionCell
+          align='center'
+          sx={{
+            width: '64px',
+          }}
+        >
+          <IconButton>
+            <CopyAll />
+          </IconButton>
+        </TableFunctionCell>
+        }
+        {props.modify &&
+        <TableFunctionCell
+          align='center'
+          sx={{
+            width: '64px',
+          }}
+        >
+          <Button variant='text'>수정</Button>
+        </TableFunctionCell>
+        }
+        {props.delete &&
+        <TableFunctionCell
+          align='center'
+          sx={{
+            width: '64px',
+          }}
+        >
+          <IconButton>
+            <DeleteOutline />
+          </IconButton>
+        </TableFunctionCell>
+        }
     </TableRow>
   )
 }

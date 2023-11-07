@@ -19,6 +19,9 @@ interface TableDataProps<TableDataType> {
   clearTableDataShowList: () => void
   setTableDataPasteList: () => void
   filterFunction: () => void
+  copy?: boolean
+  modify?: boolean
+  delete?: boolean
 }
 
 
@@ -37,13 +40,13 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
           ...snackbarOptions,
           variant: 'success',
         })
+        props.setTableDataPasteList()
       } else {
         enqueueSnackbar('복사할 데이터가 선택되지 않았습니다.', {
           ...snackbarOptions,
           variant: 'warning',
         })
       }
-      props.setTableDataPasteList()
     } else if(event.ctrlKey && event.key === 'v') {
       if(props.tableDataPasteListLength > 0) {
         props.pasteFunction()
@@ -77,10 +80,16 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         <TableDataHeader
           tableHeaderList={props.tableHeaderList}
           filterFunction={props.filterFunction}
+          copy={props.copy}
+          modify={props.modify}
+          delete={props.delete}
         />
         <TableDataBody<TableDataType>
           clickTableRow={props.clickTableRow}
           tableDataShowList={props.tableDataShowList}
+          copy={props.copy}
+          modify={props.modify}
+          delete={props.delete}
         />
       </Table>
     </TableContainer>
