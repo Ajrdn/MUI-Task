@@ -149,7 +149,7 @@ function TablePage() {
           date={searchDate} // 날짜
           setDate={setSearchDate} // 날짜 변경 시 실행할 함수
           tableDataShowListLength={meltingTableDataShowListLength} // 보여지는 테이블 행 수
-          setTableDataDateList={setMeltingTableDataDateList} // 
+          setTableDataDateList={setMeltingTableDataDateList} // 날짜에 따라 가져올 테이블 데이터 함수
           excelData={excelData} // 액셀에 나타낼 데이터
           dataConverter={MeltingDataConverter} // 액셀에서 받아온 데이터를 테이블 형태로 바꿔주는 함수
         />
