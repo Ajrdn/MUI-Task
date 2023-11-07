@@ -109,6 +109,16 @@ function TablePage() {
     },
   ]
 
+  const excelData = meltingTableDataDateList.map((taskData, index) => ({
+    [MELTING_TABLE_HEADER_LIST[0]]: (index + 1).toString().padStart(2, '0'),
+    [MELTING_TABLE_HEADER_LIST[1]]: taskData.workDate,
+    [MELTING_TABLE_HEADER_LIST[2]]: taskData.lotNo,
+    [MELTING_TABLE_HEADER_LIST[3]]: taskData.variety,
+    [MELTING_TABLE_HEADER_LIST[4]]: taskData.standard,
+    [MELTING_TABLE_HEADER_LIST[5]]: taskData.length,
+    [MELTING_TABLE_HEADER_LIST[6]]: taskData.weight,
+  }))
+
   const pasteFunction = (): Promise<void> => {
     const TaskDataList: MeltingTableData[] = meltingTableDataPasteList.map((taskData) => {
       return {
@@ -132,39 +142,27 @@ function TablePage() {
       })
   }
 
-  const excelData = () => {
-    return meltingTableDataDateList.map((taskData, index) => ({
-      [MELTING_TABLE_HEADER_LIST[0]]: (index + 1).toString().padStart(2, '0'),
-      [MELTING_TABLE_HEADER_LIST[1]]: taskData.workDate,
-      [MELTING_TABLE_HEADER_LIST[2]]: taskData.lotNo,
-      [MELTING_TABLE_HEADER_LIST[3]]: taskData.variety,
-      [MELTING_TABLE_HEADER_LIST[4]]: taskData.standard,
-      [MELTING_TABLE_HEADER_LIST[5]]: taskData.length,
-      [MELTING_TABLE_HEADER_LIST[6]]: taskData.weight,
-    }))
-  }
-
   return (
     <>
       <TablePageBackground>
         <TablePageSearchBar<MeltingTableData, MeltingExcelData>
-          date={searchDate}
-          setDate={setSearchDate}
-          tableDataShowListLength={meltingTableDataShowListLength}
-          setTableDataDateList={setMeltingTableDataDateList}
-          excelDataFunction={excelData}
-          dataConverter={MeltingDataConverter}
+          date={searchDate} // 날짜
+          setDate={setSearchDate} // 날짜 변경 시 실행할 함수
+          tableDataShowListLength={meltingTableDataShowListLength} // 보여지는 테이블 행 수
+          setTableDataDateList={setMeltingTableDataDateList} // 
+          excelData={excelData} // 액셀에 나타낼 데이터
+          dataConverter={MeltingDataConverter} // 액셀에서 받아온 데이터를 테이블 형태로 바꿔주는 함수
         />
         <TableData<MeltingTableData>
-          tableHeaderList={tableHeaderList}
-          pasteFunction={pasteFunction}
-          tableDataShowList={meltingTableDataShowList}
-          selectTableDataShowListLength={selectMeltingTableDataShowListLength}
-          tableDataPasteListLength={meltingTableDataPasteListLength}
-          clickTableRow={clickTableRow}
-          clearTableDataShowList={clearMeltingTableDataShowList}
-          setTableDataPasteList={setMeltingTableDataPasteList}
-          filterFunction={filterMeltingTableDataShowList}
+          tableHeaderList={tableHeaderList} // 테이블 헤더 리스트
+          pasteFunction={pasteFunction} // 복사 시 실행할 함수
+          tableDataShowList={meltingTableDataShowList} // 보여줄 테이블 데이터
+          selectTableDataShowListLength={selectMeltingTableDataShowListLength} // 선택된(클릭 시 회색을 띄우는) 행 수
+          tableDataPasteListLength={meltingTableDataPasteListLength} // 복사된 데이터 수
+          clickTableRow={clickTableRow} // 데이터 행 클릭 시 실행할 함수
+          clearTableDataShowList={clearMeltingTableDataShowList} // 데이블 바깥 클릭 시 실행할 함수
+          setTableDataPasteList={setMeltingTableDataPasteList} // 복사 시(ctrl + v를 할 시) 실행할 함수
+          filterFunction={filterMeltingTableDataShowList} // 필터링할 함수
         />
       </TablePageBackground>
       <TableAddFab />
