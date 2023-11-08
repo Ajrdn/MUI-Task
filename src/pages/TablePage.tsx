@@ -35,27 +35,14 @@ function TablePage() {
 
   const setMeltingTableDataList = (newMeltingTableDataList: MeltingTableData[]) => {
     setMeltingTableDataDateList(newMeltingTableDataList)
-    setMeltingTableDataShowList(newMeltingTableDataList.map((meltingTableData, index) => ({
-      index,
-      selected: false,
-      tableData: meltingTableData,
-      tableRowData: [
-        (index + 1).toString().padStart(2, '0'),
-        meltingTableData.workDate,
-        meltingTableData.lotNo,
-        meltingTableData.variety,
-        meltingTableData.standard,
-        meltingTableData.length,
-        meltingTableData.weight,
-      ],
-    })))
+    filterMeltingTableDataShowList(newMeltingTableDataList)
   }
 
   useEffect(() => {
     fetch(`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`)
       .then(response => response.json())
-      .then((meltingTableDataDateList: MeltingTableData[]) => {
-        setMeltingTableDataList(meltingTableDataDateList)
+      .then((newMeltingTableDataDateList: MeltingTableData[]) => {
+        setMeltingTableDataList(newMeltingTableDataDateList)
       })
   }, [date])
 
@@ -110,8 +97,8 @@ function TablePage() {
     },
   ]
 
-  const excelData = meltingTableDataShowList.map((tableDataShow, index) => ({
-    [MELTING_TABLE_HEADER_LIST[0]]: (index + 1).toString().padStart(2, '0'),
+  const excelData = meltingTableDataShowList.map(tableDataShow => ({
+    [MELTING_TABLE_HEADER_LIST[0]]: tableDataShow.tableData.id,
     [MELTING_TABLE_HEADER_LIST[1]]: tableDataShow.tableData.workDate,
     [MELTING_TABLE_HEADER_LIST[2]]: tableDataShow.tableData.lotNo,
     [MELTING_TABLE_HEADER_LIST[3]]: tableDataShow.tableData.variety,
@@ -120,25 +107,54 @@ function TablePage() {
     [MELTING_TABLE_HEADER_LIST[6]]: tableDataShow.tableData.weight,
   }))
 
-  const filterMeltingTableDataShowList = () => {
-    const newMeltingTableDataShowList = meltingTableDataDateList.filter(meltingTableData =>
+  const filterMeltingTableDataShowList = (newMeltingTableDataDateList?: MeltingTableData[]) => {
+    const newMeltingTableDataShowList = newMeltingTableDataDateList ?
+    newMeltingTableDataDateList.filter(meltingTableData =>
       (meltingTableData.lotNo.includes(lotNo.toUpperCase()) || meltingTableData.lotNo.includes(lotNo.toLowerCase())) &&
       (meltingTableData.variety.includes(variety.toUpperCase()) || meltingTableData.variety.includes(variety.toLowerCase())) &&
       (meltingTableData.standard.includes(standard.toUpperCase()) || meltingTableData.standard.includes(standard.toLowerCase())) &&
       (meltingTableData.length.includes(length.toUpperCase()) || meltingTableData.length.includes(length.toLowerCase())) &&
       (meltingTableData.weight.includes(weight.toUpperCase()) || meltingTableData.weight.includes(weight.toLowerCase())))
+    :
+    meltingTableDataDateList.filter(meltingTableData =>
+      (meltingTableData.lotNo.includes(lotNo.toUpperCase()) || meltingTableData.lotNo.includes(lotNo.toLowerCase())) &&
+      (meltingTableData.variety.includes(variety.toUpperCase()) || meltingTableData.variety.includes(variety.toLowerCase())) &&
+      (meltingTableData.standard.includes(standard.toUpperCase()) || meltingTableData.standard.includes(standard.toLowerCase())) &&
+      (meltingTableData.length.includes(length.toUpperCase()) || meltingTableData.length.includes(length.toLowerCase())) &&
+      (meltingTableData.weight.includes(weight.toUpperCase()) || meltingTableData.weight.includes(weight.toLowerCase())))
+    
     setMeltingTableDataShowList(newMeltingTableDataShowList.map((meltingTableDataDate, index) => ({
       index,
       selected: false,
       tableData: meltingTableDataDate,
-      tableRowData: [
-        (index + 1).toString().padStart(2, '0'),
-        meltingTableDataDate.workDate,
-        meltingTableDataDate.lotNo,
-        meltingTableDataDate.variety,
-        meltingTableDataDate.standard,
-        meltingTableDataDate.length,
-        meltingTableDataDate.weight,
+      tableRowStringData: [
+        {
+          data: (index + 1).toString().padStart(2, '0'),
+        },
+        {
+          data: meltingTableDataDate.workDate,
+          key: 'workDate',
+        },
+        {
+          data: meltingTableDataDate.lotNo,
+          key: 'lotNo',
+        },
+        {
+          data: meltingTableDataDate.variety,
+          key: 'variety',
+        },
+        {
+          data: meltingTableDataDate.standard,
+          key: 'standard',
+        },
+        {
+          data: meltingTableDataDate.length,
+          key: 'length',
+        },
+        {
+          data: meltingTableDataDate.weight,
+          key: 'weight',
+        },
       ],
     })))
   }
@@ -161,8 +177,17 @@ function TablePage() {
           setTableDataShowList={setMeltingTableDataShowList} // 보여줄 테이블 데이터 변경 함수
           setTableDataDateList={setMeltingTableDataList} // 원본 테이블 데이터 변경 함수
           filterFunction={filterMeltingTableDataShowList} // 필터링할 함수
-          copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`}
-          copyMethod='Put'
+          pasteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 붙여넣기 시 보낼 백엔드 url
+          pasteMethod='Put' // 붙여넣기 시 보낼 백엔드 method
+          copy // 복제 기능을 추가하는지 여부
+          copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 복제 시 보낼 백엔드 url
+          copyMethod='Post' // 복제 시 보낼 백엔드 method
+          modify
+          modifyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`}
+          modifyMethod='Patch'
+          delete
+          deleteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`}
+          deleteMethod='Delete'
         />
       </TablePageBackground>
       <TableAddFab
