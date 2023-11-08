@@ -7,6 +7,7 @@ import TableDataRow from './TableDataRow'
 interface TableDataBodyProps<TableDataType> {
   clickTableRow: (index: number) => void
   tableDataShowList: TableRowData<TableDataType>[]
+  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   copy?: boolean
   modify?: boolean
   delete?: boolean
@@ -17,12 +18,11 @@ function TableDataBody<TableDataType>(props: TableDataBodyProps<TableDataType>) 
   return (
     <TableBody>
       {props.tableDataShowList.map(taskDataShow => (
-          <TableDataRow
+          <TableDataRow<TableDataType>
             key={`${taskDataShow.index}`}
-            tableRowData={taskDataShow.tableRowData}
-            index={taskDataShow.index}
-            selected={taskDataShow.selected}
+            tableRowData={taskDataShow}
             clickTableRow={props.clickTableRow}
+            setTableDataDateList={props.setTableDataDateList}
             copy={props.copy}
             modify={props.modify}
             delete={props.delete}

@@ -3,7 +3,9 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import CopyAll from '@mui/icons-material/CopyAll'
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
-import { Button, IconButton } from '@mui/material'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import TableRowData from 'interface/TableRowData'
 
 
 interface TableDataCellProps {
@@ -30,20 +32,31 @@ const TableFunctionCell = styled(TableCell)({
 })
 
 
-interface TableDataRowProps {
-  tableRowData: string[]
-  index: number
-  selected: boolean
+interface TableDataRowProps<TableDataType> {
+  tableRowData: TableRowData<TableDataType>
   clickTableRow: (index: number) => void
+  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   copy?: boolean
   modify?: boolean
   delete?: boolean
 }
 
 
-function TableDataRow(props: TableDataRowProps) {
+function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
   const rowSelected = () => {
-    props.clickTableRow(props.index)
+    props.clickTableRow(props.tableRowData.index)
+  }
+
+  const copyFunction = () => {
+    
+  }
+
+  const modifyFunction = () => {
+
+  }
+
+  const deleteFunction = () => {
+
   }
 
   return (
@@ -54,11 +67,11 @@ function TableDataRow(props: TableDataRowProps) {
         },
       }}
     >
-      {props.tableRowData.map((cellData, index) => (
+      {props.tableRowData.tableRowStringData.map((cellData, index) => (
         <TableDataCell
           key={`${cellData}${index}`}
           align='center'
-          selected={props.selected}
+          selected={props.tableRowData.selected}
           onClick={rowSelected}
           >
           {cellData}
@@ -71,7 +84,7 @@ function TableDataRow(props: TableDataRowProps) {
             width: '64px',
           }}
         >
-          <IconButton>
+          <IconButton onClick={copyFunction}>
             <CopyAll />
           </IconButton>
         </TableFunctionCell>
@@ -83,7 +96,12 @@ function TableDataRow(props: TableDataRowProps) {
             width: '64px',
           }}
         >
-          <Button variant='text'>수정</Button>
+          <Button
+            variant='text'
+            onClick={modifyFunction}
+          >
+            수정
+          </Button>
         </TableFunctionCell>
         }
         {props.delete &&
@@ -93,7 +111,7 @@ function TableDataRow(props: TableDataRowProps) {
             width: '64px',
           }}
         >
-          <IconButton>
+          <IconButton onClick={deleteFunction}>
             <DeleteOutline />
           </IconButton>
         </TableFunctionCell>
