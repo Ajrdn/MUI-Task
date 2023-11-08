@@ -47,7 +47,9 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
   const [unchanged, setUnchanged] = useState<boolean>(true)
   const [open, setOpen] = useState<boolean>(false)
 
-  const openFilterField = () => {
+  const openFilterField = (event: React.MouseEvent<HTMLElement>) => {
+    console.log(event.currentTarget.getBoundingClientRect().left)
+    console.log(event.currentTarget.getBoundingClientRect().top)
     setOpen(prev => !prev)
   }
 
