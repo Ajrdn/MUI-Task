@@ -1,4 +1,5 @@
 interface MeltingTableData {
+  id: string
   workDate: string
   lotNo: string
   variety: string

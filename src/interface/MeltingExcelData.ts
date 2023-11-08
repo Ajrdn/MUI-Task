@@ -1,4 +1,5 @@
 interface MeltingExcelData {
+  'ID': string
   'LOT No.': string
   'No.': string
   '규격': string
