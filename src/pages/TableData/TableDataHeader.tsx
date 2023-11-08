@@ -18,6 +18,17 @@ const TableHeaderTitle = styled(Typography)({
 })
 
 
+interface TableCellBoxProps {
+  width: string
+}
+
+
+const TableCellBox = styled(TableCell)<TableCellBoxProps>(({ width }) => ({
+  width: width,
+  height: '64px',
+}))
+
+
 const TableDataCell = styled(Box)({
   width: '100%',
   display: 'flex',
@@ -41,13 +52,10 @@ function TableDataHeader(props: TableDataHeaderProps) {
     <TableHead>
       <TableRow>
         {props.tableHeaderList.map(tableHeader => (
-          <TableCell
+          <TableCellBox
             key={tableHeader.title}
+            width={tableHeader.size}
             align='center'
-            sx={{
-              width: tableHeader.size,
-              height: '64px',
-            }}
           >
             <TableDataCell>
               <TableHeaderTitle>{tableHeader.title}</TableHeaderTitle>
@@ -60,37 +68,31 @@ function TableDataHeader(props: TableDataHeaderProps) {
                 left={tableHeader.left!}
               />}
             </TableDataCell>
-          </TableCell>
+          </TableCellBox>
         ))}
         {props.copy &&
-        <TableCell
+        <TableCellBox
+          width='64px'
           align='center'
-          sx={{
-            width: '64px',
-          }}
         >
           <TableHeaderTitle>복제</TableHeaderTitle>
-        </TableCell>
+        </TableCellBox>
         }
         {props.modify &&
-        <TableCell
+        <TableCellBox
+          width='64px'
           align='center'
-          sx={{
-            width: '64px',
-          }}
         >
           <TableHeaderTitle>수정</TableHeaderTitle>
-        </TableCell>
+        </TableCellBox>
         }
         {props.delete &&
-        <TableCell
+        <TableCellBox
+          width='64px'
           align='center'
-          sx={{
-            width: '64px',
-          }}
         >
           <TableHeaderTitle>삭제</TableHeaderTitle>
-        </TableCell>
+        </TableCellBox>
         }
       </TableRow>
     </TableHead>
