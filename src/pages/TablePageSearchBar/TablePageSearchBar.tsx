@@ -11,7 +11,7 @@ import ExcelData from 'interface/ExcelData'
 
 
 const TablePageSearchBarBackground = styled(Box)({
-  width: '1520px',
+  width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
 })
