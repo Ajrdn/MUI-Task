@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
+import { Dayjs } from 'dayjs'
 import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import Box from '@mui/material/Box'
 import { useSnackbar } from 'notistack'
-import TableDataHeader from './TableDataHeader'
-import TableDataBody from './TableDataBody'
 import TableHeader from 'interface/TableHeader'
 import TableRowData from 'interface/TableRowData'
-import { Dayjs } from 'dayjs'
+import SNACKBAR_OPTIONS from 'constant/Snackbar_Options'
+import TableDataHeader from './TableDataHeader'
+import TableDataBody from './TableDataBody'
 
 
 interface TableDataProps<TableDataType> {
@@ -20,8 +21,14 @@ interface TableDataProps<TableDataType> {
   pasteMethod: string
   filterFunction: () => void
   copy?: boolean
+  copyUrl?: string
+  copyMethod?: string
   modify?: boolean
+  modifyUrl?: string
+  modifyMethod?: string
   delete?: boolean
+  deleteUrl?: string
+  deleteMethod?: string
 }
 
 
@@ -29,23 +36,18 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
   const [tableDataPasteList, setTableDataPasteList] = useState<TableDataType[]>([])
   const { enqueueSnackbar } = useSnackbar()
 
-  const snackbarOptions = {
-    autoHideDuration: 3000,
-    disableWindowBlurListener: true,
-  }
-
   const copyData = (event: React.KeyboardEvent) => {
     if(event.ctrlKey && event.key === 'c') {
       const selectTableDataShowListLength = props.tableDataShowList.filter(tableDataShow => tableDataShow.selected).length
       if(selectTableDataShowListLength > 0) {
         enqueueSnackbar('성공적으로 복사되었습니다!', {
-          ...snackbarOptions,
+          ...SNACKBAR_OPTIONS,
           variant: 'success',
         })
         copyMeltingTableData()
       } else {
         enqueueSnackbar('복사할 데이터가 선택되지 않았습니다.', {
-          ...snackbarOptions,
+          ...SNACKBAR_OPTIONS,
           variant: 'warning',
         })
       }
@@ -70,13 +72,13 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         })
         .finally(() => {
           enqueueSnackbar('성공적으로 붙여넣었습니다!', {
-            ...snackbarOptions,
+            ...SNACKBAR_OPTIONS,
             variant: 'success',
           })
         })
       } else {
         enqueueSnackbar('붙여넣기할 데이터가 선택되지 않았습니다.', {
-          ...snackbarOptions,
+          ...SNACKBAR_OPTIONS,
           variant: 'warning',
         })
       }
@@ -129,8 +131,14 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
           tableDataShowList={props.tableDataShowList}
           setTableDataDateList={props.setTableDataDateList}
           copy={props.copy}
+          copyUrl={props.copyUrl}
+          copyMethod={props.copyMethod}
           modify={props.modify}
+          modifyUrl={props.modifyUrl}
+          modifyMethod={props.modifyMethod}
           delete={props.delete}
+          deleteUrl={props.deleteUrl}
+          deleteMethod={props.deleteMethod}
         />
       </Table>
     </TableContainer>
