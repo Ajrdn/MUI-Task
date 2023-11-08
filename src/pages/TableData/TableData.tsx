@@ -15,9 +15,9 @@ interface TableDataProps<TableDataType> {
   tableHeaderList: TableHeader[]
   tableDataShowList: TableRowData<TableDataType>[]
   setTableDataShowList: (newTableDataShowList: TableRowData<TableDataType>[]) => void
-  setTableDataDateList: (newMeltingTableDataList: TableDataType[]) => void
-  copyUrl: string
-  copyMethod: string
+  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
+  pasteUrl: string
+  pasteMethod: string
   filterFunction: () => void
   copy?: boolean
   modify?: boolean
@@ -57,9 +57,8 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
             workDate: props.date.format('YYYY-MM-DD'),
           }
         })
-        console.log(tableDataList)
-        fetch(props.copyUrl, {
-          method: props.copyMethod,
+        fetch(props.pasteUrl, {
+          method: props.pasteMethod,
           body: JSON.stringify(tableDataList),
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +66,6 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         })
         .then(response => response.json())
         .then((tableDataDateList: TableDataType[]) => {
-          console.log(tableDataDateList)
           props.setTableDataDateList(tableDataDateList)
         })
         .finally(() => {
@@ -129,6 +127,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         <TableDataBody<TableDataType>
           clickTableRow={clickTableRow}
           tableDataShowList={props.tableDataShowList}
+          setTableDataDateList={props.setTableDataDateList}
           copy={props.copy}
           modify={props.modify}
           delete={props.delete}
