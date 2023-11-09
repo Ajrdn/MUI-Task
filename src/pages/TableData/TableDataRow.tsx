@@ -111,7 +111,6 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
         })
       })
       .catch(error => {
-        console.log(error)
         enqueueSnackbar('오류가 발생했습니다.', {
           ...SNACKBAR_OPTIONS,
           variant: 'error',
