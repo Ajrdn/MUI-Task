@@ -123,6 +123,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
     >
       <Table stickyHeader>
         <TableDataHeader
+          date={props.date}
           tableHeaderList={props.tableHeaderList}
           copy={props.copy}
           modify={props.modify}

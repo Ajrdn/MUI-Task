@@ -1,4 +1,5 @@
 import React from 'react'
+import { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
@@ -39,6 +40,7 @@ const TableDataCell = styled(Box)({
 
 
 interface TableDataHeaderProps {
+  date: Dayjs
   tableHeaderList: TableHeader[]
   copy?: boolean
   modify?: boolean
@@ -60,6 +62,7 @@ function TableDataHeader(props: TableDataHeaderProps) {
               <TableHeaderTitle>{tableHeader.title}</TableHeaderTitle>
               {tableHeader.setFilterData &&
               <TableDataFilterButton
+                date={props.date}
                 setFilterData={tableHeader.setFilterData}
               />}
             </TableDataCell>
