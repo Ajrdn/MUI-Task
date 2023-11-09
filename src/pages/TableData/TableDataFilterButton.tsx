@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
 import FilterAlt from '@mui/icons-material/FilterAlt'
 import IconButton from '@mui/material/IconButton'
@@ -56,6 +57,7 @@ const FilterTextField = styled(TextField)({
 
 
 interface TableDataFilterButtonProps {
+  date: Dayjs
   setFilterData: (newFilterData: string) => void
 }
 
@@ -66,6 +68,12 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
   const [open, setOpen] = useState<boolean>(false)
   const [top, setTop] = useState<number>(0)
   const [left, setLetf] = useState<number>(0)
+
+  useEffect(() => {
+    if(data !== '') {
+      setData('')
+    }
+  }, [props.date])
 
   const openFilterField = (event: React.MouseEvent<HTMLElement>) => {
     setTop(event.currentTarget.getBoundingClientRect().top + 30)
