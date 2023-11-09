@@ -69,11 +69,15 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         .then(response => response.json())
         .then((tableDataDateList: TableDataType[]) => {
           props.setTableDataDateList(tableDataDateList)
-        })
-        .finally(() => {
           enqueueSnackbar('성공적으로 붙여넣었습니다!', {
             ...SNACKBAR_OPTIONS,
             variant: 'success',
+          })
+        })
+        .catch(error => {
+          enqueueSnackbar('오류가 발생했습니다.', {
+            ...SNACKBAR_OPTIONS,
+            variant: 'error',
           })
         })
       } else {
