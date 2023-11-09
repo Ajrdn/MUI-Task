@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import FilterAlt from '@mui/icons-material/FilterAlt'
 import IconButton from '@mui/material/IconButton'
 import Modal from '@mui/material/Modal'
-import TableDataFilterTextField from './TableDataFilterTextField'
+import TextField from '@mui/material/TextField'
 import ModalContentBox from 'components/ModalContentBox/ModalContentBox'
 
 
@@ -34,14 +34,35 @@ const TableDataFilterModalContentBox = styled(ModalContentBox)({
 })
 
 
+const FilterTextField = styled(TextField)({
+  '& input': {
+    fontSize: '16px',
+    fontFamily: 'Pretendard',
+    fontWeight: 400,
+    color: '#13243A',
+  },
+  '& input::placeholder': {
+    fontSize: '16px',
+    fontFamily: 'Pretendard',
+    fontWeight: 400,
+    color: '#C8C8C8',
+  },
+  '& label': {
+    fontFamily: 'Pretendard',
+    fontWeight: 600,
+    color: '#878787',
+  },
+})
+
+
+
 interface TableDataFilterButtonProps {
-  filterData: string
   setFilterData: (newFilterData: string) => void
-  filterFunction: () => void
 }
 
 
 function TableDataFilterButton(props: TableDataFilterButtonProps) {
+  const [data, setData] = useState<string>('')
   const [unchanged, setUnchanged] = useState<boolean>(true)
   const [open, setOpen] = useState<boolean>(false)
   const [top, setTop] = useState<number>(0)
@@ -54,15 +75,17 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
   }
 
   const closeFilterField = () => {
-    if(unchanged) props.setFilterData('')
+    if(unchanged) {
+      props.setFilterData('')
+      setData('')
+    } else props.setFilterData(data)
     setOpen(prev => !prev)
     setUnchanged(true)
-    props.filterFunction()
   }
 
-  const filterDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const DataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUnchanged(false)
-    props.setFilterData(event.target.value)
+    setData(event.target.value)
   }
 
   return (
@@ -83,9 +106,12 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
         left={left}
       >
         <TableDataFilterModalContentBox>
-          <TableDataFilterTextField
-            filterData={props.filterData}
-            setFilterData={filterDataChange}
+          <FilterTextField
+            focused
+            label='검색어 입력'
+            value={data}
+            onChange={DataChange}
+            placeholder='검색어 입력'
           />
         </TableDataFilterModalContentBox>
       </TableDataFilterModalBackground>

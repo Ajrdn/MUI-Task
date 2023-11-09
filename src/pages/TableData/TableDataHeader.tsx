@@ -40,7 +40,6 @@ const TableDataCell = styled(Box)({
 
 interface TableDataHeaderProps {
   tableHeaderList: TableHeader[]
-  filterFunction: () => void
   copy?: boolean
   modify?: boolean
   delete?: boolean
@@ -61,9 +60,7 @@ function TableDataHeader(props: TableDataHeaderProps) {
               <TableHeaderTitle>{tableHeader.title}</TableHeaderTitle>
               {tableHeader.setFilterData &&
               <TableDataFilterButton
-                filterData={tableHeader.filterData!}
                 setFilterData={tableHeader.setFilterData}
-                filterFunction={props.filterFunction}
               />}
             </TableDataCell>
           </TableCellBox>

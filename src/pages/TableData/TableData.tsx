@@ -19,7 +19,6 @@ interface TableDataProps<TableDataType> {
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   pasteUrl: string
   pasteMethod: string
-  filterFunction: () => void
   copy?: boolean
   copyUrl?: string
   copyMethod?: string
@@ -125,7 +124,6 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
       <Table stickyHeader>
         <TableDataHeader
           tableHeaderList={props.tableHeaderList}
-          filterFunction={props.filterFunction}
           copy={props.copy}
           modify={props.modify}
           delete={props.delete}

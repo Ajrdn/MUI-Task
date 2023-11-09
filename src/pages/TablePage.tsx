@@ -46,6 +46,10 @@ function TablePage() {
       })
   }, [date])
 
+  useEffect(() => {
+    filterMeltingTableDataShowList()
+  }, [lotNo, variety, standard, length, weight])
+
   const tableHeaderList: TableHeader[] = [
     {
       title: 'No.',
@@ -58,42 +62,27 @@ function TablePage() {
     {
       title: 'LOT No.',
       size: '300px',
-      filterData: lotNo,
       setFilterData: setLotNo,
-      top: '192px',
-      left: '560px',
     },
     {
       title: '품종',
       size: '300px',
-      filterData: variety,
       setFilterData: setVariety,
-      top: '192px',
-      left: '847px',
     },
     {
       title: '규격',
       size: '300px',
-      filterData: standard,
       setFilterData: setStandard,
-      top: '192px',
-      left: '1147px',
     },
     {
       title: '슬라브 길이',
       size: '300px',
-      filterData: length,
       setFilterData: setLength,
-      top: '192px',
-      left: '1466px',
     },
     {
       title: '중량',
       size: '128px',
-      filterData: weight,
       setFilterData: setWeight,
-      top: '192px',
-      left: '1661px',
     },
   ]
 
@@ -133,7 +122,6 @@ function TablePage() {
         },
         {
           data: meltingTableDataDate.workDate,
-          key: 'workDate',
         },
         {
           data: meltingTableDataDate.lotNo,
@@ -176,18 +164,17 @@ function TablePage() {
           tableDataShowList={meltingTableDataShowList} // 보여줄 테이블 데이터
           setTableDataShowList={setMeltingTableDataShowList} // 보여줄 테이블 데이터 변경 함수
           setTableDataDateList={setMeltingTableDataList} // 원본 테이블 데이터 변경 함수
-          filterFunction={filterMeltingTableDataShowList} // 필터링할 함수
           pasteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 붙여넣기 시 보낼 백엔드 url
           pasteMethod='Put' // 붙여넣기 시 보낼 백엔드 method
-          copy // 복제 기능을 추가하는지 여부
+          copy // 복제 기능 추가 여부
           copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 복제 시 보낼 백엔드 url
           copyMethod='Post' // 복제 시 보낼 백엔드 method
-          modify
-          modifyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`}
-          modifyMethod='Patch'
-          delete
-          deleteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`}
-          deleteMethod='Delete'
+          modify // 수정 기능 추가 여부
+          modifyUrl={`http://localhost:8000/taskDataList/update/${date.format('YYYY-MM-DD')}`} // 수정 시 보낼 백엔드 url
+          modifyMethod='Post' // 수정 시 보낼 백엔드 method
+          delete // 삭제 기능 추가 여부
+          deleteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 삭제 시 보낼 백엔드 url
+          deleteMethod='Delete' // 삭제 시 보낼 백엔드 method
         />
       </TablePageBackground>
       <TableAddFab
