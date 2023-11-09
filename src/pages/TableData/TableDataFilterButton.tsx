@@ -8,8 +8,8 @@ import ModalContentBox from 'components/ModalContentBox/ModalContentBox'
 
 
 interface TableDataFilterModalBackgroundProps {
-  top: string
-  left: string
+  top: number
+  left: number
 }
 
 
@@ -17,8 +17,8 @@ const TableDataFilterModalBackground = styled(Modal)<TableDataFilterModalBackgro
   '.MuiModal-backdrop': {
     backgroundColor: 'transparent',
   },
-  top: top,
-  left: left,
+  top: `${top}px`,
+  left: `${left}px`,
   position: 'absolute',
 }))
 
@@ -38,18 +38,18 @@ interface TableDataFilterButtonProps {
   filterData: string
   setFilterData: (newFilterData: string) => void
   filterFunction: () => void
-  top: string
-  left: string
 }
 
 
 function TableDataFilterButton(props: TableDataFilterButtonProps) {
   const [unchanged, setUnchanged] = useState<boolean>(true)
   const [open, setOpen] = useState<boolean>(false)
+  const [top, setTop] = useState<number>(0)
+  const [left, setLetf] = useState<number>(0)
 
   const openFilterField = (event: React.MouseEvent<HTMLElement>) => {
-    console.log(event.currentTarget.getBoundingClientRect().left)
-    console.log(event.currentTarget.getBoundingClientRect().top)
+    setTop(event.currentTarget.getBoundingClientRect().top + 30)
+    setLetf(event.currentTarget.getBoundingClientRect().left + 10)
     setOpen(prev => !prev)
   }
 
@@ -79,8 +79,8 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
       <TableDataFilterModalBackground
         open={open}
         onClose={closeFilterField}
-        top={props.top}
-        left={props.left}
+        top={top}
+        left={left}
       >
         <TableDataFilterModalContentBox>
           <TableDataFilterTextField
