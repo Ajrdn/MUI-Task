@@ -52,6 +52,7 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
   const { enqueueSnackbar } = useSnackbar()
   
   const selectCell = () => {
+    if(openModify) return
     props.clickTableRow(props.tableRowData.index)
   }
 
@@ -67,23 +68,56 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
       .then(response => response.json())
       .then((tableDataDateList: TableDataType[]) => {
         props.setTableDataDateList(tableDataDateList)
-      })
-      .finally(() => {
         enqueueSnackbar('복제되었습니다!', {
           ...SNACKBAR_OPTIONS,
           variant: 'success',
         })
       })
+      .catch(error => {
+        enqueueSnackbar('오류가 발생했습니다.', {
+          ...SNACKBAR_OPTIONS,
+          variant: 'error',
+        })
+      })
     }
   }
 
-  const modifyFunction = () => {
-    console.log(tableRowData)
+  const openModifyFunction = () => {
     setOpenModify(true)
   }
 
+  const modifyFunction = (newData: string, key: keyof TableDataType) => {
+    setTableRowData(preTableRowData => ({
+      ...preTableRowData,
+      [key]: newData,
+    }))
+  }
+
   const saveFunction = () => {
-    console.log(tableRowData)
+    if(props.modify) {
+      fetch(props.modifyUrl!, {
+        method: props.modifyMethod!,
+        body: JSON.stringify(tableRowData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then((tableDataDateList: TableDataType[]) => {
+        props.setTableDataDateList(tableDataDateList)
+        enqueueSnackbar('수정되었습니다!', {
+          ...SNACKBAR_OPTIONS,
+          variant: 'success',
+        })
+      })
+      .catch(error => {
+        console.log(error)
+        enqueueSnackbar('오류가 발생했습니다.', {
+          ...SNACKBAR_OPTIONS,
+          variant: 'error',
+        })
+      })
+    }
     setOpenModify(false)
   }
 
@@ -96,11 +130,13 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
       }}
     >
       {props.tableRowData.tableRowStringData.map((cellData, index) => (
-        <TableDataCell
+        <TableDataCell<TableDataType>
           key={`${cellData}${index}`}
+          data={cellData.data}
+          dataKey={cellData.key}
+          modifyFunction={modifyFunction}
           selected={props.tableRowData.selected}
           selectCell={selectCell}
-          data={cellData.data}
           openModify={openModify}
         />
       ))}
@@ -115,7 +151,7 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
         <TableFunctionCell align='center'>
           <Button
             variant='text'
-            onClick={openModify ? saveFunction : modifyFunction}
+            onClick={openModify ? saveFunction : openModifyFunction}
           >
             {openModify ? '저장' : '수정'}
           </Button>
