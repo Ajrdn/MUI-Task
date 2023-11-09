@@ -55,7 +55,6 @@ const FilterTextField = styled(TextField)({
 })
 
 
-
 interface TableDataFilterButtonProps {
   setFilterData: (newFilterData: string) => void
 }
