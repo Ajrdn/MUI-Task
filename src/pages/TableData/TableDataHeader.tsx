@@ -39,9 +39,9 @@ const TableDataCell = styled(Box)({
 })
 
 
-interface TableDataHeaderProps {
+interface TableDataHeaderProps<TableDataType> {
   date: Dayjs
-  tableHeaderList: TableHeader[]
+  tableHeaderList: TableHeader<TableDataType>[]
   no?: boolean
   copy?: boolean
   modify?: boolean
@@ -49,7 +49,7 @@ interface TableDataHeaderProps {
 }
 
 
-function TableDataHeader(props: TableDataHeaderProps) {
+function TableDataHeader<TableDataType>(props: TableDataHeaderProps<TableDataType>) {
   return (
     <TableHead>
       <TableRow>
@@ -63,12 +63,12 @@ function TableDataHeader(props: TableDataHeaderProps) {
         }
         {props.tableHeaderList.map(tableHeader => (
           <TableCellBox
-            key={tableHeader.title}
+            key={tableHeader.title.toString()}
             width={tableHeader.size}
             align='center'
           >
             <TableDataCell>
-              <TableHeaderTitle>{tableHeader.title}</TableHeaderTitle>
+              <TableHeaderTitle>{tableHeader.title.toString()}</TableHeaderTitle>
               {tableHeader.setFilterData &&
               <TableDataFilterButton
                 date={props.date}
