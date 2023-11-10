@@ -23,23 +23,22 @@ const TablePageSearchBarButtonBox = styled(Box)({
 })
 
 
-interface TablePageSearchBarProps<TableDataType, ExcelDataType> {
+interface TablePageSearchBarProps<TableDataType> {
   date: Dayjs
   setDate: (date: Dayjs) => void
   tableDataShowListLength: number
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   excelData: ExcelData[]
-  dataConverter: (excelData: ExcelDataType[]) => TableDataType[]
 }
 
 
-function TablePageSearchBar<TableDataType, ExcelDataType>(props: TablePageSearchBarProps<TableDataType, ExcelDataType>) {
+function TablePageSearchBar<TableDataType>(props: TablePageSearchBarProps<TableDataType>) {
   const excelDownload = () => {
     TableDataListDownloadXlsx(props.excelData)
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    TableDataListUploadXlsx<TableDataType, ExcelDataType>(event, props.date.format('YYYY-MM-DD'), props.setTableDataDateList, props.dataConverter)
+    TableDataListUploadXlsx<TableDataType>(event, props.date.format('YYYY-MM-DD'), props.setTableDataDateList)
   }
 
   return (
