@@ -21,3 +21,8 @@ export const SNACKBAR_WARNING: SNACKBAR_OPTIONS = {
   ...SNACKBAR_DEFAULT_OPTIONS,
   variant: 'warning',
 }
+
+export const SNACKBAR_ERROR: SNACKBAR_OPTIONS = {
+  ...SNACKBAR_DEFAULT_OPTIONS,
+  variant: 'error',
+}
