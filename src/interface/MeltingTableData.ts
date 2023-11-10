@@ -1,11 +1,12 @@
 interface MeltingTableData {
-  id: string
-  workDate: string
-  lotNo: string
-  variety: string
-  standard: string
-  length: string
-  weight: string
+  'ID': string
+  'LOT No.': string
+  'No.': string
+  '규격': string
+  '슬라브 길이': string
+  '작업일': string
+  '중량': string
+  '품종': string
 }
 
 export default MeltingTableData
