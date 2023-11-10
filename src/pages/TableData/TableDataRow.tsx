@@ -28,13 +28,10 @@ interface TableDataRowProps<TableDataType> {
   tableRowData: TableRowData<TableDataType>
   clickTableRow: (index: number) => void
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
-  copy?: boolean
   copyUrl?: string
   copyMethod?: string
-  modify?: boolean
   modifyUrl?: string
   modifyMethod?: string
-  delete?: boolean
   deleteUrl?: string
   deleteMethod?: string
 }
@@ -57,9 +54,9 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
   }
 
   const copyFunction = () => {
-    if(props.copy) {
-      fetch(props.copyUrl!, {
-        method: props.copyMethod!,
+    if(props.copyUrl && props.copyMethod) {
+      fetch(props.copyUrl, {
+        method: props.copyMethod,
         body: JSON.stringify(props.tableRowData.tableData),
         headers: {
           'Content-Type': 'application/json',
@@ -94,9 +91,9 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
   }
 
   const saveFunction = () => {
-    if(props.modify) {
-      fetch(props.modifyUrl!, {
-        method: props.modifyMethod!,
+    if(props.modifyUrl && props.modifyMethod) {
+      fetch(props.modifyUrl, {
+        method: props.modifyMethod,
         body: JSON.stringify(tableRowData),
         headers: {
           'Content-Type': 'application/json',
@@ -139,14 +136,14 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
           openModify={openModify}
         />
       ))}
-      {props.copy &&
+      {props.copyUrl &&
         <TableFunctionCell align='center'>
           <IconButton onClick={copyFunction}>
             <CopyAll />
           </IconButton>
         </TableFunctionCell>
       }
-      {props.modify &&
+      {props.modifyUrl &&
         <TableFunctionCell align='center'>
           <Button
             variant='text'
@@ -156,7 +153,7 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
           </Button>
         </TableFunctionCell>
       }
-      {props.delete &&
+      {props.deleteUrl &&
         <TableFunctionCell align='center'>
           <IconButton onClick={() => setOpen(true)}>
             <DeleteOutline />
@@ -166,7 +163,6 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
             setOpen={setOpen}
             tableRowData={props.tableRowData}
             setTableDataDateList={props.setTableDataDateList}
-            delete={props.delete}
             deleteUrl={props.deleteUrl}
             deleteMethod={props.deleteMethod}
           />

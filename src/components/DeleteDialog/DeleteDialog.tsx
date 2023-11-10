@@ -58,7 +58,6 @@ interface DeleteDialogProps<TableDataType> {
   setOpen: (newOpen: boolean) => void
   tableRowData: TableRowData<TableDataType>
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
-  delete?: boolean
   deleteUrl?: string
   deleteMethod?: string
 }
@@ -68,9 +67,9 @@ function DeleteDialog<TableDataType>(props: DeleteDialogProps<TableDataType>) {
   const { enqueueSnackbar } = useSnackbar()
 
   const deleteFunction = () => {
-    if(props.delete) {
-      fetch(props.deleteUrl!, {
-        method: props.deleteMethod!,
+    if(props.deleteUrl && props.deleteMethod) {
+      fetch(props.deleteUrl, {
+        method: props.deleteMethod,
         body: JSON.stringify(props.tableRowData.tableData),
         headers: {
           'Content-Type': 'application/json',

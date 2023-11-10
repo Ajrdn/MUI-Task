@@ -17,15 +17,12 @@ interface TableDataProps<TableDataType> {
   tableDataShowList: TableRowData<TableDataType>[]
   setTableDataShowList: (newTableDataShowList: TableRowData<TableDataType>[]) => void
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
-  pasteUrl: string
-  pasteMethod: string
-  copy?: boolean
+  pasteUrl?: string
+  pasteMethod?: string
   copyUrl?: string
   copyMethod?: string
-  modify?: boolean
   modifyUrl?: string
   modifyMethod?: string
-  delete?: boolean
   deleteUrl?: string
   deleteMethod?: string
 }
@@ -36,54 +33,56 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
   const { enqueueSnackbar } = useSnackbar()
 
   const copyData = (event: React.KeyboardEvent) => {
-    if(event.ctrlKey && event.key === 'c') {
-      const selectTableDataShowListLength = props.tableDataShowList.filter(tableDataShow => tableDataShow.selected).length
-      if(selectTableDataShowListLength > 0) {
-        enqueueSnackbar('성공적으로 복사되었습니다!', {
-          ...SNACKBAR_OPTIONS,
-          variant: 'success',
-        })
-        copyMeltingTableData()
-      } else {
-        enqueueSnackbar('복사할 데이터가 선택되지 않았습니다.', {
-          ...SNACKBAR_OPTIONS,
-          variant: 'warning',
-        })
-      }
-    } else if(event.ctrlKey && event.key === 'v') {
-      if(tableDataPasteList.length > 0) {
-        const tableDataList: TableDataType[] = tableDataPasteList.map(tableData => {
-          return {
-            ...tableData,
-            workDate: props.date.format('YYYY-MM-DD'),
-          }
-        })
-        fetch(props.pasteUrl, {
-          method: props.pasteMethod,
-          body: JSON.stringify(tableDataList),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then(response => response.json())
-        .then((tableDataDateList: TableDataType[]) => {
-          props.setTableDataDateList(tableDataDateList)
-          enqueueSnackbar('성공적으로 붙여넣었습니다!', {
+    if(props.pasteUrl && props.pasteMethod) {
+      if(event.ctrlKey && event.key === 'c') {
+        const selectTableDataShowListLength = props.tableDataShowList.filter(tableDataShow => tableDataShow.selected).length
+        if(selectTableDataShowListLength > 0) {
+          enqueueSnackbar('성공적으로 복사되었습니다!', {
             ...SNACKBAR_OPTIONS,
             variant: 'success',
           })
-        })
-        .catch(error => {
-          enqueueSnackbar('오류가 발생했습니다.', {
+          copyMeltingTableData()
+        } else {
+          enqueueSnackbar('복사할 데이터가 선택되지 않았습니다.', {
             ...SNACKBAR_OPTIONS,
-            variant: 'error',
+            variant: 'warning',
           })
-        })
-      } else {
-        enqueueSnackbar('붙여넣기할 데이터가 선택되지 않았습니다.', {
-          ...SNACKBAR_OPTIONS,
-          variant: 'warning',
-        })
+        }
+      } else if(event.ctrlKey && event.key === 'v') {
+        if(tableDataPasteList.length > 0) {
+          const tableDataList: TableDataType[] = tableDataPasteList.map(tableData => {
+            return {
+              ...tableData,
+              workDate: props.date.format('YYYY-MM-DD'),
+            }
+          })
+          fetch(props.pasteUrl, {
+            method: props.pasteMethod,
+            body: JSON.stringify(tableDataList),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then(response => response.json())
+          .then((tableDataDateList: TableDataType[]) => {
+            props.setTableDataDateList(tableDataDateList)
+            enqueueSnackbar('성공적으로 붙여넣었습니다!', {
+              ...SNACKBAR_OPTIONS,
+              variant: 'success',
+            })
+          })
+          .catch(error => {
+            enqueueSnackbar('오류가 발생했습니다.', {
+              ...SNACKBAR_OPTIONS,
+              variant: 'error',
+            })
+          })
+        } else {
+          enqueueSnackbar('붙여넣기할 데이터가 선택되지 않았습니다.', {
+            ...SNACKBAR_OPTIONS,
+            variant: 'warning',
+          })
+        }
       }
     }
   }
@@ -125,21 +124,18 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         <TableDataHeader
           date={props.date}
           tableHeaderList={props.tableHeaderList}
-          copy={props.copy}
-          modify={props.modify}
-          delete={props.delete}
+          copy={props.copyUrl && props.copyMethod ? true : false}
+          modify={props.modifyUrl && props.modifyMethod ? true : false}
+          delete={props.deleteUrl && props.deleteMethod ? true : false}
         />
         <TableDataBody<TableDataType>
           clickTableRow={clickTableRow}
           tableDataShowList={props.tableDataShowList}
           setTableDataDateList={props.setTableDataDateList}
-          copy={props.copy}
           copyUrl={props.copyUrl}
           copyMethod={props.copyMethod}
-          modify={props.modify}
           modifyUrl={props.modifyUrl}
           modifyMethod={props.modifyMethod}
-          delete={props.delete}
           deleteUrl={props.deleteUrl}
           deleteMethod={props.deleteMethod}
         />
