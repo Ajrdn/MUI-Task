@@ -154,12 +154,12 @@ function TablePage() {
           no // 테이블에 숫자 열 추가 여부
           pasteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 붙여넣기 시 보낼 백엔드 url (필수 아님)
           pasteMethod='Put' // 붙여넣기 시 보낼 백엔드 method (필수 아님)
-          copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 복제 시 보낼 백엔드 url  (필수 아님)
-          copyMethod='Post' // 복제 시 보낼 백엔드 method  (필수 아님)
-          modifyUrl={`http://localhost:8000/taskDataList/update/${date.format('YYYY-MM-DD')}`} // 수정 시 보낼 백엔드 url  (필수 아님)
-          modifyMethod='Post' // 수정 시 보낼 백엔드 method  (필수 아님)
-          deleteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 삭제 시 보낼 백엔드 url  (필수 아님)
-          deleteMethod='Delete' // 삭제 시 보낼 백엔드 method  (필수 아님)
+          // copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 복제 시 보낼 백엔드 url  (필수 아님)
+          // copyMethod='Post' // 복제 시 보낼 백엔드 method  (필수 아님)
+          // modifyUrl={`http://localhost:8000/taskDataList/update/${date.format('YYYY-MM-DD')}`} // 수정 시 보낼 백엔드 url  (필수 아님)
+          // modifyMethod='Post' // 수정 시 보낼 백엔드 method  (필수 아님)
+          // deleteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 삭제 시 보낼 백엔드 url  (필수 아님)
+          // deleteMethod='Delete' // 삭제 시 보낼 백엔드 method  (필수 아님)
         />
       </TablePageBackground>
       <TableAddFab
