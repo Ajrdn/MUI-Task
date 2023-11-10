@@ -39,7 +39,7 @@ const TableDataCellBox = styled(TableCell)<TableDataCellBoxProps>(({ selected })
 interface TableDataCellProps<TableDataType> {
   data: string
   dataKey?: keyof TableDataType
-  modifyFunction: (newData: string, key: keyof TableDataType) => void
+  modifyFunction?: (newData: string, key: keyof TableDataType) => void
   selected: boolean
   selectCell?: () => void
   openModify: boolean
@@ -55,7 +55,7 @@ function TableDataCell<TableDataType>(props: TableDataCellProps<TableDataType>) 
 
   const dataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData(event.target.value)
-    props.modifyFunction(event.target.value, props.dataKey!)
+    props.modifyFunction!(event.target.value, props.dataKey!)
   }
 
   return (
@@ -64,7 +64,7 @@ function TableDataCell<TableDataType>(props: TableDataCellProps<TableDataType>) 
       selected={props.selected}
       onClick={props.selectCell}
     >
-      {props.openModify && props.dataKey ?
+      {props.openModify && props.dataKey && props.modifyFunction ?
       <ModifyTextField
         value={data}
         onChange={dataChange}

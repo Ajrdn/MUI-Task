@@ -42,6 +42,7 @@ const TableDataCell = styled(Box)({
 interface TableDataHeaderProps {
   date: Dayjs
   tableHeaderList: TableHeader[]
+  no?: boolean
   copy?: boolean
   modify?: boolean
   delete?: boolean
@@ -52,6 +53,14 @@ function TableDataHeader(props: TableDataHeaderProps) {
   return (
     <TableHead>
       <TableRow>
+        {props.no &&
+        <TableCellBox
+          width='64px'
+          align='center'
+        >
+          <TableHeaderTitle>No.</TableHeaderTitle>
+        </TableCellBox>
+        }
         {props.tableHeaderList.map(tableHeader => (
           <TableCellBox
             key={tableHeader.title}

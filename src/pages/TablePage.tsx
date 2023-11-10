@@ -34,10 +34,6 @@ function TablePage() {
 
   const tableHeaderList: TableHeader[] = [
     {
-      title: 'No.',
-      size: '64px',
-    },
-    {
       title: '작업일',
       size: '128px',
     },
@@ -102,9 +98,6 @@ function TablePage() {
       tableData: meltingTableDataDate,
       tableRowStringData: [
         {
-          data: (index + 1).toString().padStart(2, '0'),
-        },
-        {
           data: meltingTableDataDate.workDate,
         },
         {
@@ -158,6 +151,7 @@ function TablePage() {
           tableDataShowList={meltingTableDataShowList} // 보여줄 테이블 데이터
           setTableDataShowList={setMeltingTableDataShowList} // 보여줄 테이블 데이터 변경 함수
           setTableDataDateList={setMeltingTableDataDateList} // 원본 테이블 데이터 변경 함수
+          no // 테이블에 숫자 열 추가 여부
           pasteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 붙여넣기 시 보낼 백엔드 url (필수 아님)
           pasteMethod='Put' // 붙여넣기 시 보낼 백엔드 method (필수 아님)
           copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 복제 시 보낼 백엔드 url  (필수 아님)

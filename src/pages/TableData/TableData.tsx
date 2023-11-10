@@ -17,6 +17,7 @@ interface TableDataProps<TableDataType> {
   tableDataShowList: TableRowData<TableDataType>[]
   setTableDataShowList: (newTableDataShowList: TableRowData<TableDataType>[]) => void
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
+  no?: boolean
   pasteUrl?: string
   pasteMethod?: string
   copyUrl?: string
@@ -124,6 +125,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         <TableDataHeader
           date={props.date}
           tableHeaderList={props.tableHeaderList}
+          no={props.no}
           copy={props.copyUrl && props.copyMethod ? true : false}
           modify={props.modifyUrl && props.modifyMethod ? true : false}
           delete={props.deleteUrl && props.deleteMethod ? true : false}
@@ -132,6 +134,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
           clickTableRow={props.pasteUrl ? clickTableRow : undefined}
           tableDataShowList={props.tableDataShowList}
           setTableDataDateList={props.setTableDataDateList}
+          no={props.no}
           copyUrl={props.copyUrl}
           copyMethod={props.copyMethod}
           modifyUrl={props.modifyUrl}

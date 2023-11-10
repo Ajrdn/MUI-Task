@@ -26,6 +26,7 @@ const TableFunctionCell = styled(TableCell)({
 
 interface TableDataRowProps<TableDataType> {
   tableRowData: TableRowData<TableDataType>
+  no?: boolean
   clickTableRow?: (index: number) => void
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   copyUrl?: string
@@ -125,12 +126,20 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
         },
       }}
     >
+      {props.no && (
+        <TableDataCell
+          data={(props.tableRowData.index + 1).toString().padStart(2, '0')}
+          selected={props.tableRowData.selected}
+          selectCell={props.clickTableRow ? selectCell : undefined}
+          openModify={openModify}
+        />
+      )}
       {props.tableRowData.tableRowStringData.map((cellData, index) => (
         <TableDataCell<TableDataType>
           key={`${cellData}${index}`}
           data={cellData.data}
           dataKey={cellData.key}
-          modifyFunction={modifyFunction}
+          modifyFunction={cellData.key ? modifyFunction : undefined}
           selected={props.tableRowData.selected}
           selectCell={props.clickTableRow ? selectCell : undefined}
           openModify={openModify}

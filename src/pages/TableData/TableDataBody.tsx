@@ -8,6 +8,7 @@ interface TableDataBodyProps<TableDataType> {
   clickTableRow?: (index: number) => void
   tableDataShowList: TableRowData<TableDataType>[]
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
+  no?: boolean
   copyUrl?: string
   copyMethod?: string
   modifyUrl?: string
@@ -24,6 +25,7 @@ function TableDataBody<TableDataType>(props: TableDataBodyProps<TableDataType>) 
           <TableDataRow<TableDataType>
             key={taskDataShow.index}
             tableRowData={taskDataShow}
+            no={props.no}
             clickTableRow={props.clickTableRow}
             setTableDataDateList={props.setTableDataDateList}
             copyUrl={props.copyUrl}
