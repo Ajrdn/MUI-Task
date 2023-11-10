@@ -8,23 +8,22 @@ import TextField from '@mui/material/TextField'
 import ModalContentBox from 'components/ModalContentBox/ModalContentBox'
 
 
+const TableDataFilterModalBackground = styled(Modal)({
+  '.MuiModal-backdrop': {
+    backgroundColor: 'transparent',
+  },
+})
+
+
 interface TableDataFilterModalBackgroundProps {
   top: number
   left: number
 }
 
 
-const TableDataFilterModalBackground = styled(Modal)<TableDataFilterModalBackgroundProps>(({ top, left }) => ({
-  '.MuiModal-backdrop': {
-    backgroundColor: 'transparent',
-  },
+const TableDataFilterModalContentBox = styled(ModalContentBox)<TableDataFilterModalBackgroundProps>(({ top, left }) => ({
   top: `${top}px`,
   left: `${left}px`,
-  position: 'absolute',
-}))
-
-
-const TableDataFilterModalContentBox = styled(ModalContentBox)({
   borderRaius: '4px',
   width: '209px',
   height: '61px',
@@ -32,7 +31,8 @@ const TableDataFilterModalContentBox = styled(ModalContentBox)({
   backgroundColor: 'white',
   boxShadow: '0px 0px 5px #444',
   justifyContent: 'center',
-})
+  outline: 'none',
+}))
 
 
 const FilterTextField = styled(TextField)({
@@ -95,9 +95,18 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
     setData(event.target.value)
   }
 
+  const onPressEnter = (event: React.KeyboardEvent) => {
+    if(event.key === 'Enter') {
+      closeFilterField()
+    }
+  }
+
   return (
     <>
-      <IconButton onClick={openFilterField}>
+      <IconButton
+        onClick={openFilterField}
+        disableFocusRipple
+      >
         <FilterAlt
           sx={{
             width: '10px',
@@ -109,16 +118,18 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
       <TableDataFilterModalBackground
         open={open}
         onClose={closeFilterField}
-        top={top}
-        left={left}
       >
-        <TableDataFilterModalContentBox>
+        <TableDataFilterModalContentBox
+          top={top}
+          left={left}
+        >
           <FilterTextField
             focused
             label='검색어 입력'
+            placeholder='검색어 입력'
             value={data}
             onChange={DataChange}
-            placeholder='검색어 입력'
+            onKeyUp={onPressEnter}
           />
         </TableDataFilterModalContentBox>
       </TableDataFilterModalBackground>
