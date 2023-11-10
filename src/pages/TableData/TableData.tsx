@@ -13,7 +13,7 @@ import TableDataBody from './TableDataBody'
 
 interface TableDataProps<TableDataType> {
   date: Dayjs
-  tableHeaderList: TableHeader[]
+  tableHeaderList: TableHeader<TableDataType>[]
   tableDataShowList: TableRowData<TableDataType>[]
   setTableDataShowList: (newTableDataShowList: TableRowData<TableDataType>[]) => void
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
@@ -122,7 +122,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
       onBlur={clearTableDataShowList}
     >
       <Table stickyHeader>
-        <TableDataHeader
+        <TableDataHeader<TableDataType>
           date={props.date}
           tableHeaderList={props.tableHeaderList}
           no={props.no}
