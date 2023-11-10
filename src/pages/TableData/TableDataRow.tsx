@@ -128,7 +128,7 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
     >
       {props.no && (
         <TableDataCell
-          data={(props.tableRowData.index + 1).toString().padStart(2, '0')}
+          data={(props.tableRowData.index + 1).toString()}
           selected={props.tableRowData.selected}
           selectCell={props.clickTableRow ? selectCell : undefined}
           openModify={openModify}
