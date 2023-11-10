@@ -1,5 +1,5 @@
 const MELTING_TABLE_HEADER_LIST: string[] = [
-  'No.',
+  'ID',
   '작업일',
   'LOT No.',
   '품종',
