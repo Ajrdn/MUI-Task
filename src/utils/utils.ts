@@ -1,20 +1,5 @@
 import { utils, writeFile, read } from 'xlsx'
 import ExcelData from 'interface/ExcelData'
-import MeltingData from 'interface/MeltingData'
-import MeltingTableData from 'interface/MeltingTableData'
-
-
-export const MeltingDataConverter = (excelData: MeltingTableData[]): MeltingData[] => {
-  return excelData.map(meltingData => ({
-    id: meltingData['ID'],
-    workDate: meltingData['작업일'],
-    lotNo: meltingData['LOT No.'],
-    variety: meltingData['품종'],
-    standard: meltingData['규격'],
-    length: meltingData['슬라브 길이'],
-    weight: meltingData['중량'],
-  }))
-}
 
 
 export const TableDataListDownloadXlsx = (excelData: ExcelData[]): void => {
@@ -40,11 +25,10 @@ export const TableDataListDownloadXlsx = (excelData: ExcelData[]): void => {
 }
 
 
-export const TableDataListUploadXlsx = <TableDataType, ExcelDataType>(
+export const TableDataListUploadXlsx = <TableDataType>(
   event: React.ChangeEvent<HTMLInputElement>,
   date: string,
   setTableDataDateList: (tableDataList: TableDataType[]) => void,
-  dataConverter: (excelData: ExcelDataType[]) => TableDataType[]
 ): void => {
   if (!event.target.files || event.target.files.length === 0) return
   
@@ -60,8 +44,7 @@ export const TableDataListUploadXlsx = <TableDataType, ExcelDataType>(
     })
     const sheetName = fileInformation.SheetNames[0]
     const rawData = fileInformation.Sheets[sheetName]
-    const data: ExcelDataType[] = utils.sheet_to_json<ExcelDataType>(rawData)
-    const tableDataList: TableDataType[] = dataConverter(data)
+    const tableDataList: TableDataType[] = utils.sheet_to_json<TableDataType>(rawData)
 
     fetch(`http://localhost:8000/taskDataList/${date}`, {
       method: 'PUT',
