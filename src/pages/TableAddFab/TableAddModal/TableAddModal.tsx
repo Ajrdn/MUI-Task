@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
-import MeltingTableData from 'interface/MeltingTableData'
+import MeltingData from 'interface/MeltingData'
 import ModalBackground from 'components/ModalBackground/ModalBackground'
 import ModalContentBox from 'components/ModalContentBox/ModalContentBox'
 import ModalTitle from 'components/ModalTitle/ModalTitle'
@@ -26,7 +26,7 @@ const TableAddModalTitle = styled(ModalTitle)({
 interface TableAddModalProps {
   open: boolean
   setOpen: (newOpen: boolean) => void
-  setMeltingTableDataList: (newMeltingTableDataList: MeltingTableData[]) => void
+  setMeltingTableDataList: (newMeltingTableDataList: MeltingData[]) => void
 }
 
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
 import FormControl from '@mui/material/FormControl'
-import MeltingTableData from 'interface/MeltingTableData'
+import MeltingData from 'interface/MeltingData'
 import TableAddFormField from './TableAddFormField'
 import TableAddFormButton from './TableAddFormButton'
 
@@ -17,7 +17,7 @@ const TableAddFormControl = styled(FormControl)({
 
 
 interface TableAddFormProps {
-  setMeltingTableDataList: (newMeltingTableDataList: MeltingTableData[]) => void
+  setMeltingTableDataList: (newMeltingTableDataList: MeltingData[]) => void
   setOpen: (newOpen: boolean) => void
   workDate: Dayjs
   lotNo: string

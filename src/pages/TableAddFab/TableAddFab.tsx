@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Fab from '@mui/material/Fab'
 import Add from '@mui/icons-material/Add'
-import MeltingTableData from 'interface/MeltingTableData'
+import MeltingData from 'interface/MeltingData'
 import TableAddModal from './TableAddModal/TableAddModal'
 
 
 interface TableAddFabProps {
-  setMeltingTableDataList: (newMeltingTableDataList: MeltingTableData[]) => void
+  setMeltingTableDataList: (newMeltingTableDataList: MeltingData[]) => void
 }
 
 

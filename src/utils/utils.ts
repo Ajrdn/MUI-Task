@@ -1,10 +1,10 @@
 import { utils, writeFile, read } from 'xlsx'
 import ExcelData from 'interface/ExcelData'
-import MeltingExcelData from 'interface/MeltingExcelData'
+import MeltingData from 'interface/MeltingData'
 import MeltingTableData from 'interface/MeltingTableData'
 
 
-export const MeltingDataConverter = (excelData: MeltingExcelData[]): MeltingTableData[] => {
+export const MeltingDataConverter = (excelData: MeltingTableData[]): MeltingData[] => {
   return excelData.map(meltingData => ({
     id: meltingData['ID'],
     workDate: meltingData['작업일'],

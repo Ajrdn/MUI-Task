@@ -2,7 +2,7 @@ import React from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-import MeltingTableData from 'interface/MeltingTableData'
+import MeltingData from 'interface/MeltingData'
 
 
 const AddButton = styled(Button)({
@@ -22,7 +22,7 @@ const AddButton = styled(Button)({
 
 
 interface TableAddFormButtonProps {
-  setMeltingTableDataList: (newMeltingTableDataList: MeltingTableData[]) => void
+  setMeltingTableDataList: (newMeltingTableDataList: MeltingData[]) => void
   setOpen: (newOpen: boolean) => void
   workDate: Dayjs
   lotNo: string
@@ -56,7 +56,7 @@ function TableAddFormButton(props: TableAddFormButtonProps) {
       },
     })
     .then(response => response.json())
-    .then((taskDataDateList: MeltingTableData[]) => {
+    .then((taskDataDateList: MeltingData[]) => {
       props.setMeltingTableDataList(taskDataDateList)
       props.setWorkDate(dayjs())
       props.setLotNo('')

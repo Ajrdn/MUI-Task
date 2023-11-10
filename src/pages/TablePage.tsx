@@ -5,8 +5,8 @@ import Box from '@mui/material/Box'
 import { MeltingDataConverter } from 'utils/utils'
 import MELTING_TABLE_HEADER_LIST from 'constant/Melting_Table_Header_List'
 import TableHeader from 'interface/TableHeader'
+import MeltingData from 'interface/MeltingData'
 import MeltingTableData from 'interface/MeltingTableData'
-import MeltingExcelData from 'interface/MeltingExcelData'
 import TableRowData from 'interface/TableRowData'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
 import TableData from './TableData/TableData'
@@ -23,8 +23,8 @@ const TablePageBackground = styled(Box)({
 
 function TablePage() {
   const [date, setDate] = useState<Dayjs>(dayjs())
-  const [meltingTableDataDateList, setMeltingTableDataDateList] = useState<MeltingTableData[]>([])
-  const [meltingTableDataShowList, setMeltingTableDataShowList] = useState<TableRowData<MeltingTableData>[]>([])
+  const [meltingTableDataDateList, setMeltingTableDataDateList] = useState<MeltingData[]>([])
+  const [meltingTableDataShowList, setMeltingTableDataShowList] = useState<TableRowData<MeltingData>[]>([])
 
   const [lotNo, setLotNo] = useState<string>('')
   const [variety, setVariety] = useState<string>('')
@@ -77,7 +77,7 @@ function TablePage() {
   useEffect(() => {
     fetch(`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`)
       .then(response => response.json())
-      .then((newMeltingTableDataDateList: MeltingTableData[]) => {
+      .then((newMeltingTableDataDateList: MeltingData[]) => {
         if(lotNo !== '') setLotNo('')
         if(variety !== '') setVariety('')
         if(standard !== '') setStandard('')
@@ -91,7 +91,7 @@ function TablePage() {
     filterMeltingTableDataShowList(meltingTableDataDateList)
   }, [lotNo, variety, standard, length, weight, meltingTableDataDateList])
 
-  const MeltingTableDataListConverter = (newMeltingTableDataList: MeltingTableData[]) => {
+  const MeltingTableDataListConverter = (newMeltingTableDataList: MeltingData[]) => {
     setMeltingTableDataShowList(newMeltingTableDataList.map((meltingTableDataDate, index) => ({
       index,
       selected: false,
@@ -124,7 +124,7 @@ function TablePage() {
     })))
   }
 
-  const filterMeltingTableDataShowList = (newMeltingTableDataDateList: MeltingTableData[]) => {
+  const filterMeltingTableDataShowList = (newMeltingTableDataDateList: MeltingData[]) => {
     const newMeltingTableDataShowList = newMeltingTableDataDateList.filter(meltingTableData =>
       (meltingTableData.lotNo.includes(lotNo.toUpperCase()) || meltingTableData.lotNo.includes(lotNo.toLowerCase())) &&
       (meltingTableData.variety.includes(variety.toUpperCase()) || meltingTableData.variety.includes(variety.toLowerCase())) &&
@@ -137,7 +137,7 @@ function TablePage() {
   return (
     <>
       <TablePageBackground>
-        <TablePageSearchBar<MeltingTableData, MeltingExcelData>
+        <TablePageSearchBar<MeltingData, MeltingTableData>
           date={date} // 날짜
           setDate={setDate} // 날짜 변경 시 실행할 함수
           tableDataShowListLength={meltingTableDataShowList.length} // 보여지는 테이블 행 수
@@ -145,7 +145,7 @@ function TablePage() {
           excelData={excelData} // 액셀에 나타낼 데이터
           dataConverter={MeltingDataConverter} // 액셀에서 받아온 데이터를 테이블 형태로 바꿔주는 함수
         />
-        <TableData<MeltingTableData>
+        <TableData<MeltingData>
           date={date}
           tableHeaderList={tableHeaderList} // 테이블 헤더 리스트
           tableDataShowList={meltingTableDataShowList} // 보여줄 테이블 데이터
