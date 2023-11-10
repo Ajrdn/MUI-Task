@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import { MeltingDataConverter } from 'utils/utils'
-import MELTING_TABLE_HEADER_LIST from 'constant/Melting_Table_Header_List'
 import TableHeader from 'interface/TableHeader'
-import MeltingData from 'interface/MeltingData'
 import MeltingTableData from 'interface/MeltingTableData'
 import TableRowData from 'interface/TableRowData'
+import ExcelData from 'interface/ExcelData'
+import MeltingData from 'interface/MeltingData'
 import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
 import TableData from './TableData/TableData'
 import TableAddFab from './TableAddFab/TableAddFab'
@@ -23,8 +22,8 @@ const TablePageBackground = styled(Box)({
 
 function TablePage() {
   const [date, setDate] = useState<Dayjs>(dayjs())
-  const [meltingTableDataDateList, setMeltingTableDataDateList] = useState<MeltingData[]>([])
-  const [meltingTableDataShowList, setMeltingTableDataShowList] = useState<TableRowData<MeltingData>[]>([])
+  const [meltingTableDataList, setMeltingTableDataList] = useState<MeltingTableData[]>([])
+  const [meltingTableDataShowList, setMeltingTableDataShowList] = useState<TableRowData<MeltingTableData>[]>([])
 
   const [lotNo, setLotNo] = useState<string>('')
   const [variety, setVariety] = useState<string>('')
@@ -32,7 +31,7 @@ function TablePage() {
   const [length, setLength] = useState<string>('')
   const [weight, setWeight] = useState<string>('')
 
-  const tableHeaderList: TableHeader[] = [
+  const tableHeaderList: TableHeader<MeltingTableData>[] = [
     {
       title: '작업일',
       size: '128px',
@@ -64,96 +63,136 @@ function TablePage() {
     },
   ]
 
-  const excelData = meltingTableDataShowList.map(tableDataShow => ({
-    [MELTING_TABLE_HEADER_LIST[0]]: tableDataShow.tableData.id,
-    [MELTING_TABLE_HEADER_LIST[1]]: tableDataShow.tableData.workDate,
-    [MELTING_TABLE_HEADER_LIST[2]]: tableDataShow.tableData.lotNo,
-    [MELTING_TABLE_HEADER_LIST[3]]: tableDataShow.tableData.variety,
-    [MELTING_TABLE_HEADER_LIST[4]]: tableDataShow.tableData.standard,
-    [MELTING_TABLE_HEADER_LIST[5]]: tableDataShow.tableData.length,
-    [MELTING_TABLE_HEADER_LIST[6]]: tableDataShow.tableData.weight,
-  }))
+  const excelData = meltingTableDataShowList.map(tableDataShow => {
+    const meltingExcelData: ExcelData = {}
+    const tableHeaderTitleList = tableHeaderList.map(tableHeader => tableHeader.title)
+    tableHeaderTitleList.map(title => meltingExcelData[title] = tableDataShow.tableData[title])
+    return meltingExcelData
+  })
 
   useEffect(() => {
     fetch(`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`)
       .then(response => response.json())
-      .then((newMeltingTableDataDateList: MeltingData[]) => {
+      .then((newMeltingDataList: MeltingData[]) => {
         if(lotNo !== '') setLotNo('')
         if(variety !== '') setVariety('')
         if(standard !== '') setStandard('')
         if(length !== '') setLength('')
         if(weight !== '') setWeight('')
-        setMeltingTableDataDateList(newMeltingTableDataDateList)
+        meltingDataListConverter(newMeltingDataList)
       })
   }, [date])
 
   useEffect(() => {
-    filterMeltingTableDataShowList(meltingTableDataDateList)
-  }, [lotNo, variety, standard, length, weight, meltingTableDataDateList])
+    filterMeltingTableDataShowList(meltingTableDataList)
+  }, [lotNo, variety, standard, length, weight, meltingTableDataList])
 
-  const MeltingTableDataListConverter = (newMeltingTableDataList: MeltingData[]) => {
+  const setNewMeltingTableDataList = (url: string, method: string, body: MeltingData | MeltingData[]): Promise<void> => {
+    return fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then((meltingDataList: MeltingData[]) => {
+      meltingDataListConverter(meltingDataList)
+    })
+  }
+
+  const pasteFunction = (meltingDataPasteList: MeltingTableData[]): Promise<void> => {
+    const meltingDataList: MeltingData[] = meltingDataPasteList.map(meltingDataPaste => {
+      return {
+        id: meltingDataPaste.ID,
+        workDate: date.format('YYYY-MM-DD'),
+        lotNo: meltingDataPaste['LOT No.'],
+        variety: meltingDataPaste.품종,
+        standard: meltingDataPaste.규격,
+        length: meltingDataPaste['슬라브 길이'],
+        weight: meltingDataPaste.중량,
+      }
+    })
+    return setNewMeltingTableDataList(
+      `http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`,
+      'Put',
+      meltingDataList,
+    )
+  }
+
+  const meltingTableDataListConverter = (newMeltingTableDataList: MeltingTableData[]) => {
     setMeltingTableDataShowList(newMeltingTableDataList.map((meltingTableDataDate, index) => ({
       index,
       selected: false,
       tableData: meltingTableDataDate,
       tableRowStringData: [
         {
-          data: meltingTableDataDate.workDate,
+          data: meltingTableDataDate['작업일'],
         },
         {
-          data: meltingTableDataDate.lotNo,
-          key: 'lotNo',
+          data: meltingTableDataDate['LOT No.'],
+          key: 'LOT No.',
         },
         {
-          data: meltingTableDataDate.variety,
-          key: 'variety',
+          data: meltingTableDataDate['품종'],
+          key: '품종',
         },
         {
-          data: meltingTableDataDate.standard,
-          key: 'standard',
+          data: meltingTableDataDate['규격'],
+          key: '규격',
         },
         {
-          data: meltingTableDataDate.length,
-          key: 'length',
+          data: meltingTableDataDate['슬라브 길이'],
+          key: '슬라브 길이',
         },
         {
-          data: meltingTableDataDate.weight,
-          key: 'weight',
+          data: meltingTableDataDate['중량'],
+          key: '중량',
         },
       ],
     })))
   }
 
-  const filterMeltingTableDataShowList = (newMeltingTableDataDateList: MeltingData[]) => {
+  const meltingDataListConverter = (newMeltingDataList: MeltingData[]) => {
+    setMeltingTableDataList(newMeltingDataList.map(meltingData => ({
+      ID: meltingData.id,
+      작업일: meltingData.workDate,
+      'LOT No.': meltingData.lotNo,
+      품종: meltingData.variety,
+      규격: meltingData.standard,
+      '슬라브 길이': meltingData.length,
+      중량: meltingData.weight,
+    })))
+  }
+
+  const filterMeltingTableDataShowList = (newMeltingTableDataDateList: MeltingTableData[]) => {
     const newMeltingTableDataShowList = newMeltingTableDataDateList.filter(meltingTableData =>
-      (meltingTableData.lotNo.includes(lotNo.toUpperCase()) || meltingTableData.lotNo.includes(lotNo.toLowerCase())) &&
-      (meltingTableData.variety.includes(variety.toUpperCase()) || meltingTableData.variety.includes(variety.toLowerCase())) &&
-      (meltingTableData.standard.includes(standard.toUpperCase()) || meltingTableData.standard.includes(standard.toLowerCase())) &&
-      (meltingTableData.length.includes(length.toUpperCase()) || meltingTableData.length.includes(length.toLowerCase())) &&
-      (meltingTableData.weight.includes(weight.toUpperCase()) || meltingTableData.weight.includes(weight.toLowerCase())))
-    MeltingTableDataListConverter(newMeltingTableDataShowList)
+      (meltingTableData['LOT No.'].includes(lotNo.toUpperCase()) || meltingTableData['LOT No.'].includes(lotNo.toLowerCase())) &&
+      (meltingTableData['품종'].includes(variety.toUpperCase()) || meltingTableData['품종'].includes(variety.toLowerCase())) &&
+      (meltingTableData['규격'].includes(standard.toUpperCase()) || meltingTableData['규격'].includes(standard.toLowerCase())) &&
+      (meltingTableData['슬라브 길이'].includes(length.toUpperCase()) || meltingTableData['슬라브 길이'].includes(length.toLowerCase())) &&
+      (meltingTableData['중량'].includes(weight.toUpperCase()) || meltingTableData['중량'].includes(weight.toLowerCase())))
+    meltingTableDataListConverter(newMeltingTableDataShowList)
   }
 
   return (
     <>
       <TablePageBackground>
-        <TablePageSearchBar<MeltingData, MeltingTableData>
+        <TablePageSearchBar<MeltingTableData>
           date={date} // 날짜
           setDate={setDate} // 날짜 변경 시 실행할 함수
           tableDataShowListLength={meltingTableDataShowList.length} // 보여지는 테이블 행 수
-          setTableDataDateList={setMeltingTableDataDateList} // 날짜에 따라 가져올 테이블 데이터 함수
+          setTableDataDateList={setMeltingTableDataList} // 날짜에 따라 가져올 테이블 데이터 함수
           excelData={excelData} // 액셀에 나타낼 데이터
-          dataConverter={MeltingDataConverter} // 액셀에서 받아온 데이터를 테이블 형태로 바꿔주는 함수
         />
-        <TableData<MeltingData>
+        <TableData<MeltingTableData>
           date={date}
           tableHeaderList={tableHeaderList} // 테이블 헤더 리스트
           tableDataShowList={meltingTableDataShowList} // 보여줄 테이블 데이터
           setTableDataShowList={setMeltingTableDataShowList} // 보여줄 테이블 데이터 변경 함수
-          setTableDataDateList={setMeltingTableDataDateList} // 원본 테이블 데이터 변경 함수
+          setTableDataDateList={setMeltingTableDataList} // 원본 테이블 데이터 변경 함수
           no // 테이블에 숫자 열 추가 여부
-          pasteUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 붙여넣기 시 보낼 백엔드 url (필수 아님)
-          pasteMethod='Put' // 붙여넣기 시 보낼 백엔드 method (필수 아님)
+          pasteFunction={pasteFunction}
           // copyUrl={`http://localhost:8000/taskDataList/${date.format('YYYY-MM-DD')}`} // 복제 시 보낼 백엔드 url  (필수 아님)
           // copyMethod='Post' // 복제 시 보낼 백엔드 method  (필수 아님)
           // modifyUrl={`http://localhost:8000/taskDataList/update/${date.format('YYYY-MM-DD')}`} // 수정 시 보낼 백엔드 url  (필수 아님)
@@ -162,9 +201,7 @@ function TablePage() {
           // deleteMethod='Delete' // 삭제 시 보낼 백엔드 method  (필수 아님)
         />
       </TablePageBackground>
-      <TableAddFab
-        setMeltingTableDataList={setMeltingTableDataDateList}
-      />
+      <TableAddFab setMeltingTableDataList={meltingDataListConverter}/>
     </>
   )
 }
