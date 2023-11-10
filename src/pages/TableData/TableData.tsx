@@ -129,7 +129,7 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
           delete={props.deleteUrl && props.deleteMethod ? true : false}
         />
         <TableDataBody<TableDataType>
-          clickTableRow={clickTableRow}
+          clickTableRow={props.pasteUrl ? clickTableRow : undefined}
           tableDataShowList={props.tableDataShowList}
           setTableDataDateList={props.setTableDataDateList}
           copyUrl={props.copyUrl}

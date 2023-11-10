@@ -5,7 +5,7 @@ import TableDataRow from './TableDataRow'
 
 
 interface TableDataBodyProps<TableDataType> {
-  clickTableRow: (index: number) => void
+  clickTableRow?: (index: number) => void
   tableDataShowList: TableRowData<TableDataType>[]
   setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   copyUrl?: string

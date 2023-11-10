@@ -41,7 +41,7 @@ interface TableDataCellProps<TableDataType> {
   dataKey?: keyof TableDataType
   modifyFunction: (newData: string, key: keyof TableDataType) => void
   selected: boolean
-  selectCell: () => void
+  selectCell?: () => void
   openModify: boolean
 }
 
