@@ -8,7 +8,7 @@ import TableCell from '@mui/material/TableCell'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import TableRowData from 'interface/TableRowData'
-import SNACKBAR_OPTIONS from 'constant/Snackbar_Options'
+import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constant/Snackbar_Options'
 import DeleteDialog from 'components/DeleteDialog/DeleteDialog'
 import TableDataCell from './TableDataCell'
 
@@ -66,16 +66,10 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
       .then(response => response.json())
       .then((tableDataDateList: TableDataType[]) => {
         props.setTableDataDateList(tableDataDateList)
-        enqueueSnackbar('복제되었습니다!', {
-          ...SNACKBAR_OPTIONS,
-          variant: 'success',
-        })
+        enqueueSnackbar('복제되었습니다!', SNACKBAR_SUCCESS)
       })
       .catch(error => {
-        enqueueSnackbar('오류가 발생했습니다.', {
-          ...SNACKBAR_OPTIONS,
-          variant: 'error',
-        })
+        enqueueSnackbar('오류가 발생했습니다.', SNACKBAR_ERROR)
       })
     }
   }
@@ -103,16 +97,10 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
       .then(response => response.json())
       .then((tableDataDateList: TableDataType[]) => {
         props.setTableDataDateList(tableDataDateList)
-        enqueueSnackbar('수정되었습니다!', {
-          ...SNACKBAR_OPTIONS,
-          variant: 'success',
-        })
+        enqueueSnackbar('수정되었습니다!', SNACKBAR_SUCCESS)
       })
       .catch(error => {
-        enqueueSnackbar('오류가 발생했습니다.', {
-          ...SNACKBAR_OPTIONS,
-          variant: 'error',
-        })
+        enqueueSnackbar('오류가 발생했습니다.', SNACKBAR_ERROR)
       })
     }
     setOpenModify(false)
