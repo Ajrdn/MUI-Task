@@ -1,5 +1,5 @@
 interface TableHeader<TableDataType> {
-  title: keyof TableDataType
+  key: keyof TableDataType
   size: string
   setFilterData?: (newFilterData: string) => void
 }

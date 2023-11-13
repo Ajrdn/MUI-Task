@@ -63,12 +63,12 @@ function TableDataHeader<TableDataType>(props: TableDataHeaderProps<TableDataTyp
         }
         {props.tableHeaderList.map(tableHeader => (
           <TableCellBox
-            key={tableHeader.title.toString()}
+            key={tableHeader.key.toString()}
             width={tableHeader.size}
             align='center'
           >
             <TableDataCell>
-              <TableHeaderTitle>{tableHeader.title.toString()}</TableHeaderTitle>
+              <TableHeaderTitle>{tableHeader.key.toString()}</TableHeaderTitle>
               {tableHeader.setFilterData &&
               <TableDataFilterButton
                 date={props.date}
