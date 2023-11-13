@@ -19,14 +19,8 @@ interface TableDataProps<TableDataType> {
   no?: boolean
   pasteFunction?: (tableDataPasteList: TableDataType[]) => Promise<void>
   copyFunction?: (tableData: TableDataType) => Promise<void>
-  copyUrl?: string
-  copyMethod?: string
   modifyFunction?: (tableData: TableDataType) => Promise<void>
-  modifyUrl?: string
-  modifyMethod?: string
   deleteFunction?: (tableData: TableDataType) => Promise<void>
-  deleteUrl?: string
-  deleteMethod?: string
 }
 
 
