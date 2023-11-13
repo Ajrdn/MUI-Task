@@ -7,7 +7,7 @@ import MeltingTableData from 'interface/MeltingTableData'
 import TableRowData from 'interface/TableRowData'
 import ExcelData from 'interface/ExcelData'
 import MeltingData from 'interface/MeltingData'
-import TablePageSearchBar from './TablePageSearchBar/TablePageSearchBar'
+import TableBar from './TableBar/TableBar'
 import TableData from './TableData/TableData'
 import TableAddFab from './TableAddFab/TableAddFab'
 
@@ -248,7 +248,7 @@ function TableComponent() {
   return (
     <>
       <TablePageBackground>
-        <TablePageSearchBar<MeltingTableData>
+        <TableBar<MeltingTableData>
           date={date} // 날짜
           setDate={setDate} // 날짜 변경 시 실행할 함수
           tableDataShowListLength={meltingTableDataShowList.length} // 보여지는 테이블 행 수
