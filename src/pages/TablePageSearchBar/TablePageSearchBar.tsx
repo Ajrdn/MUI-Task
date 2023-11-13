@@ -27,7 +27,7 @@ interface TablePageSearchBarProps<TableDataType> {
   date: Dayjs
   setDate: (date: Dayjs) => void
   tableDataShowListLength: number
-  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
+  excelFunction: (tableDataExcelList: TableDataType[]) => void
   excelData: ExcelData[]
 }
 
@@ -38,7 +38,7 @@ function TablePageSearchBar<TableDataType>(props: TablePageSearchBarProps<TableD
   }
 
   const excelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    TableDataListUploadXlsx<TableDataType>(event, props.date.format('YYYY-MM-DD'), props.setTableDataDateList)
+    TableDataListUploadXlsx<TableDataType>(event, props.date.format('YYYY-MM-DD'), props.excelFunction)
   }
 
   return (
