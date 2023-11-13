@@ -70,9 +70,7 @@ function TableDataFilterButton(props: TableDataFilterButtonProps) {
   const [left, setLetf] = useState<number>(0)
 
   useEffect(() => {
-    if(data !== '') {
-      setData('')
-    }
+    if(data !== '') setData('')
   }, [props.date])
 
   const openFilterField = (event: React.MouseEvent<HTMLElement>) => {
