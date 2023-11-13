@@ -2,7 +2,7 @@ import React from 'react'
 import { styled, ThemeProvider } from '@mui/material/styles'
 import { theme } from './theme/theme'
 import Box from '@mui/material/Box'
-import TablePage from './pages/TablePage'
+import TableComponent from './pages/TableComponent'
 
 
 const PageBackground = styled(Box)({
@@ -20,7 +20,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <PageBackground>
-        <TablePage />
+        <TableComponent />
       </PageBackground>
     </ThemeProvider>
   )
