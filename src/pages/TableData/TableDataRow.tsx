@@ -28,13 +28,9 @@ interface TableDataRowProps<TableDataType> {
   tableRowData: TableRowData<TableDataType>
   no?: boolean
   clickTableRow?: (index: number) => void
-  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
-  copyUrl?: string
-  copyMethod?: string
-  modifyUrl?: string
-  modifyMethod?: string
-  deleteUrl?: string
-  deleteMethod?: string
+  copyFunction?: (tableData: TableDataType) => Promise<void>
+  modifyFunction?: (tableData: TableDataType) => Promise<void>
+  deleteFunction?: (tableData: TableDataType) => Promise<void>
 }
 
 
@@ -55,17 +51,9 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
   }
 
   const copyFunction = () => {
-    if(props.copyUrl && props.copyMethod) {
-      fetch(props.copyUrl, {
-        method: props.copyMethod,
-        body: JSON.stringify(props.tableRowData.tableData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => response.json())
-      .then((tableDataDateList: TableDataType[]) => {
-        props.setTableDataDateList(tableDataDateList)
+    if(props.copyFunction) {
+      props.copyFunction(props.tableRowData.tableData)
+      .then(() => {
         enqueueSnackbar('복제되었습니다!', SNACKBAR_SUCCESS)
       })
       .catch(error => {
@@ -86,17 +74,9 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
   }
 
   const saveFunction = () => {
-    if(props.modifyUrl && props.modifyMethod) {
-      fetch(props.modifyUrl, {
-        method: props.modifyMethod,
-        body: JSON.stringify(tableRowData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => response.json())
-      .then((tableDataDateList: TableDataType[]) => {
-        props.setTableDataDateList(tableDataDateList)
+    if(props.modifyFunction) {
+      props.modifyFunction(tableRowData)
+      .then(() => {
         enqueueSnackbar('수정되었습니다!', SNACKBAR_SUCCESS)
       })
       .catch(error => {
@@ -133,14 +113,14 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
           openModify={openModify}
         />
       ))}
-      {props.copyUrl &&
+      {props.copyFunction &&
         <TableFunctionCell align='center'>
           <IconButton onClick={copyFunction}>
             <CopyAll />
           </IconButton>
         </TableFunctionCell>
       }
-      {props.modifyUrl &&
+      {props.modifyFunction &&
         <TableFunctionCell align='center'>
           <Button
             variant='text'
@@ -150,7 +130,7 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
           </Button>
         </TableFunctionCell>
       }
-      {props.deleteUrl &&
+      {props.deleteFunction &&
         <TableFunctionCell align='center'>
           <IconButton onClick={() => setOpen(true)}>
             <DeleteOutline />
@@ -159,9 +139,7 @@ function TableDataRow<TableDataType>(props: TableDataRowProps<TableDataType>) {
             open={open}
             setOpen={setOpen}
             tableRowData={props.tableRowData}
-            setTableDataDateList={props.setTableDataDateList}
-            deleteUrl={props.deleteUrl}
-            deleteMethod={props.deleteMethod}
+            deleteFunction={props.deleteFunction}
           />
         </TableFunctionCell>
       }

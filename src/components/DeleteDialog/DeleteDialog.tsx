@@ -57,9 +57,7 @@ interface DeleteDialogProps<TableDataType> {
   open: boolean
   setOpen: (newOpen: boolean) => void
   tableRowData: TableRowData<TableDataType>
-  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
-  deleteUrl?: string
-  deleteMethod?: string
+  deleteFunction?: (tableData: TableDataType) => Promise<void>
 }
 
 
@@ -67,17 +65,9 @@ function DeleteDialog<TableDataType>(props: DeleteDialogProps<TableDataType>) {
   const { enqueueSnackbar } = useSnackbar()
 
   const deleteFunction = () => {
-    if(props.deleteUrl && props.deleteMethod) {
-      fetch(props.deleteUrl, {
-        method: props.deleteMethod,
-        body: JSON.stringify(props.tableRowData.tableData),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => response.json())
-      .then((tableDataDateList: TableDataType[]) => {
-        props.setTableDataDateList(tableDataDateList)
+    if(props.deleteFunction) {
+      props.deleteFunction(props.tableRowData.tableData)
+      .then(() => {
         enqueueSnackbar('삭제되었습니다!', SNACKBAR_SUCCESS)
       })
       .catch(error => {

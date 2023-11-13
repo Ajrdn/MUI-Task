@@ -16,16 +16,15 @@ interface TableDataProps<TableDataType> {
   tableHeaderList: TableHeader<TableDataType>[]
   tableDataShowList: TableRowData<TableDataType>[]
   setTableDataShowList: (newTableDataShowList: TableRowData<TableDataType>[]) => void
-  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   no?: boolean
   pasteFunction?: (tableDataPasteList: TableDataType[]) => Promise<void>
-  copyFunction?: (tableData: TableDataType) => void
+  copyFunction?: (tableData: TableDataType) => Promise<void>
   copyUrl?: string
   copyMethod?: string
-  modifyFunction?: (tableData: TableDataType) => void
+  modifyFunction?: (tableData: TableDataType) => Promise<void>
   modifyUrl?: string
   modifyMethod?: string
-  deleteFunction?: (tableData: TableDataType) => void
+  deleteFunction?: (tableData: TableDataType) => Promise<void>
   deleteUrl?: string
   deleteMethod?: string
 }
@@ -106,14 +105,10 @@ function TableData<TableDataType>(props: TableDataProps<TableDataType>) {
         <TableDataBody<TableDataType>
           clickTableRow={props.pasteFunction ? clickTableRow : undefined}
           tableDataShowList={props.tableDataShowList}
-          setTableDataDateList={props.setTableDataDateList}
           no={props.no}
-          copyUrl={props.copyUrl}
-          copyMethod={props.copyMethod}
-          modifyUrl={props.modifyUrl}
-          modifyMethod={props.modifyMethod}
-          deleteUrl={props.deleteUrl}
-          deleteMethod={props.deleteMethod}
+          copyFunction={props.copyFunction}
+          modifyFunction={props.modifyFunction}
+          deleteFunction={props.deleteFunction}
         />
       </Table>
     </TableContainer>

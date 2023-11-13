@@ -7,14 +7,10 @@ import TableDataRow from './TableDataRow'
 interface TableDataBodyProps<TableDataType> {
   clickTableRow?: (index: number) => void
   tableDataShowList: TableRowData<TableDataType>[]
-  setTableDataDateList: (newTableDataDateList: TableDataType[]) => void
   no?: boolean
-  copyUrl?: string
-  copyMethod?: string
-  modifyUrl?: string
-  modifyMethod?: string
-  deleteUrl?: string
-  deleteMethod?: string
+  copyFunction?: (tableData: TableDataType) => Promise<void>
+  modifyFunction?: (tableData: TableDataType) => Promise<void>
+  deleteFunction?: (tableData: TableDataType) => Promise<void>
 }
 
 
@@ -27,13 +23,9 @@ function TableDataBody<TableDataType>(props: TableDataBodyProps<TableDataType>) 
             tableRowData={taskDataShow}
             no={props.no}
             clickTableRow={props.clickTableRow}
-            setTableDataDateList={props.setTableDataDateList}
-            copyUrl={props.copyUrl}
-            copyMethod={props.copyMethod}
-            modifyUrl={props.modifyUrl}
-            modifyMethod={props.modifyMethod}
-            deleteUrl={props.deleteUrl}
-            deleteMethod={props.deleteMethod}
+            copyFunction={props.copyFunction}
+            modifyFunction={props.modifyFunction}
+            deleteFunction={props.deleteFunction}
           />
         ))}
     </TableBody>
